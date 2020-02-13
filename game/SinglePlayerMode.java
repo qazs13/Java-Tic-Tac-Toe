@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class SinglePlayerMode {
-    public char [][] grid = {
+    char [][] grid = {
             {' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '+', '-'},
             {' ', '|', ' ', '|', ' '},
@@ -12,7 +12,7 @@ public class SinglePlayerMode {
     Vector<Integer> playerMoves= new Vector<>();
     Vector<Integer> AIMoves= new Vector<>();
     Vector<Integer> movesPool= new Vector<>();
-    public char getRndSymbol(){
+    char getRndSymbol(){
         Random r = new Random();
         String symbols = "XO";
         return symbols.charAt(r.nextInt(symbols.length()));
@@ -27,7 +27,7 @@ public class SinglePlayerMode {
             randomElement = AIMoves.get(0);
         return randomElement;
     }
-    public void printGrid(){
+    void printGrid(){
         for(int i=0; i<5; i++) {
             for (int j=0; j<5; j++)
                 System.out.print(grid[i][j]);
