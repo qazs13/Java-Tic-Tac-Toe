@@ -19,7 +19,6 @@ public class Database {
     private Gamelog gameLog = null;
     private XOInterface xoInterface = null;
     boolean state = false; //Momken Nshylo 3ady
-    int gameNumber = 0; //Momken Nshylo 3ady
     char[] ch = null;
     
     public Connection connect ()
@@ -62,7 +61,7 @@ public class Database {
         }
     }
     
-    public boolean loginCheck (XOInterface xoPlayer)
+    public boolean checkLogIn (XOInterface xoPlayer)
     {
         try
         {
@@ -75,9 +74,34 @@ public class Database {
             while (result.next())
             {
                 state = result.getBoolean(1);
-                System.out.println(result.getBoolean(1));
             }
             System.out.println("Login checked has done to user "+user+" and password "+password);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            close();
+            return state;
+        }
+    }
+    
+    public boolean checkSignUp (XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            sqlCommand = "SELECT checkNewPlayer(?)";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            preparedStatment.setString(1, xoPlayer.getPlayer().getUserName());
+            result = preparedStatment.executeQuery();
+            while (result.next())
+            {
+                state = result.getBoolean(1);
+            }
+            System.out.println("The User Name "+xoPlayer.getPlayer().getUserName()+" is checked and the result is "+state);
         }
         catch (SQLException ex)
         {
@@ -106,6 +130,37 @@ public class Database {
                 xoInterface.Players.add(new Player(result.getString(1),result.getBoolean(2),result.getInt(3)));
             }
             System.out.println("Data has been retrived");            
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            close();
+            return xoInterface;
+        }
+    }
+    
+    
+    public XOInterface retrivePlayerData (XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            player = new Player();
+            sqlCommand = "SELECT * from retriveplayerdata(?)";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            preparedStatment.setString(1, xoPlayer.getPlayer().getUserName());
+            result = preparedStatment.executeQuery();
+            while (result.next())
+            {
+                player.setFName(result.getString(1));
+                player.setLName(result.getString(2));
+                player.setStatus(result.getBoolean(3));
+                player.setScore(result.getInt(4));
+            }
+            xoInterface = new XOInterface("playerData", player);
         }
         catch (SQLException ex)
         {
@@ -216,7 +271,7 @@ public class Database {
     }
    
     
-    public int createGame (XOInterface xoPlayer)
+    public XOInterface createGame (XOInterface xoPlayer)
     {
         try
         {
@@ -228,13 +283,13 @@ public class Database {
             result = preparedStatment.executeQuery();
             while (result.next())
             {
-                gameNumber = result.getInt(1);
+                xoInterface = new XOInterface("gameIsCreated", new Gamelog(result.getInt(1)));
             }
             
             System.out.println("Game is created between " + xoPlayer.getGameLog().getHomePlayer() + 
                     " and " + 
                     xoPlayer.getGameLog().getOpponentPlayer() +
-                    "and game number is " + gameNumber);
+                    "and game number is " + xoInterface.getGameLog().getGameId());
         }
         catch (SQLException ex)
         {
@@ -243,7 +298,7 @@ public class Database {
         finally
         {
             close();
-            return gameNumber;
+            return xoInterface;
         }
     }
     
@@ -268,7 +323,7 @@ public class Database {
     }
     
     
-    public boolean setGameMove (XOInterface xoPlayer)
+    public XOInterface setGameMove (XOInterface xoPlayer)
     {
         try
         {
@@ -277,28 +332,29 @@ public class Database {
             preparedStatment = connection.prepareStatement(sqlCommand);
             preparedStatment.setInt(1, xoPlayer.getFieldNumber());
             preparedStatment.setInt(2, (int) xoPlayer.getSignPlayed());
-            preparedStatment.setInt(3, xoPlayer.gamelog.getGameId());
+            preparedStatment.setInt(3, xoPlayer.getGameLog().getGameId());
             preparedStatment.executeQuery();
             System.out.println("Move is saved to the database");
             close();
-            return true;
+            return new XOInterface("gameIsSetted");
         }
         catch (SQLException ex)
         {
             ex.printStackTrace();
-            return false;
+            return new XOInterface("gameIsNotSetted");
         }
     }
     
-    public char[] getSavedGame (XOInterface xoPlayer)        //Hayt8yar be user
+    public XOInterface getSavedGame (XOInterface xoPlayer)
     {
         try
         {
             ch = new char[9];
             connect();
+            gameLog = new Gamelog();
             sqlCommand = "SELECT * FROM getsaveddata(?)";
             preparedStatment = connection.prepareStatement(sqlCommand);
-            preparedStatment.setInt(1, xoPlayer.gamelog.getGameId());
+            preparedStatment.setInt(1, xoPlayer.getGameLog().getGameId());
             result = preparedStatment.executeQuery();
             while (result.next())
             {
@@ -312,6 +368,8 @@ public class Database {
                 ch[7] = (char) result.getInt(8);
                 ch[8] = (char) result.getInt(9);
             }
+            gameLog.setSavedGame(ch);
+            xoInterface = new XOInterface("savedData", gameLog);
             close();
         }
         catch (SQLException ex)
@@ -320,7 +378,7 @@ public class Database {
         }
         finally
         {
-         return ch;
+         return xoInterface;
         }
     }
     
@@ -340,14 +398,7 @@ public class Database {
     
     public static void main(String[] args) {
         Database db = new Database();
-        XOInterface xoPlayer = new XOInterface("creatPlayer",new Gamelog(2));
-        xoPlayer.setFieldNumber(7);
-        xoPlayer.setSignPlayed('x');
-        if (xoPlayer.getTypeOfOpearation().equals("creatPlayer"))
-        {
-            db.setGameMove(xoPlayer);
-        }
-        xoPlayer = new XOInterface("", new Gamelog(2));
-        System.out.println(db.getSavedGame(xoPlayer));
+        XOInterface xoplayer = new XOInterface("getSavedData",new Gamelog(1));
+        System.out.println(db.getSavedGame(xoplayer).getGameLog().getSavedGame()[0]);
     }
 }
