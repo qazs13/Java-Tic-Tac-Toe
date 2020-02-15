@@ -6,6 +6,15 @@ public class Player {
     private int score,gameId;
     private boolean isPlaying,status;
     public Player(){};
+    public Player(String _userName)
+    {
+        userName=_userName;
+    }
+    public Player(String _userName,String _passwd)
+    {
+        userName=_userName;
+        passwd=_passwd; 
+    }
     public Player(String _userName,String _passwd,String _fName,String _lName)
     {
         userName=_userName;
@@ -18,7 +27,12 @@ public class Player {
         this.userName = userName;
         this.status = status;
         this.score = score;
-    }
+    };
+    public Player (String userName,int score)
+    {
+        this.userName = userName;
+        this.score = score;
+    };
     public Player (String userName,String fName,String lName,boolean status,int score,boolean isPlaying,int gameId)
     {
         this.userName = userName;
