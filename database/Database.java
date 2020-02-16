@@ -21,7 +21,7 @@ public class Database {
     boolean state = false; //Momken Nshylo 3ady
     char[] ch = null;
     
-    public Connection connect ()
+    private void connect ()
     {
         try
         {
@@ -31,10 +31,6 @@ public class Database {
         catch (SQLException ex)
         {
             ex.printStackTrace();
-        }
-        finally
-        {
-            return connection;
         }
     }
     
@@ -75,7 +71,8 @@ public class Database {
             {
                 state = result.getBoolean(1);
             }
-            System.out.println("Login checked has done to user "+user+" and password "+password);
+            System.out.println("Login checked has done to user "+xoPlayer.getPlayer().getUserName()
+                    +" and password "+xoPlayer.getPlayer().getPasswd());
         }
         catch (SQLException ex)
         {
@@ -114,6 +111,31 @@ public class Database {
         }
     }
     
+    public XOInterface makePlayerOnline (XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            sqlCommand = "SELECT makeplayeronline(?)";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            preparedStatment.setString(1, xoPlayer.getPlayer().getUserName());
+            result = preparedStatment.executeQuery();
+            while (result.next())
+            {
+                state = result.getBoolean(1);
+            }
+            xoPlayer.setOpearationResult(state);
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            close();
+            return xoPlayer;
+        }
+    }
     
     public XOInterface retriveAllPlayers ()
     {
@@ -395,10 +417,4 @@ public class Database {
             ex.printStackTrace();
         }
     }    
-    
-    public static void main(String[] args) {
-        Database db = new Database();
-        XOInterface xoplayer = new XOInterface("getSavedData",new Gamelog(1));
-        System.out.println(db.getSavedGame(xoplayer).getGameLog().getSavedGame()[0]);
-    }
 }

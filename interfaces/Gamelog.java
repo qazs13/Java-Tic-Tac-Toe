@@ -18,6 +18,12 @@ public class Gamelog {
     {
         this.gameId = gameId;
     }
+    public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer){
+        this.gameId = gameId;
+        homePlayer=_homePlayer;
+        opponentPlayer=_opponentPlayer;
+    }
+    
     public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer,Timestamp _startGameDate,Timestamp _endGameDate,boolean _isFinished,char[] savedGame){
         this.gameId = gameId;
         homePlayer=_homePlayer;
@@ -26,7 +32,7 @@ public class Gamelog {
         endGameDate=_endGameDate;
         isFinished=_isFinished; 
         this.savedGame = savedGame;
-    };
+    }
     public void setGameId(int _gameId){ 
             gameId=_gameId;
     };
