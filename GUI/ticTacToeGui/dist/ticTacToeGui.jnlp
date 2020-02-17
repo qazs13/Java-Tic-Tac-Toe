@@ -8,7 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ticTacToeGui.jar" size="259835" download="eager" />
+    <jar href="lib\gson-2.8.6.jar" size="240255" download="eager" />
+    <jar href="lib\postgresql-42.2.10.jar" size="927447" download="eager" />
+    <jar href="ticTacToeGui.jar" size="261178" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="ticTacToeGui" >
     <param name="requiredFXVersion" value="8.0+"/>

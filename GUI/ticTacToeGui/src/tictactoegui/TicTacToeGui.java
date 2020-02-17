@@ -24,13 +24,12 @@ public class TicTacToeGui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-//        Parent  root = FXMLLoader.load(getClass().getResource("/signin/signIn.fxml"));
-
-        Parent  root = FXMLLoader.load(getClass().getResource("/playwithcomputer/playWithComputer.fxml"));
+   FXMLLoader loader=new FXMLLoader();
+   loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
+        Parent  root = loader.load();
+       SignInController FS=loader.getController();
         
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/playwithcomputer/style.css");
-        PlayWithComputerController.init();
         
         stage.setScene(scene);
         stage.show();
@@ -38,8 +37,7 @@ public class TicTacToeGui extends Application {
     
   
     
-    public static void main(String[] args) throws FileNotFoundException {
-
+    public static void main(String[] args) {
         Application.launch(args);
     }
     

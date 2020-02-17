@@ -1,6 +1,7 @@
 
 package signin;
 
+import com.google.gson.Gson;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,57 +23,84 @@ import signup.*;
 import  tictactoegui.*;
 
 public class SignInController implements Initializable {
-String username;
-String password;
-    @FXML
+    String username;
+    String password;
+   @FXML
     Button signup;
    @FXML
  private AnchorPane main;
     @FXML
-    private    Button login;
+       Button login;
     @FXML
-    private TextField loginusername;
+     TextField loginusername;
     @FXML
-    private PasswordField loginpassword;
+     PasswordField loginpassword;
     @FXML
-   private Text checkusername;
+   Text checkusername;
         @FXML
-   private Text checkpassword;
+    Text checkpassword;  
+  Stage window;
+  
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
-    @FXML
-    private void signup(ActionEvent event) throws IOException {
-      //  AnchorPane root=FXMLLoader.load(getClass().getResource("signUp.fxml"));
-           Parent  root = FXMLLoader.load(getClass().getResource("/signup/signUp.fxml"));
-          Scene scene = new Scene(root);
-           Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-           window.setScene(scene);
-           window.show();
-            //root = FXMLLoader.load(TicTacToeGui.class.getResource("signUp.fxml"));
-           // main.getChildren().addAll(root);
-        
-        //stage.show();
-    }
+    
 
     @FXML
+     void signup(ActionEvent event) throws IOException {
+   FXMLLoader signuppage=new FXMLLoader();
+   signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
+        Parent  signuppageroot = signuppage.load();
+       signUpController su=signuppage.getController();
+        
+        Scene scenesignup = new Scene(signuppageroot);
+ Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            signupstage.hide(); //optional
+            signupstage.setScene(scenesignup);
+            signupstage.show(); 
+    }
+
+@FXML
     private void login(ActionEvent event) {
-        username=loginusername.getText();
-        password=loginpassword.getText();
-       if(username.equals(""))
+        username = loginusername.getText();
+        password = loginpassword.getText();
+       if(username.equals("") || password.equals(""))
        {
-       checkusername.setVisible(true);
-       }
-       else if(password.equals(""))
-       {
-          checkpassword.setVisible(true); 
+            if (username.equals(""))
+            {
+                checkusername.setVisible(true);
+            }
+            else
+            {
+                checkusername.setVisible(false);
+            }
+            if(password.equals(""))
+            {
+                checkpassword.setVisible(true);
+            }
+            else
+            {
+                checkpassword.setVisible(false);
+            }
        }
        else{
-           Player player=new Player();
-           player.setUserName(username);
-           player.setPasswd(password);
-          XOInterface xointerface =new XOInterface ("login",player);
+            checkusername.setVisible(false);
+            checkpassword.setVisible(false);
+            Player player=new Player();
+            player.setUserName(username);
+            player.setPasswd(password);
+            XOInterface xointerface =new XOInterface ("login",player);
+            Gson g = new Gson();
+            String s = g.toJson(xointerface);
+            SocketPlayer socket = SocketPlayer.socketPlayer;
+            socket.sendMessageToServer(s);
+            s = socket.ReciveMessageFromServer();
+            if (s != null)
+            {
+                System.out.println(s);
+            }
        }
       
     }
