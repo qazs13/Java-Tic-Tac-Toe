@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +20,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import selectionmode.selectionModeController;
 import static tictactoegui.TicTacToeGui.main;
 import signup.*;
 import  tictactoegui.*;
@@ -94,13 +97,30 @@ public class SignInController implements Initializable {
             XOInterface xointerface =new XOInterface ("login",player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
-            SocketPlayer socket = SocketPlayer.socketPlayer;
-            socket.sendMessageToServer(s);
-            s = socket.ReciveMessageFromServer();
-            if (s != null)
-            {
-                System.out.println(s);
-            }
+//            SocketPlayer socket = SocketPlayer.socketPlayer;
+//            socket.sendMessageToServer(s);
+//            s = socket.ReciveMessageFromServer();
+//            if (s != null)
+//            {
+//                System.out.println(s);
+//            }
+if(true)
+{
+                try {
+                    FXMLLoader selectionpage=new FXMLLoader();
+                    selectionpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
+                    Parent  selectionroot = selectionpage.load();
+                    selectionModeController sm= selectionpage.getController();
+                    
+                    Scene sceneselection = new Scene(selectionroot);
+                    Stage selectionstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    selectionstage.hide(); //optional
+                    selectionstage.setScene(sceneselection);   
+                    selectionstage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+}
        }
       
     }
