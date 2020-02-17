@@ -59,19 +59,36 @@ public class Server {
                 try {
                     message = input.readLine();
                     XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
-                    
-                    if(xoPlayer.getTypeOfOpearation().equals("login"))
+                    System.out.println(xoPlayer.getGameLog().getHomePlayer());
+                    if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
                     {
-                        PlayerLoginCheck(xoPlayer); 
+                        PlayerLoginCheck(xoPlayer);                        
                     }
-                    else if(xoPlayer.getTypeOfOpearation().equals("register"))
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.REGISTER))
                     {
                         PlayerRegister(xoPlayer);
                     }
-                    else
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
+                        
                     {
-                                   
+                        db.createGame(xoPlayer);        
                     }
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.SINGLE_MODE_FINISHED))
+                    {
+                        db.endGame(xoPlayer);
+                        db.updateScoreOffline(xoPlayer);
+                        sendMsgToAllInternalSocket(xoPlayer);
+                    }
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.GET_PLAYERS))
+                    {
+                        db.retriveAllPlayers();
+                    }
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITE))
+                    {
+                        sendMsgToDesiredInternalSocket(xoPlayer);
+                        //need to be continued
+                    }
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -83,8 +100,11 @@ public class Server {
             {
                 Hashmapper(xoPlayer); 
                 xoPlayer = db.makePlayerOnline(xoPlayer);
-                xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
-                sendMsgToDesiredInternalSocket(xoPlayer);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);
+                xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGED_IN);
+                sendMsgToAllInternalSocket(xoPlayer);
             }
             else
             {
@@ -99,11 +119,23 @@ public class Server {
         void PlayerRegister(XOInterface xoPlayer){
             if (db.checkSignUp(xoPlayer))
             {
-                System.out.println("Player is Created ? "+db.createplayer(xoPlayer));
+                XOInterface xoPlayerRecived = new XOInterface();
+                xoPlayerRecived.setTypeOfOpearation(Messages.SIGN_UP_ACCEPTED);
+                boolean flag = db.createplayer(xoPlayer);
+                xoPlayerRecived.setOpearationResult(flag);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayerRecived);
+                this.output.println(message);                
             }
             else
-            {
+            {   
                 System.out.println("error");
+                XOInterface xoPlayerRecived = new XOInterface();
+                xoPlayerRecived.setTypeOfOpearation(Messages.SIGN_UP_REJECTED);
+                xoPlayerRecived.setOpearationResult(false);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayerRecived);
+                this.output.println(message);                
             }
         }
         
@@ -126,9 +158,15 @@ public class Server {
         }
         
        
-        void sendMsgToAllInternalSocket(String msg){
+        void sendMsgToAllInternalSocket(XOInterface xoPlayer){
+            ServerHandler key = null;
+            incomeObjectFromPlayer = new Gson();
+            message = incomeObjectFromPlayer.toJson(xoPlayer);
             for(Map.Entry kv: map.entrySet()){
-                  System.out.println(kv);
+                  
+                System.out.println(kv);
+                key = (ServerHandler) kv.getKey();
+                key.output.println(message);
             }
          }
     }
