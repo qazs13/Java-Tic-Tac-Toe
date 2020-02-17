@@ -5,19 +5,24 @@ import java.util.Vector;
 
 public class XOInterface {
     
-    String typeOfOperation = null;
-    Boolean operationResult;
-    Player player = null;
-    public Gamelog gamelog = null;
+    private String typeOfOperation = null;
+    private Boolean operationResult;
+    private Player player = null;
+    private Gamelog gamelog = null;
     public Vector<Player> Players= null;
-    int fieldNumber; 
+    private int fieldNumber; 
     //String homePlayer;
-    char signPlayed;
-    Boolean moveReceived;
+    private char signPlayed;
+    private Boolean moveReceived;
             
     public XOInterface()
     {
         Players = new Vector<>();
+    }
+    
+    public XOInterface(String typeOfOperation)
+    {
+        this.typeOfOperation = typeOfOperation;
     }
     
     public XOInterface(String typeOfOperation,Player player)
@@ -44,20 +49,31 @@ public class XOInterface {
         this.gamelog = gamelog;
     }
     
+    public void setTypeOfOpearation(String typeOfOpearation)
+    {
+        this.typeOfOperation = typeOfOpearation;
+    }
+    
     public String getTypeOfOpearation()
     {
         return typeOfOperation;
     }
+    
+    public void setOpearationResult(boolean operationResult)
+    {
+        this.operationResult = operationResult;
+    }    
+    
     public Boolean getOpearationResult()
     {
         return operationResult;
-        
     }
     
     public Player getPlayer()
     {
         return player;
     }
+    
     public Gamelog getGameLog()
     {
         return gamelog;
@@ -67,6 +83,7 @@ public class XOInterface {
     {
         this.fieldNumber = fieldNumber;
     }
+    
     public void setSignPlayed (char signPlayed)
     {
         this.signPlayed = signPlayed;
@@ -76,6 +93,7 @@ public class XOInterface {
     {
         return fieldNumber;
     }
+    
     public char getSignPlayed ()
     {
         return signPlayed;
