@@ -49,6 +49,11 @@ public class XOInterface {
         this.gamelog = gamelog;
     }
     
+    public void setTypeOfOpearation(String typeOfOperation)
+    {
+        this.typeOfOperation = typeOfOperation;
+    }    
+    
     public String getTypeOfOpearation()
     {
         return typeOfOperation;

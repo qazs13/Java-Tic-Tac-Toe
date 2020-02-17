@@ -8,7 +8,7 @@ public class Database {
     
     private final String url = "jdbc:postgresql://localhost/javagame";
     private final String user = "postgres";
-    private final String password = "amrwsk13";
+    private final String password = "postgres";
 
     private Connection connection = null;
     private PreparedStatement preparedStatment = null;

@@ -27,6 +27,7 @@ public class Server {
             server_socket = new ServerSocket(5000);
             while(true){
                 Socket internal_socket=server_socket.accept();
+                System.err.println("New player is here");
                 new ServerHandler(internal_socket);
             }
         } catch (IOException ex) {
@@ -59,7 +60,8 @@ public class Server {
                 try {
                     message = input.readLine();
                     XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
-                    System.out.println(xoPlayer.getGameLog().getHomePlayer());
+                    System.err.println(xoPlayer);
+                    System.out.println(xoPlayer.getPlayer().getUserName());
                     if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
                     {
                         PlayerLoginCheck(xoPlayer);                        
