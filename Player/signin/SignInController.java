@@ -2,6 +2,8 @@
 package signin;
 
 import com.google.gson.Gson;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -11,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.io.PrintStream;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,7 +43,12 @@ public class SignInController implements Initializable {
         @FXML
     Text checkpassword;  
   Stage window;
-  
+    DataInputStream controllerDIS;
+    PrintStream controllerPS;
+    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+        controllerDIS = dis;
+        controllerPS = ps;
+    }
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,16 +58,16 @@ public class SignInController implements Initializable {
 
     @FXML
      void signup(ActionEvent event) throws IOException {
-   FXMLLoader signuppage=new FXMLLoader();
-   signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
+        FXMLLoader signuppage=new FXMLLoader();
+        signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent  signuppageroot = signuppage.load();
-       signUpController su=signuppage.getController();
+        signUpController su=signuppage.getController();
         
         Scene scenesignup = new Scene(signuppageroot);
- Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            signupstage.hide(); //optional
-            signupstage.setScene(scenesignup);
-            signupstage.show(); 
+        Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        signupstage.hide(); //optional
+        signupstage.setScene(scenesignup);
+        signupstage.show(); 
     }
 
 @FXML
@@ -94,9 +102,10 @@ public class SignInController implements Initializable {
             XOInterface xointerface =new XOInterface ("login",player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
-            SocketPlayer socket = SocketPlayer.socketPlayer;
-            socket.sendMessageToServer(s);
-            s = socket.ReciveMessageFromServer();
+            controllerPS.println(s);
+//            SocketPlayer socket = SocketPlayer.socketPlayer;
+//            socket.sendMessageToServer(s);
+//            s = socket.ReciveMessageFromServer();
             if (s != null)
             {
                 System.out.println(s);
