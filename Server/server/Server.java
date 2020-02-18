@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,10 +21,11 @@ public class Server {
     Gson incomeObjectFromPlayer = null;
     public void runServer(){
         try {
-            System.err.println("Server is Opened Succesfully");
+            System.out.println("Server is Opened Succesfully");
             server_socket = new ServerSocket(5000);
             while(true){
                 Socket internal_socket=server_socket.accept();
+                System.err.println("New Player Is Here");
                 new ServerHandler(internal_socket);
             }
         } catch (IOException ex) {
@@ -43,10 +42,10 @@ public class Server {
         public ServerHandler(Socket socket){
            
             try {
-                this.playerSocket=socket;
-                input = new DataInputStream(playerSocket.getInputStream());
-                output = new PrintStream(playerSocket.getOutputStream());
-                start();
+                    this.playerSocket=socket;
+                    input = new DataInputStream(playerSocket.getInputStream());
+                    output = new PrintStream(playerSocket.getOutputStream());
+                    start();
                 }
             catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,8 +57,8 @@ public class Server {
             while(true){
                 try {
                     message = input.readLine();
+                    System.out.println("New Message From Player");
                     XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
-                    System.out.println(xoPlayer.getGameLog().getHomePlayer());
                     if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
                     {
                         PlayerLoginCheck(xoPlayer);                        
@@ -80,30 +79,36 @@ public class Server {
                             updatePlayerScoreOffline(xoPlayer);
 
                         }
+                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.GET_PLAYERS))
                         {
                             getAllPlayers(xoPlayer);
                         }
+                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITE))
                         {
                             invitePlayer(xoPlayer);
                         }
+                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.ACCEPT))
                         {
                             createGame(xoPlayer);
                         }
+                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.DECLINE))
                         {
-                            createGame(xoPlayer);
+                            rejectingInvitation(xoPlayer);
                         }
+                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.PLAY_MOVE))
                         {
                             makeMove(xoPlayer);
                         }   
+                                               
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.MULTI_MODE_FINISHED))
                         {
                             endGame(xoPlayer);
-                        }                        
+                        }  
                     }
                     
                 } catch (IOException ex) {
@@ -115,12 +120,14 @@ public class Server {
         void PlayerLoginCheck(XOInterface xoPlayer){
             if (db.checkLogIn(xoPlayer))
             {
-                Hashmapper(xoPlayer); 
+                Hashmapper(xoPlayer);
                 xoPlayer = db.makePlayerOnline(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGED_IN);
+                xoPlayer.getPlayer().setPasswd(null);
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
+                System.out.println(message);
                 this.output.println(message);
-                xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGED_IN);
                 sendMsgToAllInternalSocket(xoPlayer);
             }
             else
@@ -129,7 +136,6 @@ public class Server {
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
-               // this.stop();
             }
         } 
         
@@ -146,41 +152,33 @@ public class Server {
             }
             else
             {   
-                System.out.println("error");
-                XOInterface xoPlayerRecived = new XOInterface();
-                xoPlayerRecived.setTypeOfOpearation(Messages.SIGN_UP_REJECTED);
-                xoPlayerRecived.setOpearationResult(false);
-                incomeObjectFromPlayer = new Gson();
-                message = incomeObjectFromPlayer.toJson(xoPlayerRecived);
-                this.output.println(message);                
-            }
-        }
-       void playingSingleMode(XOInterface xoPlayer){
-           if(db.updateIsPlaying) //updateIsPlaying function need to be created
-           {
-                xoPlayer.setOpearationResult(true);
-                incomeObjectFromPlayer = new Gson();
-                message = incomeObjectFromPlayer.toJson(xoPlayer);
-                this.output.println(message);               
-           }
-           else
-           {
+                System.out.println("User Name is Existed");
+                xoPlayer.setTypeOfOpearation(Messages.SIGN_UP_REJECTED);
                 xoPlayer.setOpearationResult(false);
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
-                this.output.println(message);               
-           }
+                this.output.println(message);                
+            }
+        }
+ 
+       void playingSingleMode(XOInterface xoPlayer){
+           System.out.println("Player Is Playing Single Mood");
+            db.makePlayerIsPlaying(xoPlayer);
+            xoPlayer.setOpearationResult(true);
+            incomeObjectFromPlayer = new Gson();
+            message = incomeObjectFromPlayer.toJson(xoPlayer);
+            this.output.println(message);
        }
                
+
        void updatePlayerScoreOffline(XOInterface xoPlayer){
             if(db.updateScoreOffline(xoPlayer))
             {   
-                xoPlayer=db.getScore(xoPlayer); //getScore function in data base need to be created 
+                xoPlayer = db.getScore(xoPlayer);
                 xoPlayer.setTypeOfOpearation(Messages.SINGLE_MODE_SCORE_UPDATED);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
-                
             }
             
             else
@@ -192,46 +190,51 @@ public class Server {
             }
             
         }
+
        void getAllPlayers(XOInterface xoPlayer){
-           xoPlayer=db.retriveAllPlayers();
+           xoPlayer = db.retriveAllPlayers();
            xoPlayer.setTypeOfOpearation(Messages.RETREVING_PLAYERS_LIST);                
            incomeObjectFromPlayer = new Gson();
            message = incomeObjectFromPlayer.toJson(xoPlayer);
            this.output.println(message);
        }
        
-       void invitePlayer(XOInterface xoPlayer){
-           xoPlayer.setTypeOfOpearation(Messages.RECEIVING_INVITATION);
-           sendMsgToDesiredInternalSocket(xoPlayer);  
-       }
-       
        void createGame(XOInterface xoPlayer){
-           xoPlayer=db.createGame(xoPlayer);
+           xoPlayer = db.createGame(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.INVITATION_ACCEPTED);
            sendMsgToDesiredInternalSocket(xoPlayer);
            incomeObjectFromPlayer = new Gson();
            message = incomeObjectFromPlayer.toJson(xoPlayer);
            this.output.println(message);           
        }
+
+       
+       
+       void invitePlayer(XOInterface xoPlayer){
+//           xoPlayer.setTypeOfOpearation(Messages.RECEIVING_INVITATION);
+           sendMsgToDesiredInternalSocket(xoPlayer);  
+       }
+       
        void rejectingInvitation(XOInterface xoPlayer){
            xoPlayer.setTypeOfOpearation(Messages.INVITATION_REJECTED);
            sendMsgToDesiredInternalSocket(xoPlayer);
        }
+       
        void makeMove(XOInterface xoPlayer){
-           xoPlayer=db.setGameMove(xoPlayer);
+           xoPlayer = db.setGameMove(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.RECEIVING_MOVE);
            sendMsgToDesiredInternalSocket(xoPlayer);
        }
+
        void endGame(XOInterface xoPlayer){
             if(db.endGame(xoPlayer))
             {   
                 db.updateScoreOnline(xoPlayer);
-                xoPlayer=db.getScore(xoPlayer); //getScore function in data base need to be created 
+                xoPlayer = db.getScore(xoPlayer); //getScore function in data base need to be created 
                 xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
-                
             }
             
             else
@@ -242,7 +245,7 @@ public class Server {
                 this.output.println(message);     
             }           
        }
-        
+
        void Hashmapper(XOInterface xoPlayer){
             map.put(this,xoPlayer.getPlayer().getUserName());
             System.out.println(map);
@@ -262,7 +265,8 @@ public class Server {
         }
         
        
-        void sendMsgToAllInternalSocket(XOInterface xoPlayer){
+        void sendMsgToAllInternalSocket(XOInterface xoPlayer)
+        {
             ServerHandler key = null;
             incomeObjectFromPlayer = new Gson();
             message = incomeObjectFromPlayer.toJson(xoPlayer);
@@ -272,15 +276,15 @@ public class Server {
                 key = (ServerHandler) kv.getKey();
                 key.output.println(message);
             }
-         }
+        }
     }
-         public void stopServer()
-         {
+        public void stopServer()
+        {
             try {
                 System.out.println("Stopped Server");
                 server_socket.close();
             } catch (IOException ex) {
                 System.out.println("error");
             }
-         }    
+        }    
 }

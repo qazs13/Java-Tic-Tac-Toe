@@ -14,10 +14,12 @@ public class Gamelog {
         this.homePlayer = homePlayer;
         this.opponentPlayer = opponentPlayer;
     }
+    
     public Gamelog (int gameId)
     {
         this.gameId = gameId;
     }
+    
     public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer){
         this.gameId = gameId;
         homePlayer=_homePlayer;

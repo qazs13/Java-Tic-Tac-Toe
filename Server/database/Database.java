@@ -8,7 +8,7 @@ public class Database {
     
     private final String url = "jdbc:postgresql://localhost/javagame";
     private final String user = "postgres";
-    private final String password = "postgres";
+    private final String password = "amrwsk13";
 
     private Connection connection = null;
     private PreparedStatement preparedStatment = null;
@@ -134,6 +134,26 @@ public class Database {
         {
             close();
             return xoPlayer;
+        }
+    }
+    
+    public boolean makePlayerIsPlaying (XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            sqlCommand = "SELECT setIsPlayerPlaying (?)";
+            preparedStatment = connection.prepareStatement(sqlCommand); 
+            preparedStatment.setString(1, xoPlayer.getPlayer().getUserName());
+            preparedStatment.executeQuery();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            return true;
         }
     }
     
@@ -344,6 +364,32 @@ public class Database {
         }
     }
     
+    public XOInterface getScore (XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            int score = 0;
+            sqlCommand = "select returnScorePlayer (?)";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            preparedStatment.setString(1, xoPlayer.getPlayer().getUserName());
+            result = preparedStatment.executeQuery();
+            while (result.next())
+            {
+                score = result.getInt(1);
+            }
+            xoPlayer = new XOInterface(" ", new Player(xoPlayer.getPlayer().getUserName(),score));
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            return xoPlayer;
+        }
+    }
+    
     
     public XOInterface setGameMove (XOInterface xoPlayer)
     {
@@ -417,4 +463,5 @@ public class Database {
             ex.printStackTrace();
         }
     }    
+
 }

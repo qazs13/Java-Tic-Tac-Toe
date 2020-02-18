@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serverpage;
 
 import database.Database;
 import interfaces.Player;
-import java.net.ServerSocket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -83,7 +76,6 @@ public class ServerPageController implements Initializable {
         userNameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
         scoreCol.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
         statusCol.setCellValueFactory(new PropertyValueFactory<Player, String>("status"));
-        fetchPlayers();
     }
     
 }
