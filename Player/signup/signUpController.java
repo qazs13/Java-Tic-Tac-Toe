@@ -6,7 +6,13 @@
 package signup;
 
 
+import com.google.gson.Gson;
+import interfaces.Messages;
+import interfaces.Player;
+import interfaces.XOInterface;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,6 +31,12 @@ import signin.SignInController;
 import  tictactoegui.*;
 
 public class signUpController implements Initializable {
+        DataInputStream controllerDIS;
+    PrintStream controllerPS;
+        public void setControllerStreams(DataInputStream dis, PrintStream ps){
+        controllerDIS = dis;
+        controllerPS = ps;
+    }
 
     @FXML
     private TextField fname;
@@ -80,9 +92,7 @@ public class signUpController implements Initializable {
             confirmpass.setVisible(true); 
             flag = false;
         }
-//        else{
-//         flag = true;
-//        }
+
         return flag;
     }
     
@@ -94,20 +104,35 @@ public class signUpController implements Initializable {
     @FXML
     private void register(ActionEvent event) throws IOException {
       boolean b=check1();
-      if (b==true)
-      {
-   FXMLLoader signinpage=new FXMLLoader();
-   signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
-        Parent  signinpageroot = signinpage.load();
-        SignInController FS=signinpage.getController();
-        
-        Scene scenesignin = new Scene( signinpageroot);
- Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            signinstage.hide(); //optional
-            signinstage.setScene(scenesignin);
-           signinstage.show(); 
-       
-      }
+       Player player=new Player(uname.getText(),password.getText(),fname.getText(),lname.getText());
+
+            XOInterface xointerface =new XOInterface (Messages.REGISTER,player);
+            Gson g = new Gson();
+            String s = g.toJson(xointerface);
+            controllerPS.println(s);  
+//      controllerPS.println("reg msg");
+//      if (b==true)
+//      {
+////           Player player=new Player(uname.getText(),password.getText(),fname.getText(),lname.getText());
+////
+////            XOInterface xointerface =new XOInterface (Messages.REGISTER,player);
+////            Gson g = new Gson();
+////            String s = g.toJson(xointerface);
+////            controllerPS.println(s);  
+//          
+//          
+////   FXMLLoader signinpage=new FXMLLoader();
+////   signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
+////        Parent  signinpageroot = signinpage.load();
+////        SignInController FS=signinpage.getController();
+////        
+////        Scene scenesignin = new Scene( signinpageroot);
+//// Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+////            signinstage.hide(); //optional
+////            signinstage.setScene(scenesignin);
+////           signinstage.show(); 
+//       
+//      }
 
     }
     

@@ -5,31 +5,67 @@
  */
 package selectionmode;
 
+import com.google.gson.Gson;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import online.OnLineController;
+import signup.signUpController;
+import interfaces.*;
+import signin.SignInController;
 
-/**
- *
- * @author E.S
- */
+
 public class selectionModeController implements Initializable {
     
-    @FXML
-    private Label label;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+     DataInputStream controllerDIS;
+    PrintStream controllerPS;
+    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+        controllerDIS = dis;
+        controllerPS = ps;
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void multiplayer(ActionEvent event) throws IOException {
+              Player player=new Player();
+            player.setUserName(SignInController.username); 
+                 XOInterface xointerface =new XOInterface (Messages.GET_PLAYERS,player);
+        
+                    Gson g = new Gson();
+            String s = g.toJson(xointerface);
+            controllerPS.println(s);
+        
+        
+        
+        
+//               FXMLLoader onLinePage=new FXMLLoader();
+//        onLinePage.setLocation(getClass().getResource("/online/onLine.fxml"));
+//        Parent  onLineRoot = onLinePage.load();
+//        OnLineController ON=onLinePage.getController();
+//        
+//        Scene scenesignup = new Scene(onLineRoot);
+//        Stage onLineStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        onLineStage.hide(); //optional
+//       onLineStage.setScene(scenesignup);
+//      onLineStage.show(); 
+      
+      
+
+    }
     
 }

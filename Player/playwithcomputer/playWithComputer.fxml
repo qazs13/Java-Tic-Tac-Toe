@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="772.0" prefWidth="1045.0" style="-fx-background-color: #e0ffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playwithcomputer.PlayWithComputerController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1084.0" style="-fx-background-color: #e0ffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playwithcomputer.PlayWithComputerController">
    <children>
-      <AnchorPane layoutX="270.0" layoutY="167.0" maxWidth="920.0" prefHeight="482.0" prefWidth="444.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="270.0">
+      <AnchorPane layoutX="270.0" layoutY="131.0" maxWidth="920.0" prefHeight="482.0" prefWidth="444.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="270.0">
          <children>
-            <Button id="7" fx:id="pos7" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="8" fx:id="pos8" layoutX="164.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="9" fx:id="pos9" layoutX="331.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="6" fx:id="pos6" layoutX="331.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="5" fx:id="pos5" layoutX="164.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="4" fx:id="pos4" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="2" fx:id="pos2" layoutX="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="3" fx:id="pos3" layoutX="331.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="1" fx:id="pos1" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
+            <Button id="7" fx:id="pos7" styleClass="playingBtn" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="8" fx:id="pos8" styleClass="playingBtn" layoutX="164.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="9" fx:id="pos9" styleClass="playingBtn" layoutX="331.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="6" fx:id="pos6" styleClass="playingBtn" layoutX="331.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="5" fx:id="pos5" styleClass="playingBtn" layoutX="164.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="4" fx:id="pos4" styleClass="playingBtn" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="2" fx:id="pos2" styleClass="playingBtn" layoutX="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="3" fx:id="pos3" styleClass="playingBtn" layoutX="331.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
+            <Button id="1" fx:id="pos1" styleClass="playingBtn" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
       <Text layoutX="46.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
@@ -28,7 +27,7 @@
             <Font name="Arial" size="36.0" />
          </font>
       </Text>
-      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="472.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="472.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@versus_vs-512.png" />
          </image>
@@ -55,6 +54,11 @@
       </Button>
       <Text layoutX="915.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="8.085959553718567" />
       <Text layoutX="133.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+      <ImageView fx:id="pause" fitHeight="52.0" fitWidth="100.0" focusTraversable="true" layoutX="863.0" layoutY="16.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@1149586.png" />
+         </image>
+      </ImageView>
       <ImageView fx:id="playerSign" fitHeight="150.0" fitWidth="150.0" layoutX="840.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Osign.png" />
@@ -66,6 +70,5 @@
             <Image url="@Xsign.png" />
          </image>
       </ImageView>
-      <Label fx:id="gameResultLabel" layoutX="337.0" layoutY="675.0" prefHeight="83.0" prefWidth="372.0" styleClass="resultLabel" />
    </children>
 </AnchorPane>

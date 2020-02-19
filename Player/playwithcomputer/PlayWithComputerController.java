@@ -7,17 +7,14 @@ package playwithcomputer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.ResourceBundle;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -29,7 +26,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author E.S
  */
-public class PlayWithComputerController implements Initializable{
+public class PlayWithComputerController {
     
     private Label label;
     @FXML
@@ -51,25 +48,25 @@ public class PlayWithComputerController implements Initializable{
     @FXML
     private Button pos1;
     @FXML
+    private ImageView pause;
+    @FXML
     private static ImageView playerSign;
     @FXML
     private static ImageView AISign;
 
-    char playerSymbol, AISymbol;
+    static char playerSymbol, AISymbol;
     
     
     Vector<Integer> playerMoves= new Vector<>();
     Vector<Integer> AIMoves= new Vector<>();
-    Vector<Integer> movesPool= new Vector<>();
-    int numOfMoves;
-    char getRndSymbol(){
+    static Vector<Integer> movesPool= new Vector<>();
+    static int numOfMoves;
+    static char getRndSymbol(){
         Random r = new Random();
         String symbols = "XO";
         return symbols.charAt(r.nextInt(symbols.length()));
     }
-    boolean gameEnded;
-    @FXML
-    private Label gameResultLabel;
+    static boolean gameEnded;
     boolean isWinningPosition(Vector<Integer> moves){
         boolean winFlag = false;
         Integer []  topRow = {1, 2, 3};
@@ -94,20 +91,29 @@ public class PlayWithComputerController implements Initializable{
         }
         return winFlag;
     }
-    void init(){
+    public static void init(){
+//        Image xImage = null, oImage = null;
+//        try {
+//            xImage = new Image(new FileInputStream("./src/playwithcomputer/Xsign.png"));
+//            oImage = new Image(new FileInputStream("./src/playwithcomputer/Osign.png"));
+//        } catch (FileNotFoundException ex) {
+//            System.out.println("loading error");
+//        }
         playerSymbol = getRndSymbol();
         if (playerSymbol == 'X'){
             AISymbol = 'O';
+//            playerSign.setImage(xImage);
+//            AISign.setImage(oImage);
         }
         else{
             AISymbol = 'X';
+//            AISign.setImage(xImage);
+//            playerSign.setImage(oImage);
         }
         for(int i=0; i<9; i++)
             movesPool.add(i+1);
         numOfMoves = 0;
         gameEnded = false;
-        gameResultLabel.setVisible(false);
-        
     }
     Integer getRndMove() {
         int number = (int) (Math.random() * movesPool.size());
@@ -159,8 +165,6 @@ public class PlayWithComputerController implements Initializable{
                 if(isWinningPosition(playerMoves)){
                     System.out.println("You win! :D");
                     gameEnded = true;
-                    gameResultLabel.setText("You win! :D");
-                    gameResultLabel.setVisible(true);
                 }
             }
             // AI move
@@ -173,23 +177,17 @@ public class PlayWithComputerController implements Initializable{
                 if(isWinningPosition(AIMoves)){
                     System.out.println("You Lose! :(");
                     gameEnded = true;
-                    gameResultLabel.setText("You Lose! :(");
-                    gameResultLabel.setVisible(true);
                 }
             }
             if (numOfMoves >= 9){
                 System.out.println("It's a draw!");
                 gameEnded = true;
-                gameResultLabel.setText("It's a draw!");
-                gameResultLabel.setVisible(true);
             }
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        init();
+    @FXML
+    private void pause(MouseEvent event) {
     }
-
     
 }

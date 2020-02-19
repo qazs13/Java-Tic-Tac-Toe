@@ -24,9 +24,10 @@ import javafx.scene.text.Text;
 import static tictactoegui.TicTacToeGui.main;
 import signup.*;
 import  tictactoegui.*;
+import interfaces.*;
 
 public class SignInController implements Initializable {
-    String username;
+    public static String username;
     String password;
    @FXML
     Button signup;
@@ -62,7 +63,7 @@ public class SignInController implements Initializable {
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent  signuppageroot = signuppage.load();
         signUpController su=signuppage.getController();
-        
+        su.setControllerStreams(controllerDIS, controllerPS);
         Scene scenesignup = new Scene(signuppageroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         signupstage.hide(); //optional
@@ -99,7 +100,7 @@ public class SignInController implements Initializable {
             Player player=new Player();
             player.setUserName(username);
             player.setPasswd(password);
-            XOInterface xointerface =new XOInterface ("login",player);
+            XOInterface xointerface =new XOInterface (Messages.LOGIN,player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             controllerPS.println(s);
