@@ -5,6 +5,7 @@ import interfaces.Player;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javafx.animation.PathTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,6 +54,7 @@ public class ServerPageController implements Initializable {
     private TableColumn<Player, Integer> scoreCol;
     @FXML
     private TableColumn<Player, String> statusCol;
+    
     void fetchPlayers(){
         allPlayers = db.retriveAllPlayers().Players;
         ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
@@ -76,6 +78,9 @@ public class ServerPageController implements Initializable {
         userNameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
         scoreCol.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
         statusCol.setCellValueFactory(new PropertyValueFactory<Player, String>("status"));
+        userNameCol.setStyle("-fx-alignment: CENTER;");
+        scoreCol.setStyle("-fx-alignment: CENTER;");
+        statusCol.setStyle("-fx-alignment: CENTER;");
     }
     
 }
