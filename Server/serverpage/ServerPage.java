@@ -1,8 +1,5 @@
 package serverpage;
 
-import database.Database;
-import interfaces.Player;
-import interfaces.XOInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +24,5 @@ public class ServerPage extends Application {
     
     public static void main(String[] args) {
         launch(args);        
-    }
-    
+    }   
 }

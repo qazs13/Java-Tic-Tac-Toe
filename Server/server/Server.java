@@ -128,6 +128,7 @@ public class Server {
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 System.out.println(message);
                 this.output.println(message);
+                xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGEDIN_POP);
                 sendMsgToAllInternalSocket(xoPlayer);
             }
             else
