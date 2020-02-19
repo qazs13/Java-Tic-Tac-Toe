@@ -27,7 +27,11 @@ import selectionmode.selectionModeController;
 import signin.*;
 import signup.*;
 import interfaces.*;
-import online.OnLineController;
+import javafx.util.*;
+import javafx.animation.PauseTransition;
+import online.*;
+import onlinepopup.onLinePopupController;
+import onlinepopup.*;
 
 
 public class TicTacToeGui extends Application {
@@ -45,14 +49,16 @@ public class TicTacToeGui extends Application {
                 while (true){
                     try {
                         String recievedMsg = dis.readLine();
+                        System.err.println(recievedMsg);
                         Gson g = new Gson();
                         XOInterface xoMsg;
                         xoMsg = g.fromJson(recievedMsg, XOInterface.class);
                         if(xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGED_IN)){
-                            System.err.println("login here");
+                          //  System.err.println(SignInController.username);
                             Platform.runLater(()->{
                                 try {
                                     switchToSelectionScene(stage);
+                                    
                                 } catch (IOException ex) {
                                     System.err.println("coudn't switch");
                                 }
@@ -67,6 +73,12 @@ public class TicTacToeGui extends Application {
                                 
                             });                           
                         }
+                    else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
+                        {
+                        switchToOnpopupscene(xoMsg);
+                        }
+                          
+                        
 //                        
 //                     else if(xoMsg.getTypeOfOpearation().equals(Messages.)){
 //                            System.err.println("login here");
@@ -151,6 +163,36 @@ public class TicTacToeGui extends Application {
         stage.show();
       
     }
+    void switchToOnpopupscene( XOInterface xoMsg){
+        if(!xoMsg.getPlayer().getUserName().equals(SignInController.username))
+                            {
+                            
+                           
+                              Platform.runLater(()->{
+                                  try {
+                                      FXMLLoader popuppage=new FXMLLoader();
+                                      popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
+                                      Parent  popuppageroot = popuppage.load();
+                                      onLinePopupController popup=popuppage.getController(); 
+                                      popup.getusername( xoMsg.getPlayer().getUserName());
+                                            
+                                      Scene scenepopup = new Scene( popuppageroot);
+                                      Stage popupstage =  new Stage() ;
+                                      popupstage.hide(); //optional
+                                      popupstage.setScene(scenepopup); 
+                                      popupstage.show(); 
+                                      PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                                       delay.setOnFinished( event ->  popupstage.close() );
+                                        delay.play();
+                                  } catch (IOException ex) {
+                                      Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+                                  }
+         }); 
+      }
+    }
+    
+    
+    
    void switchToLogIn (Stage stage)
     {
         try
