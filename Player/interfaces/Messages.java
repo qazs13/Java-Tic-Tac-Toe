@@ -5,8 +5,6 @@
  */
 package interfaces;
 
-
-
 /**
  *
  * @author mo
@@ -32,4 +30,5 @@ public interface Messages {
     public static final String INVITATION_REJECTED="invitationRejected";
     public static final String RECEIVING_MOVE="receivingMove";
     public static final String GAME_ENDED="gameEnded";
+    public static final String NEW_PLAYER_LOGGEDIN_POP = "newPlayerLoggedInPOP";
 }
