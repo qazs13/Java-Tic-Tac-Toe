@@ -73,9 +73,22 @@ public class TicTacToeGui extends Application {
                                 
                             });                           
                         }
-                    else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
                         {
                         switchToOnpopupscene(xoMsg);
+                        }
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.INVITE))
+                        {
+                            System.out.println("Invited Player");                            
+                            /*
+                            Platform.runLater(()->{
+                                try {
+                                    //switchToSelectionScene(stage);
+                                } catch (IOException ex) {
+                                    System.err.println("coudn't switch");
+                                }
+                            });
+                        }*/
                         }
                           
                         
