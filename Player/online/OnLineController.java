@@ -19,11 +19,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import signin.SignInController;
 
@@ -37,10 +34,10 @@ public class OnLineController implements Initializable {
     Player player;
     @FXML
     private TableView<Player> table;
-    @FXML
-    private TableColumn<String, String> userName;
     String homePlayer = SignInController.username;
     String opponentPlayer;    
+    @FXML
+    private TableColumn<?, ?> userName;
     
     public void setControllerStreams(DataInputStream dis, PrintStream ps){
         controllerDIS = dis;
