@@ -157,6 +157,22 @@ public class Database {
         }
     }
     
+    public boolean makeAllPlayersOffline ()
+    {
+        try
+        {
+            connect();
+            sqlCommand = "SELECT makeAllPlayersOffline ()";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            return preparedStatment.execute();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
     public XOInterface retriveAllPlayers ()
     {
                     

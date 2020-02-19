@@ -70,6 +70,7 @@ public class ServerPageController implements Initializable {
     
     @FXML
     private void serverOff(ActionEvent event) {
+        db.makeAllPlayersOffline();
         serverThread.stopThread();
     }
 
