@@ -6,7 +6,9 @@
 package online;
 
 import com.google.gson.Gson;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 import interfaces.Gamelog;
+import interfaces.Messages;
 import interfaces.Player;
 import interfaces.XOInterface;
 import java.io.DataInputStream;
@@ -85,7 +87,7 @@ public class OnLineController implements Initializable {
         Gamelog offlineGameCreation=new Gamelog();
         offlineGameCreation.setHomePlayer(homePlayer);
         offlineGameCreation.setOpponentPlayer(opponentPlayer);
-        XOInterface xointerface =new XOInterface ("invite",offlineGameCreation);
+        XOInterface xointerface =new XOInterface (Messages.INVITE, offlineGameCreation);
         Gson g = new Gson();
         String s = g.toJson(xointerface);
         System.out.println(s);

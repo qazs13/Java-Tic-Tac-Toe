@@ -26,7 +26,6 @@ import javafx.stage.StageStyle;
 import online.*;
 import onlinepopup.onLinePopupController;
 import invitationpopup.*;
-import selectionmode.*;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
@@ -178,21 +177,20 @@ public class TicTacToeGui extends Application {
         {                  
             Platform.runLater(()->{
                 try {
-                      FXMLLoader popuppage=new FXMLLoader();
-                      popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
-                      Parent  popuppageroot = popuppage.load();
-                      onLinePopupController popup=popuppage.getController(); 
-                      popup.getusername( xoMsg.getPlayer().getUserName());
-
-                      Scene scenepopup = new Scene( popuppageroot);
-                      Stage popupstage =  new Stage() ;
-                      popupstage.hide();
-                      popupstage.setScene(scenepopup);
-                      popupstage.initStyle(StageStyle.UNDECORATED);
-                      popupstage.show(); 
-                      PauseTransition delay = new PauseTransition(Duration.seconds(2));
-                      delay.setOnFinished(event ->  popupstage.close());
-                      delay.play();
+                    FXMLLoader popuppage = new FXMLLoader();
+                    popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
+                    Parent  popUpPageRoot = popuppage.load();
+                    onLinePopupController popup = popuppage.getController(); 
+                    popup.getusername(xoMsg.getPlayer().getUserName());
+                    Scene scenepopup = new Scene(popUpPageRoot);
+                    Stage popupstage =  new Stage();
+                    popupstage.initStyle(StageStyle.UNDECORATED);
+                    popupstage.hide();
+                    popupstage.setScene(scenepopup);
+                    popupstage.show(); 
+                    PauseTransition delay = new PauseTransition(Duration.seconds(8));
+                    delay.setOnFinished(event ->  popupstage.close());
+                    delay.play();
                 } catch (IOException ex) {
                     Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -219,26 +217,28 @@ public class TicTacToeGui extends Application {
             ex.printStackTrace();
         }     
     } 
-         void   switchToInvitationpopupscene(XOInterface xoMsg){
+    void switchToInvitationpopupscene(XOInterface xoMsg){
       
-                              Platform.runLater(()->{
-                                  try {
-                                      FXMLLoader popupInvitationpage=new FXMLLoader();
-                                     popupInvitationpage.setLocation(getClass().getResource("/invitationpopup/invitationPopup.fxml"));
-                                      Parent  invitationpageroot = popupInvitationpage.load();
-                                      invitationPopupController popupInvitation= popupInvitationpage.getController(); 
-                                     popupInvitation. gethomeplayername( xoMsg.getGameLog().getHomePlayer());
-                                            
-                                      Scene scenepopupinvitation = new Scene( invitationpageroot);
-                                      Stage popupinvitationstage =  new Stage() ;
-                                     popupinvitationstage.hide(); //optional
-                                      popupinvitationstage.setScene(scenepopupinvitation); 
-                                      popupinvitationstage.show(); 
-                                   
-                                  } catch (IOException ex) {
-                                      Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
-                                  }
-         }); 
+        Platform.runLater(()->{
+            try {
+                FXMLLoader popupInvitationpage=new FXMLLoader();
+                popupInvitationpage.setLocation(getClass().getResource("/invitationpopup/invitationPopup.fxml"));
+                Parent  invitationpageroot = popupInvitationpage.load();
+                invitationPopupController popupInvitation = popupInvitationpage.getController();
+                popupInvitation.setControllerStreams(dis, ps);
+                Scene scenepopupinvitation = new Scene( invitationpageroot);
+                Stage popupinvitationstage =  new Stage() ;
+                popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  
+                popupinvitationstage.hide();
+                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
+                popupinvitationstage.setScene(scenepopupinvitation); 
+                popupinvitationstage.show(); 
+              } 
+            catch (IOException ex) 
+            {
+              Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }); 
       
     }
     

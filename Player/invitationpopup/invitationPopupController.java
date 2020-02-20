@@ -18,6 +18,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import signin.SignInController;
 import static signin.SignInController.username;
 
 
@@ -25,43 +27,49 @@ public class invitationPopupController implements Initializable {
     
     @FXML
     private Text poptextinvitation;
-  DataInputStream controllerDIS;
+    DataInputStream controllerDIS;
     PrintStream controllerPS;
-    String homeplayer;
-  
+    String homeplayer = SignInController.username;
+    String opponentPlayer;
+    XOInterface xoMssge;
+    Stage stage;
+    
     public void setControllerStreams(DataInputStream dis, PrintStream ps){
         controllerDIS = dis;
         controllerPS = ps;
     }
     
-         public void gethomeplayername( String name){
-       homeplayer=name;
-      poptextinvitation.setText( "invitation request from"+ homeplayer);
-     }
+    public void getOpponentplayername(XOInterface xoMssge,Stage stage){
+        this.xoMssge = xoMssge;
+        this.opponentPlayer = xoMssge.getGameLog().getOpponentPlayer();
+        this.stage = stage;
+        poptextinvitation.setText("An invitation request came from: "+ opponentPlayer);
+    }
 
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-Gamelog gamelog=new Gamelog();
+        
+    }   
+    
     @FXML
-    private void accept(ActionEvent event) {
-     gamelog.setHomePlayer(homeplayer);
-            XOInterface xointerface =new XOInterface (Messages.ACCEPT,gamelog);
-            Gson g = new Gson();
-            String s = g.toJson(xointerface);
-            controllerPS.println(s);
+    private void accept(ActionEvent event) {        
+        xoMssge.setTypeOfOpearation(Messages.INVITATION_ACCEPTED);
+        Gson g = new Gson();
+        String s = g.toJson(xoMssge);
+        controllerPS.println(s);
+        stage.hide();
     }
 
     @FXML
     private void decline(ActionEvent event) {
-             gamelog.setHomePlayer(homeplayer);
-            XOInterface xointerface =new XOInterface (Messages.DECLINE,gamelog);
-            Gson g = new Gson();
-            String s = g.toJson(xointerface);
-            controllerPS.println(s);
+       xoMssge.getGameLog().setOpponentPlayer(homeplayer);
+       xoMssge.setTypeOfOpearation(Messages.INVITATION_REJECTED);
+       Gson g = new Gson();
+       String s = g.toJson(xoMssge);
+       controllerPS.println(s);
+       stage.hide();
     }
     
 }

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" blendMode="SCREEN" prefHeight="133.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="onlinepopup.onLinePopupController">
+<AnchorPane id="AnchorPane" blendMode="SCREEN" cacheShape="false" centerShape="false" prefHeight="133.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="onlinepopup.onLinePopupController">
    <children>
       <ImageView fitHeight="69.0" fitWidth="107.0" layoutX="60.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -14,4 +18,17 @@
       </ImageView>
       <Text fx:id="poptext" layoutX="185.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
+   <effect>
+      <ColorAdjust brightness="-0.42" contrast="1.0" hue="1.0" saturation="-0.41">
+         <input>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </input></ColorAdjust>
+   </effect>
 </AnchorPane>
