@@ -97,7 +97,7 @@ public class Server {
                             createGame(xoPlayer);
                         }
                         
-                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.DECLINE))
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITATION_REJECTED))
                         {
                             rejectingInvitation(xoPlayer);
                         }
@@ -224,7 +224,6 @@ public class Server {
        }
        
        void rejectingInvitation(XOInterface xoPlayer){
-           xoPlayer.setTypeOfOpearation(Messages.INVITATION_REJECTED);
            sendMsgToDesiredInternalSocket(xoPlayer);
        }
        
