@@ -36,7 +36,9 @@ public class TicTacToeGui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try{
-            mySocket = new Socket("10.145.3.114", 5000);
+            mySocket = new Socket("192.168.43.12", 5000);
+//            mySocket = new Socket("197.164.217.96", 5000);
+//            mySocket = new Socket("10.145.3.114", 5000);
 //            mySocket = new Socket("127.0.0.1", 5000);
             dis = new DataInputStream(mySocket.getInputStream());
             ps = new PrintStream(mySocket.getOutputStream());
@@ -173,28 +175,28 @@ public class TicTacToeGui extends Application {
     }
     void switchToOnpopupscene(XOInterface xoMsg){
         if(!xoMsg.getPlayer().getUserName().equals(SignInController.username))
-        {                  
+        {    
             Platform.runLater(()->{
-                try
-                {
-                    FXMLLoader popuppage = new FXMLLoader();
-                    popuppage.setLocation(getClass().getResource("/onlinePopUp/onLinePopup.fxml"));
-                    //new onLinePopupController().getusername("amr");
-                    Scene scenepopup = new Scene(popuppage.load());
-                    Stage popupstage =  new Stage();
-                    popupstage.initStyle(StageStyle.UNDECORATED);
-                    popupstage.hide();
-                    popupstage.setScene(scenepopup);
+                try {
+                    FXMLLoader popuppage=new FXMLLoader();
+                    popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
+                    Parent  popuppageroot = popuppage.load();
+                    onLinePopupController popup=popuppage.getController(); 
+                    popup.getusername( xoMsg.getPlayer().getUserName());
+
+                    Scene scenepopup = new Scene( popuppageroot);
+                    Stage popupstage =  new Stage() ;
+                    popupstage.hide(); //optional
+                    popupstage.setScene(scenepopup); 
                     popupstage.show(); 
-                    PauseTransition delay = new PauseTransition(Duration.seconds(8));
-                    delay.setOnFinished(event ->  popupstage.close());
-                    delay.play();
-                } 
-                catch (IOException ex) 
-                {
+                    PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                     delay.setOnFinished( event ->  popupstage.close() );
+                      delay.play();
+                } catch (IOException ex) {
                     Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
-         }); 
+            }); 
+
       }
     }
     
