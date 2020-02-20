@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import playwithcomputer.PlayWithComputerController;
 import selectionmode.selectionModeController;
 import signin.*;
 import signup.*;
@@ -33,6 +34,7 @@ public class TicTacToeGui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try{
+//            mySocket = new Socket("10.145.3.114", 5000);
             mySocket = new Socket("127.0.0.1", 5000);
             dis = new DataInputStream(mySocket.getInputStream());
             ps = new PrintStream(mySocket.getOutputStream());
@@ -101,6 +103,17 @@ public class TicTacToeGui extends Application {
                         {
                             System.out.println("Afta7 Yabny El game");
                         }
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
+                        {
+                            Platform.runLater(()->{
+                                try {
+                                    switchToSinglePlayerScene(stage);
+                                } catch (IOException ex) {
+                                    System.err.println("coudn't switch");
+                                    ex.printStackTrace();
+                                }
+                            });
+                        }
                         
                         else
                         {
@@ -157,6 +170,17 @@ public class TicTacToeGui extends Application {
         Scene sceneonline = new Scene(onLineRoot);
         stage.hide();
         stage.setScene(sceneonline);
+        stage.show();
+    }
+    void switchToSinglePlayerScene(Stage stage) throws IOException {
+        FXMLLoader singlePlayerPage=new FXMLLoader();
+        singlePlayerPage.setLocation(getClass().getResource("/playwithcomputer/playWithComputer.fxml"));
+        Parent  root = singlePlayerPage.load();
+        PlayWithComputerController SP = singlePlayerPage.getController();
+        SP.setControllerStreams(dis, ps);
+        Scene scene = new Scene(root);
+        stage.hide();
+        stage.setScene(scene);
         stage.show();
     }
     void switchToOnpopupscene( XOInterface xoMsg){

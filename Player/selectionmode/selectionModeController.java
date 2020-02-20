@@ -50,5 +50,14 @@ public class selectionModeController implements Initializable {
         controllerPS.println(s);
 
     }
-    
+
+    @FXML
+    private void singlePlayer(ActionEvent event) {
+        Player player=new Player();
+        player.setUserName(SignInController.username);
+        XOInterface xointerface =new XOInterface (Messages.PLAYING_SINGLE_MODE,player);
+        Gson g = new Gson();
+        String s = g.toJson(xointerface);
+        controllerPS.println(s);
+    }
 }
