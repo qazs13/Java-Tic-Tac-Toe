@@ -1,4 +1,5 @@
 
+
 package tictactoegui;
 
 import com.google.gson.Gson;
@@ -24,7 +25,8 @@ import javafx.animation.PauseTransition;
 import javafx.stage.StageStyle;
 import online.*;
 import onlinepopup.onLinePopupController;
-
+import invitationpopup.*;
+import selectionmode.*;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
@@ -69,19 +71,7 @@ public class TicTacToeGui extends Application {
                         }
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_INVITATION))
                         {
-                            /*
-                            Platform.runLater(()->{
-                                try {
-                                    //switchToSelectionScene(stage);
-                                } catch (IOException ex) {
-                                    System.err.println("coudn't switch");
-                                }
-                            });
-                        }*/
-                            /*
-                            n7ot fe new page message = Messages.Invitation_AccEpted
-                            ahm 7aga n8yar el Opponent Player
-                            */
+                           switchToInvitationpopupscene(xoMsg);
                         }
                           
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.RETREVING_PLAYERS_LIST))
@@ -229,6 +219,28 @@ public class TicTacToeGui extends Application {
             ex.printStackTrace();
         }     
     } 
+         void   switchToInvitationpopupscene(XOInterface xoMsg){
+      
+                              Platform.runLater(()->{
+                                  try {
+                                      FXMLLoader popupInvitationpage=new FXMLLoader();
+                                     popupInvitationpage.setLocation(getClass().getResource("/invitationpopup/invitationPopup.fxml"));
+                                      Parent  invitationpageroot = popupInvitationpage.load();
+                                      invitationPopupController popupInvitation= popupInvitationpage.getController(); 
+                                     popupInvitation. gethomeplayername( xoMsg.getGameLog().getHomePlayer());
+                                            
+                                      Scene scenepopupinvitation = new Scene( invitationpageroot);
+                                      Stage popupinvitationstage =  new Stage() ;
+                                     popupinvitationstage.hide(); //optional
+                                      popupinvitationstage.setScene(scenepopupinvitation); 
+                                      popupinvitationstage.show(); 
+                                   
+                                  } catch (IOException ex) {
+                                      Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+                                  }
+         }); 
+      
+    }
     
     
   
@@ -238,3 +250,4 @@ public class TicTacToeGui extends Application {
     }
     
 }
+
