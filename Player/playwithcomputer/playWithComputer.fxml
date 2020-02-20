@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1084.0" style="-fx-background-color: #e0ffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playwithcomputer.PlayWithComputerController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1043.0" style="-fx-background-color: #e0ffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playwithcomputer.PlayWithComputerController">
    <children>
-      <AnchorPane layoutX="270.0" layoutY="131.0" maxWidth="920.0" prefHeight="482.0" prefWidth="444.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="270.0">
+      <AnchorPane layoutX="281.0" layoutY="174.0" maxWidth="920.0" prefHeight="482.0" prefWidth="481.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="281.0">
          <children>
             <Button id="7" fx:id="pos7" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
             <Button id="8" fx:id="pos8" layoutX="164.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
@@ -22,53 +23,60 @@
             <Button id="1" fx:id="pos1" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
          </children>
       </AnchorPane>
-      <Text layoutX="46.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
+      <Text layoutX="38.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
          <font>
             <Font name="Arial" size="36.0" />
          </font>
       </Text>
-      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="472.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="869.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@versus_vs-512.png" />
          </image>
       </ImageView>
-      <Button layoutX="79.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #66cdaa;" text="Computer">
+      <Button layoutX="822.0" layoutY="138.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="856.0" layoutY="87.0" mnemonicParsing="false" style="-fx-background-color: #66cdaa;" text="User Name">
+      <Text fx:id="playerSign" layoutX="878.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button layoutX="877.0" layoutY="175.0" mnemonicParsing="false" text="Score">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button layoutX="99.0" layoutY="175.0" mnemonicParsing="false" text="Score">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Text layoutX="915.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="8.085959553718567" />
-      <Text layoutX="133.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-      <ImageView fx:id="pause" fitHeight="52.0" fitWidth="100.0" focusTraversable="true" layoutX="863.0" layoutY="16.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@1149586.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="playerSign" fitHeight="150.0" fitWidth="150.0" layoutX="840.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Osign.png" />
-         </image>
-      </ImageView>
+            <Font name="Andalus" size="58.0" />
+         </font></Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="AISign" fitHeight="150.0" fitWidth="150.0" layoutX="48.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Xsign.png" />
-         </image>
-      </ImageView>
+      <Label fx:id="userNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" text="Label" textAlignment="CENTER">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Text fx:id="computerSign" layoutX="887.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
+         <font>
+            <Font name="Andalus" size="58.0" />
+         </font>
+      </Text>
+      <Button layoutX="832.0" layoutY="484.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" text="Computer" textAlignment="RIGHT">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Button layoutX="38.0" layoutY="447.0" mnemonicParsing="false" onAction="#back" prefHeight="52.0" prefWidth="171.0" text="Back">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="38.0" layoutY="340.0" mnemonicParsing="false" onAction="#restart" prefHeight="52.0" prefWidth="171.0" text="Restart">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="gameResult" layoutX="148.0" layoutY="57.0" prefHeight="89.0" prefWidth="626.0" textAlignment="CENTER">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
