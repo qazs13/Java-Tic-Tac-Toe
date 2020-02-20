@@ -5,31 +5,38 @@
  */
 package multiPlayers;
 
+import interfaces.Player;
+import java.io.DataInputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import signin.SignInController;
 
-/**
- *
- * @author E.S
- */
+
 public class MultiPlayerController implements Initializable {
     
-    @FXML
     private Label label;
+    String name;
+    DataInputStream controllerDIS;
+    PrintStream controllerPS;
+    Player player;    
     
-    @FXML
+    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+        controllerDIS = dis;
+        controllerPS = ps;
+    }    
+    
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        name = SignInController.username;
     }    
     
 }
