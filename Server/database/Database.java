@@ -341,13 +341,13 @@ public class Database {
             result = preparedStatment.executeQuery();
             while (result.next())
             {
-                xoInterface = new XOInterface("gameIsCreated", new Gamelog(result.getInt(1)));
+                xoPlayer.getGameLog().setGameId(result.getInt(1));
             }
             
             System.out.println("Game is created between " + xoPlayer.getGameLog().getHomePlayer() + 
                     " and " + 
                     xoPlayer.getGameLog().getOpponentPlayer() +
-                    "and game number is " + xoInterface.getGameLog().getGameId());
+                    "and game number is " + xoPlayer.getGameLog().getGameId());
         }
         catch (SQLException ex)
         {
@@ -356,7 +356,7 @@ public class Database {
         finally
         {
             close();
-            return xoInterface;
+            return xoPlayer;
         }
     }
     

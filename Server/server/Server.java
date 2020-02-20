@@ -42,7 +42,7 @@ public class Server {
         public ServerHandler(Socket socket){
            
             try {
-                    this.playerSocket=socket;
+                    this.playerSocket = socket;
                     input = new DataInputStream(playerSocket.getInputStream());
                     output = new PrintStream(playerSocket.getOutputStream());
                     start();
@@ -73,7 +73,6 @@ public class Server {
                     else
                     {
                         if(xoPlayer.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
-
                         {
                             playingSingleMode(xoPlayer);
                         }
@@ -93,7 +92,7 @@ public class Server {
                             invitePlayer(xoPlayer);
                         }
                         
-                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.ACCEPT))
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITATION_ACCEPTED))
                         {
                             createGame(xoPlayer);
                         }
@@ -114,8 +113,17 @@ public class Server {
                         }  
                     }
                     
-                } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) 
+                {
+                    try {
+                        this.input.close();
+                        this.output.close();
+                        this.playerSocket.close();
+                        this.stop();                   
+                        break;
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }
             }
         }
@@ -166,9 +174,8 @@ public class Server {
         }
  
        void playingSingleMode(XOInterface xoPlayer){
-           System.out.println("Player Is Playing Single Mood");
-            db.makePlayerIsPlaying(xoPlayer);
-            xoPlayer.setOpearationResult(true);
+            System.out.println("Player Is Playing Single Mood");
+            xoPlayer.setOpearationResult(db.makePlayerIsPlaying(xoPlayer));
             incomeObjectFromPlayer = new Gson();
             message = incomeObjectFromPlayer.toJson(xoPlayer);
             this.output.println(message);
@@ -204,10 +211,11 @@ public class Server {
        void createGame(XOInterface xoPlayer){
            xoPlayer = db.createGame(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.INVITATION_ACCEPTED);
-           sendMsgToDesiredInternalSocket(xoPlayer);
            incomeObjectFromPlayer = new Gson();
-           message = incomeObjectFromPlayer.toJson(xoPlayer);
-           this.output.println(message);           
+           message = incomeObjectFromPlayer.toJson(xoPlayer);             
+           this.output.println(message);
+           xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
+           sendMsgToDesiredInternalSocket(xoPlayer);      
        }
        
        void invitePlayer(XOInterface xoPlayer){
@@ -261,6 +269,7 @@ public class Server {
                     }
             }
             message = incomeObjectFromPlayer.toJson(xoPlayer);
+            System.out.println(message);
             key.output.println(message);
         }
            
