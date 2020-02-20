@@ -27,6 +27,7 @@ import online.*;
 import invitationpopup.*;
 import multiPlayers.MultiPlayerController;
 import onlinepopup.onLinePopupController;
+//import playwithcomputer.MultiPlayerController;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
@@ -93,7 +94,7 @@ public class TicTacToeGui extends Application {
                         else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_ACCEPTED))
                         {
                             Platform.runLater(() -> {
-                                switchToMultiPlayer(stage);
+                                switchToMultiPlayer(stage, xoMsg);
                             });
                         }
                         
@@ -220,7 +221,7 @@ public class TicTacToeGui extends Application {
         }     
     } 
    
-   void switchToMultiPlayer (Stage stage)
+   void switchToMultiPlayer (Stage stage, XOInterface xoMsg)
    {
         try
         {
@@ -229,6 +230,8 @@ public class TicTacToeGui extends Application {
             Parent  multiPlayerPageRoot = multiPlayer.load();
             MultiPlayerController MI = multiPlayer.getController();
             MI.setControllerStreams(dis, ps);
+            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());
+           
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
             stage.hide();
             stage.setScene(multiPlayerScene);
