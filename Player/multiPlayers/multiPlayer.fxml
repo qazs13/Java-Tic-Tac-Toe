@@ -38,17 +38,17 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Text fx:id="playerSign" layoutX="878.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
+      <Text fx:id="homePlayerSign" layoutX="878.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
             <Font name="Andalus" size="58.0" />
          </font></Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="userNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="homeNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Text fx:id="computerSign" layoutX="887.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
+      <Text fx:id="opponenPlayerSign" layoutX="887.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
             <Font name="Andalus" size="58.0" />
          </font>
@@ -58,7 +58,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Label layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" text="Computer" textAlignment="RIGHT">
+      <Label fx:id="opponentNameLabel" layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" textAlignment="RIGHT">
          <font>
             <Font size="31.0" />
          </font>

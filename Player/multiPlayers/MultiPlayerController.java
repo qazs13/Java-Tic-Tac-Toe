@@ -8,11 +8,8 @@ package multiPlayers;
 import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import interfaces.Gamelog;
@@ -26,9 +23,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import signin.SignInController;
 
@@ -37,11 +31,6 @@ import signin.SignInController;
  * @author E.S
  */
 public class MultiPlayerController implements Initializable {
-
-    @FXML
-    private Text playerSign;
-    @FXML
-    private Text computerSign;
 
     boolean gameEnded;
     @FXML
@@ -62,7 +51,6 @@ public class MultiPlayerController implements Initializable {
     private Button pos3;
     @FXML
     private Button pos1;
-    @FXML
     private Label userNameLabel;
     @FXML
     private Label gameResult;
@@ -79,6 +67,14 @@ public class MultiPlayerController implements Initializable {
     Vector<Integer> opponentMoves= new Vector<>();
     Vector<Integer> movesPool= new Vector<>();
     int numOfMoves;
+    @FXML
+    private Text homePlayerSign;
+    @FXML
+    private Label homeNameLabel;
+    @FXML
+    private Label opponentNameLabel;
+    @FXML
+    private Text opponenPlayerSign;
 
     boolean isWinningPosition(Vector<Integer> moves){
         boolean winFlag = false;
@@ -112,20 +108,19 @@ public class MultiPlayerController implements Initializable {
             playerSymbol = 'X';
             opponentSymbol = 'O';
         }
-        else{
+        else
+        {
             playerSymbol = 'O';
             opponentSymbol = 'X';        
         }
-
-        playerSign.setText(Character.toString(playerSymbol));
-        computerSign.setText(Character.toString(opponentSymbol));
         for(int i=0; i<9; i++)
             movesPool.add(i+1);
         numOfMoves = 0;
         gameEnded = false;
     }
 
-    public void displayMove(Integer position, char symbol){
+    public void displayMove(Integer position, char symbol)
+    {
         switch (position) {
             case 1:
                 pos1.setText(Character.toString(symbol));
@@ -160,28 +155,31 @@ public class MultiPlayerController implements Initializable {
     }
     @FXML
     void playMove(ActionEvent event) {
-        if (!gameEnded) {
-            // Player move
-            playerPos = Integer.parseInt(((Control) event.getSource()).getId());
-            if (!movesPool.isEmpty() && movesPool.contains(playerPos)) {
-                displayMove(playerPos, playerSymbol);
-                movesPool.remove(playerPos);
-                playerMoves.add(playerPos);
-                sendMyMove();
-                numOfMoves++;
-                
-                if(isWinningPosition(playerMoves)){
-                    System.out.println("You win! :D");
-//                    gameResult.setText("You Win! :D");
-                    gameEnded = true;
-//                    reportGameEnding();
+        if (myturn)
+        {
+            if (!gameEnded) {
+                // Player move
+                playerPos = Integer.parseInt(((Control) event.getSource()).getId());
+                if (!movesPool.isEmpty() && movesPool.contains(playerPos)) {
+                    displayMove(playerPos, playerSymbol);
+                    movesPool.remove(playerPos);
+                    playerMoves.add(playerPos);
+                    sendMyMove();
+                    numOfMoves++;
+                    myturn = false;
+                    if(isWinningPosition(playerMoves)){
+                        System.out.println("You win! :D");
+                        gameResult.setText("You Win! :D");
+                        gameEnded = true;
+    //                    reportGameEnding();
+                    }
                 }
-            }
-            if (numOfMoves >= 9){
-                System.out.println("It's a draw!");
-                gameResult.setText("It's a Draw! ");
-                gameEnded = true;
-            }
+                if (numOfMoves >= 9){
+                    System.out.println("It's a draw!");
+                    gameResult.setText("It's a Draw! ");
+                    gameEnded = true;
+                }
+            }            
         }
     }
 
@@ -198,7 +196,7 @@ public class MultiPlayerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         init();
-        userNameLabel.setText(myUserName);
+        myturn = SignInController.myTurn;
     }
 
 
@@ -225,16 +223,20 @@ public class MultiPlayerController implements Initializable {
         XOInterface xoMsg = new XOInterface(Messages.PLAY_MOVE, gamelog, playerPos, playerSymbol);
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
-        System.err.println(g.toJson(xoMsg));
     }
+    
     public void setIDs(int gameID, String myUserName, String opponentUserName){
         this.gameID = gameID;
         this.myUserName = myUserName;
         this.opponentUserName = opponentUserName;
+        homeNameLabel.setText(myUserName);
+        opponentNameLabel.setText(opponentUserName);
     }
-    public void printOpponentMove(int playerPos){
+    
+    public void printOpponentMove(int playerPos,boolean _myturn){
         Platform.runLater(()->{
             displayMove(playerPos, opponentSymbol);
+            myturn = _myturn;
         });
         
     }

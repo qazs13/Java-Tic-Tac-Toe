@@ -82,6 +82,7 @@ public class OnLineController implements Initializable {
         offlineGameCreation.setHomePlayer(homePlayer);
         offlineGameCreation.setOpponentPlayer(opponentPlayer);
         XOInterface xointerface =new XOInterface (Messages.INVITE, offlineGameCreation);
+        SignInController.myTurn = true;
         Gson g = new Gson();
         String s = g.toJson(xointerface);
         System.out.println(s);

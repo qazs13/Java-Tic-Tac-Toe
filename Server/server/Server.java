@@ -58,7 +58,7 @@ public class Server {
             while(true){
                 try {
                     message = input.readLine();
-                    System.out.println("New Message From Player");
+                    System.err.println("New Message From Player");
                     XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
                     if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
                     {
@@ -110,7 +110,7 @@ public class Server {
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.MULTI_MODE_FINISHED))
                         {
                             endGame(xoPlayer);
-                        }  
+                        }
                     }
                     
                 } catch (IOException ex) 
@@ -190,7 +190,6 @@ public class Server {
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
             }
-            
             else
             {
                 xoPlayer.setOpearationResult(false);
@@ -214,7 +213,9 @@ public class Server {
            incomeObjectFromPlayer = new Gson();
            message = incomeObjectFromPlayer.toJson(xoPlayer);             
            this.output.println(message);
+           String home = xoPlayer.getGameLog().getOpponentPlayer();
            xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
+           xoPlayer.getGameLog().setHomePlayer(home);
            sendMsgToDesiredInternalSocket(xoPlayer);      
        }
        
@@ -228,7 +229,7 @@ public class Server {
            sendMsgToDesiredInternalSocket(xoPlayer);
        }
        
-       void makeMove(XOInterface xoPlayer){
+        void makeMove(XOInterface xoPlayer){
            xoPlayer = db.setGameMove(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.RECEIVING_MOVE);
            sendMsgToDesiredInternalSocket(xoPlayer);

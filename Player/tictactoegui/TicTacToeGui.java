@@ -37,10 +37,7 @@ public class TicTacToeGui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try{
-            mySocket = new Socket("192.168.43.12", 5000);
-//            mySocket = new Socket("197.164.217.96", 5000);
-//            mySocket = new Socket("10.145.3.114", 5000);
-//            mySocket = new Socket("127.0.0.1", 5000);
+            mySocket = new Socket("127.0.0.1", 5000);
             dis = new DataInputStream(mySocket.getInputStream());
             ps = new PrintStream(mySocket.getOutputStream());
             new Thread(()->{
@@ -96,6 +93,11 @@ public class TicTacToeGui extends Application {
                             Platform.runLater(() -> {
                                 switchToMultiPlayer(stage, xoMsg);
                             });
+                        }
+                        
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_REJECTED))
+                        {
+                            SignInController.myTurn = false;
                         }
                         
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
@@ -285,7 +287,7 @@ public class TicTacToeGui extends Application {
     
     void printGameMove(XOInterface xoMsg)
     {
-        MI.printOpponentMove(xoMsg.getFieldNumber());
+        MI.printOpponentMove(xoMsg.getFieldNumber(),true);
 //        try {
 //            FXMLLoader multiPlayer = new FXMLLoader();
 //            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));

@@ -420,7 +420,7 @@ public class Database {
             preparedStatment.executeQuery();
             System.out.println("Move is saved to the database");
             close();
-            return new XOInterface("gameIsSetted");
+            return xoPlayer;
         }
         catch (SQLException ex)
         {

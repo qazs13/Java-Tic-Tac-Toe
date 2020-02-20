@@ -3,7 +3,6 @@ package signin;
 
 import com.google.gson.Gson;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,13 +20,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import static tictactoegui.TicTacToeGui.main;
 import signup.*;
-import  tictactoegui.*;
 import interfaces.*;
 
 public class SignInController implements Initializable {
     public static String username;
+    public static boolean myTurn = false;
     String password;
    @FXML
     Button signup;
