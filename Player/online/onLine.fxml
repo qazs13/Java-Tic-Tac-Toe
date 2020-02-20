@@ -26,6 +26,9 @@
             <TableColumn fx:id="statusCol" prefWidth="175.0" text="status" />
             <TableColumn fx:id="isPlayingCol" prefWidth="190.0" text="Is Playing" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Button layoutX="849.0" layoutY="350.0" mnemonicParsing="false" onAction="#GetNames" text="Invite Player">
          <font>

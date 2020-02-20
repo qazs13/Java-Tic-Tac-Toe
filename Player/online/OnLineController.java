@@ -55,7 +55,6 @@ public class OnLineController implements Initializable {
     
     public void setAllPlayers (XOInterface xoMssge)
     {
-        
         userNameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
         scoreCol.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
         statusCol.setCellValueFactory(new PropertyValueFactory<Player, String>("status"));
@@ -76,6 +75,7 @@ public class OnLineController implements Initializable {
     void fetchPlayers(){
         ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
         playersTable.setItems(_allPlayers);
+        playersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }    
 
 
