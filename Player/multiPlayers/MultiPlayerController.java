@@ -125,7 +125,7 @@ public class MultiPlayerController implements Initializable {
         gameEnded = false;
     }
 
-    void displayMove(Integer position, char symbol){
+    public void displayMove(Integer position, char symbol){
         switch (position) {
             case 1:
                 pos1.setText(Character.toString(symbol));
@@ -167,6 +167,7 @@ public class MultiPlayerController implements Initializable {
                 displayMove(playerPos, playerSymbol);
                 movesPool.remove(playerPos);
                 playerMoves.add(playerPos);
+                sendMyMove();
                 numOfMoves++;
                 
                 if(isWinningPosition(playerMoves)){
@@ -176,19 +177,6 @@ public class MultiPlayerController implements Initializable {
 //                    reportGameEnding();
                 }
             }
-            // AI move
-//            if (!movesPool.isEmpty() && !gameEnded) {
-//                Integer AIPos = getRndMove();
-//                displayMove(AIPos, AISymbol);
-//                movesPool.remove(AIPos);
-//                AIMoves.add(AIPos);
-//                numOfMoves++;
-//                if(isWinningPosition(AIMoves)){
-//                    System.out.println("You Lose! :(");
-//                    gameResult.setText("You Lose! :(");
-//                    gameEnded = true;
-//                }
-//            }
             if (numOfMoves >= 9){
                 System.out.println("It's a draw!");
                 gameResult.setText("It's a Draw! ");
@@ -235,6 +223,8 @@ public class MultiPlayerController implements Initializable {
     void sendMyMove(){
         Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
         XOInterface xoMsg = new XOInterface(Messages.PLAY_MOVE, gamelog, playerPos, playerSymbol);
+        Gson g = new Gson();
+        controllerPS.println(g.toJson(xoMsg));
     }
     public void setIDs(int gameID, String myUserName, String opponentUserName){
         this.gameID = gameID;

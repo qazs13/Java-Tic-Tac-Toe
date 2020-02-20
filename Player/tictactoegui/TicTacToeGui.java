@@ -111,6 +111,19 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_MOVE))
+                        {
+                            Platform.runLater(() -> {
+                                try
+                                {
+                                    printGameMove(xoMsg);
+                                }
+                                catch (Exception ex)
+                                {
+                                    ex.printStackTrace();
+                                }
+                            });
+                        }
                     }
                      catch (IOException ex) {
                         System.err.println("errrrrrr");
@@ -265,7 +278,21 @@ public class TicTacToeGui extends Application {
               Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
             }
           }); 
-      
+    }
+    
+    void printGameMove(XOInterface xoMsg)
+    {
+        try {
+            FXMLLoader multiPlayer = new FXMLLoader();
+            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
+            Parent  multiPlayerPageRoot = multiPlayer.load();
+            MultiPlayerController MI = multiPlayer.getController();
+            MI.setControllerStreams(dis, ps);
+            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());       
+            MI.displayMove(xoMsg.getFieldNumber(),xoMsg.getSignPlayed());
+        } catch (IOException ex) {
+            Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
   
     
