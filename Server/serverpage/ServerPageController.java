@@ -63,6 +63,7 @@ public class ServerPageController implements Initializable {
     
     @FXML
     private void serverOn(ActionEvent event) {
+        db.makeAllPlayersOffline();
         serverThread = new ServerThread();
         serverThread.start();
         fetchPlayers();

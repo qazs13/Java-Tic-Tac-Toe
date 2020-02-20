@@ -224,6 +224,7 @@ public class Server {
        }
        
        void rejectingInvitation(XOInterface xoPlayer){
+           xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
            sendMsgToDesiredInternalSocket(xoPlayer);
        }
        
