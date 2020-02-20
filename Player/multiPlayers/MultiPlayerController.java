@@ -225,11 +225,18 @@ public class MultiPlayerController implements Initializable {
         XOInterface xoMsg = new XOInterface(Messages.PLAY_MOVE, gamelog, playerPos, playerSymbol);
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
+        System.err.println(g.toJson(xoMsg));
     }
     public void setIDs(int gameID, String myUserName, String opponentUserName){
         this.gameID = gameID;
         this.myUserName = myUserName;
         this.opponentUserName = opponentUserName;
+    }
+    public void printOpponentMove(int playerPos){
+        Platform.runLater(()->{
+            displayMove(playerPos, opponentSymbol);
+        });
+        
     }
 
     @FXML

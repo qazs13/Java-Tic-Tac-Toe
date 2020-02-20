@@ -33,7 +33,7 @@ public class TicTacToeGui extends Application {
     DataInputStream dis;
     PrintStream ps;
     Socket mySocket;
-
+    MultiPlayerController MI;
     @Override
     public void start(Stage stage) throws Exception {
         try{
@@ -123,6 +123,9 @@ public class TicTacToeGui extends Application {
                                     ex.printStackTrace();
                                 }
                             });
+                        }
+                        else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
+                            System.err.println("gameIsNotSetted");
                         }
                     }
                      catch (IOException ex) {
@@ -241,9 +244,9 @@ public class TicTacToeGui extends Application {
             FXMLLoader multiPlayer = new FXMLLoader();
             multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
             Parent  multiPlayerPageRoot = multiPlayer.load();
-            MultiPlayerController MI = multiPlayer.getController();
+            MI = multiPlayer.getController();
             MI.setControllerStreams(dis, ps);
-            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());
+            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());
            
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
             stage.hide();
@@ -282,17 +285,18 @@ public class TicTacToeGui extends Application {
     
     void printGameMove(XOInterface xoMsg)
     {
-        try {
-            FXMLLoader multiPlayer = new FXMLLoader();
-            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
-            Parent  multiPlayerPageRoot = multiPlayer.load();
-            MultiPlayerController MI = multiPlayer.getController();
-            MI.setControllerStreams(dis, ps);
-            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());       
-            MI.displayMove(xoMsg.getFieldNumber(),xoMsg.getSignPlayed());
-        } catch (IOException ex) {
-            Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        MI.printOpponentMove(xoMsg.getFieldNumber());
+//        try {
+//            FXMLLoader multiPlayer = new FXMLLoader();
+//            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
+//            Parent  multiPlayerPageRoot = multiPlayer.load();
+//            MultiPlayerController MI = multiPlayer.getController();
+//            MI.setControllerStreams(dis, ps);
+//            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());       
+//            MI.displayMove(xoMsg.getFieldNumber(),xoMsg.getSignPlayed());
+//        } catch (IOException ex) {
+//            Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
   
     
