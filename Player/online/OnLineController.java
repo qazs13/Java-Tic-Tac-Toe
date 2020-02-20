@@ -21,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import signin.SignInController;
 
@@ -32,29 +33,49 @@ public class OnLineController implements Initializable {
     DataInputStream controllerDIS;
     PrintStream controllerPS;
     Player player;
-    @FXML
-    private TableView<Player> table;
+
     String homePlayer = SignInController.username;
     String opponentPlayer;    
+    Vector<Player> allPlayers;
     @FXML
-    private TableColumn<?, ?> userName;
+    private TableView<Player> playersTable;    
+    @FXML
+    private TableColumn<Player, String> userNameCol;
+    @FXML
+    private TableColumn<Player, Integer> scoreCol;
+    @FXML
+    private TableColumn<Player, String> statusCol;
+    @FXML
+    private TableColumn<Player, String> isPlayingCol;
     
     public void setControllerStreams(DataInputStream dis, PrintStream ps){
         controllerDIS = dis;
         controllerPS = ps;
     }
     
+    public void setAllPlayers (XOInterface xoMssge)
+    {
+        
+        userNameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
+        scoreCol.setCellValueFactory(new PropertyValueFactory<Player, Integer>("score"));
+        statusCol.setCellValueFactory(new PropertyValueFactory<Player, String>("status"));
+        isPlayingCol.setCellValueFactory(new PropertyValueFactory<Player, String>("IsPlaying"));
+        userNameCol.setStyle("-fx-alignment: CENTER;");
+        scoreCol.setStyle("-fx-alignment: CENTER;");
+        statusCol.setStyle("-fx-alignment: CENTER;");
+        isPlayingCol.setStyle("-fx-alignment: CENTER;");
+        allPlayers = xoMssge.Players;
+        fetchPlayers();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Vector<Player> allPlayers = new Vector<>();
-        Player play1 = new Player("amr", true, 0);
-        Player play2 = new Player("hakim", true, 0);
-        Player play3 = new Player("mayar", true, 0);
-        allPlayers.add(play3);
-        allPlayers.add(play2);
-        allPlayers.add(play1);
+
+    }    
+    
+    void fetchPlayers(){
         ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
-        table.setItems(_allPlayers);
+        playersTable.setItems(_allPlayers);
     }    
 
 
@@ -67,14 +88,12 @@ public class OnLineController implements Initializable {
         XOInterface xointerface =new XOInterface ("invite",offlineGameCreation);
         Gson g = new Gson();
         String s = g.toJson(xointerface);
+        System.out.println(s);
         controllerPS.println(s);        
     }
 
     @FXML
     private void MouseClicked(MouseEvent event) {
-        player = table.getSelectionModel().getSelectedItem();
+        player = playersTable.getSelectionModel().getSelectedItem();
     }
-
-
-    
 }

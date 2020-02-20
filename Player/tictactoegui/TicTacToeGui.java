@@ -58,16 +58,14 @@ public class TicTacToeGui extends Application {
                         {
                             System.err.println("Register here");
                             Platform.runLater(()->{
-                                
-                                switchToLogIn(stage);
-                                
+                            switchToLogIn(stage);
                             });                           
                         }
                         else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
                         {
                             switchToOnpopupscene(xoMsg);
                         }
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.INVITE))
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_INVITATION))
                         {
                             /*
                             Platform.runLater(()->{
@@ -78,15 +76,20 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }*/
+                            /*
+                            n7ot fe new page message = Messages.Invitation_AccEpted
+                            ahm 7aga n8yar el Opponent Player
+                            */
                         }
                           
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.RETREVING_PLAYERS_LIST))
                         {
                                        Platform.runLater(()->{
                                 try {
-                                   switchToOnLineScene(stage);
+                                    switchToOnLineScene(stage,xoMsg);
                                 } catch (IOException ex) {
                                     System.err.println("coudn't switch");
+                                    ex.printStackTrace();
                                 }
                             });
                         
@@ -94,7 +97,13 @@ public class TicTacToeGui extends Application {
 
                         }
                         
-                        else{
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_ACCEPTED))
+                        {
+                            System.out.println("Afta7 Yabny El game");
+                        }
+                        
+                        else
+                        {
                             
                         }
                     }
@@ -138,11 +147,12 @@ public class TicTacToeGui extends Application {
         stage.setScene(sceneselection);
         stage.show();
     }
-    void switchToOnLineScene(Stage stage) throws IOException{
+    void switchToOnLineScene(Stage stage,XOInterface xoMssge) throws IOException{
         FXMLLoader onLinePage=new FXMLLoader();
         onLinePage.setLocation(getClass().getResource("/online/onLine.fxml"));
-        Parent  onLineRoot = onLinePage.load();
+        Parent  onLineRoot = onLinePage.load();        
         OnLineController ON=onLinePage.getController();
+        ON.setAllPlayers(xoMssge);        
         ON.setControllerStreams(dis, ps);
         Scene sceneonline = new Scene(onLineRoot);
         stage.hide();
@@ -151,29 +161,27 @@ public class TicTacToeGui extends Application {
     }
     void switchToOnpopupscene( XOInterface xoMsg){
         if(!xoMsg.getPlayer().getUserName().equals(SignInController.username))
-                            {
-                            
-                           
-                              Platform.runLater(()->{
-                                  try {
-                                        FXMLLoader popuppage=new FXMLLoader();
-                                        popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
-                                        Parent  popuppageroot = popuppage.load();
-                                        onLinePopupController popup=popuppage.getController(); 
-                                        popup.getusername( xoMsg.getPlayer().getUserName());
-                                            
-                                        Scene scenepopup = new Scene( popuppageroot);
-                                        Stage popupstage =  new Stage() ;
-                                        popupstage.hide();
-                                        popupstage.setScene(scenepopup);
-                                        popupstage.initStyle(StageStyle.UNDECORATED);
-                                        popupstage.show(); 
-                                        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-                                        delay.setOnFinished(event ->  popupstage.close());
-                                        delay.play();
-                                  } catch (IOException ex) {
-                                      Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
-                                  }
+        {                  
+            Platform.runLater(()->{
+                try {
+                      FXMLLoader popuppage=new FXMLLoader();
+                      popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
+                      Parent  popuppageroot = popuppage.load();
+                      onLinePopupController popup=popuppage.getController(); 
+                      popup.getusername( xoMsg.getPlayer().getUserName());
+
+                      Scene scenepopup = new Scene( popuppageroot);
+                      Stage popupstage =  new Stage() ;
+                      popupstage.hide();
+                      popupstage.setScene(scenepopup);
+                      popupstage.initStyle(StageStyle.UNDECORATED);
+                      popupstage.show(); 
+                      PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                      delay.setOnFinished(event ->  popupstage.close());
+                      delay.play();
+                } catch (IOException ex) {
+                    Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
          }); 
       }
     }

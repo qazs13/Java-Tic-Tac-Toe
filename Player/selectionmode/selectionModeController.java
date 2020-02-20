@@ -42,29 +42,12 @@ public class selectionModeController implements Initializable {
 
     @FXML
     private void multiplayer(ActionEvent event) throws IOException {
-              Player player=new Player();
-            player.setUserName(SignInController.username); 
-                 XOInterface xointerface =new XOInterface (Messages.GET_PLAYERS,player);
-        
-                    Gson g = new Gson();
-            String s = g.toJson(xointerface);
-            controllerPS.println(s);
-        
-        
-        
-        
-//               FXMLLoader onLinePage=new FXMLLoader();
-//        onLinePage.setLocation(getClass().getResource("/online/onLine.fxml"));
-//        Parent  onLineRoot = onLinePage.load();
-//        OnLineController ON=onLinePage.getController();
-//        
-//        Scene scenesignup = new Scene(onLineRoot);
-//        Stage onLineStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        onLineStage.hide(); //optional
-//       onLineStage.setScene(scenesignup);
-//      onLineStage.show(); 
-      
-      
+        Player player=new Player();
+        player.setUserName(SignInController.username); 
+        XOInterface xointerface =new XOInterface (Messages.GET_PLAYERS,player);
+        Gson g = new Gson();
+        String s = g.toJson(xointerface);
+        controllerPS.println(s);
 
     }
     

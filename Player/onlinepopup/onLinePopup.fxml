@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="133.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="onlinepopup.onLinePopupController">
+<AnchorPane id="AnchorPane" blendMode="SCREEN" prefHeight="133.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="onlinepopup.onLinePopupController">
    <children>
-      <ImageView fitHeight="69.0" fitWidth="107.0" layoutX="60.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="69.0" fitWidth="107.0" layoutX="60.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@name.png" />
          </image>
       </ImageView>
-      <Text fx:id="poptext" layoutX="215.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="poptext" layoutX="185.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>

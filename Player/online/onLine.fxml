@@ -19,11 +19,12 @@
             <Font name="Forte" size="36.0" />
          </font>
       </Text>
-      <TableView fx:id="table" layoutX="287.0" layoutY="137.0" onMouseClicked="#MouseClicked" prefHeight="543.0" prefWidth="445.0">
+      <TableView fx:id="playersTable" layoutX="78.0" layoutY="137.0" onMouseClicked="#MouseClicked" prefHeight="543.0" prefWidth="740.0">
         <columns>
-          <TableColumn fx:id="userName" prefWidth="135.0" text="User Name" />
-          <TableColumn prefWidth="141.0" text="Score" />
-            <TableColumn prefWidth="167.0" text="Is Playing" />
+          <TableColumn fx:id="userNameCol" prefWidth="203.0" text="User Name" />
+          <TableColumn fx:id="scoreCol" prefWidth="171.0" text="Score" />
+            <TableColumn fx:id="statusCol" prefWidth="175.0" text="status" />
+            <TableColumn fx:id="isPlayingCol" prefWidth="190.0" text="Is Playing" />
         </columns>
       </TableView>
       <Button layoutX="849.0" layoutY="350.0" mnemonicParsing="false" onAction="#GetNames" text="Invite Player">
