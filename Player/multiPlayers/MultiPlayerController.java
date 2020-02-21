@@ -253,4 +253,9 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private void back(ActionEvent event) {
     }
+
+    @FXML
+    private void sendMessage(ActionEvent event) {
+        //////////////// The Function used By the send Button
+    }
 }
