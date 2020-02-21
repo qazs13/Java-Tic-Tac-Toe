@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import signin.SignInController;
 
@@ -75,6 +76,12 @@ public class MultiPlayerController implements Initializable {
     private Label opponentNameLabel;
     @FXML
     private Text opponenPlayerSign;
+    @FXML
+    private TextField textScreenMessanger;  /////The Main Screen Ally haytl3 3lyha el klam///////
+    @FXML
+    private Button sendButton;  /////////Send Button///////////
+    @FXML
+    private TextField textAreaMessanger; ///////The Input Screen Ally hakteb feha el resala//////////
 
     boolean isWinningPosition(Vector<Integer> moves){
         boolean winFlag = false;
@@ -171,6 +178,7 @@ public class MultiPlayerController implements Initializable {
                         System.out.println("You win! :D");
                         gameResult.setText("You Win! :D");
                         gameEnded = true;
+                        myturn = false;
     //                    reportGameEnding();
                     }
                 }
@@ -178,6 +186,7 @@ public class MultiPlayerController implements Initializable {
                     System.out.println("It's a draw!");
                     gameResult.setText("It's a Draw! ");
                     gameEnded = true;
+                    myturn = false;
                 }
             }            
         }

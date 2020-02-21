@@ -29,6 +29,7 @@ public class OnLineController implements Initializable {
     DataInputStream controllerDIS;
     PrintStream controllerPS;
     Player player;
+    boolean inviteName = false;
 
     String homePlayer = SignInController.username;
     String opponentPlayer;    
@@ -77,16 +78,19 @@ public class OnLineController implements Initializable {
 
     @FXML
     private void GetNames(ActionEvent event) {
-        opponentPlayer = player.getUserName();
-        Gamelog offlineGameCreation=new Gamelog();
-        offlineGameCreation.setHomePlayer(homePlayer);
-        offlineGameCreation.setOpponentPlayer(opponentPlayer);
-        XOInterface xointerface =new XOInterface (Messages.INVITE, offlineGameCreation);
-        SignInController.myTurn = true;
-        Gson g = new Gson();
-        String s = g.toJson(xointerface);
-        System.out.println(s);
-        controllerPS.println(s);        
+        if (!player.getUserName().equals(SignInController.username))
+        {
+            opponentPlayer = player.getUserName();
+            Gamelog offlineGameCreation = new Gamelog();
+            offlineGameCreation.setHomePlayer(homePlayer);
+            offlineGameCreation.setOpponentPlayer(opponentPlayer);
+            XOInterface xointerface =new XOInterface (Messages.INVITE, offlineGameCreation);
+            SignInController.myTurn = true;
+            Gson g = new Gson();
+            String s = g.toJson(xointerface);
+            System.out.println(s);
+            controllerPS.println(s);             
+        }
     }
 
     @FXML

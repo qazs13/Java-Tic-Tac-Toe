@@ -39,5 +39,10 @@
             <Image url="@878516.png" />
          </image>
       </ImageView>
+      <Text fx:id="myName" layoutX="559.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="252.037109375">
+         <font>
+            <Font name="Andalus" size="40.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

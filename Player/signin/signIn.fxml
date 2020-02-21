@@ -11,12 +11,11 @@
 
 <AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="840.0" style="-fx-background-color: #e0ffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signin.SignInController">
    <children>
-      <Button fx:id="login" layoutX="343.0" layoutY="300.0" mnemonicParsing="false" onAction="#login" prefHeight="31.0" prefWidth="167.0" style="-fx-background-color: #66cdaa;" text="Log In">
+      <Button fx:id="login" defaultButton="true" layoutX="343.0" layoutY="300.0" mnemonicParsing="false" onAction="#login" prefHeight="31.0" prefWidth="167.0" style="-fx-background-color: #66cdaa;" text="Log In">
          <font>
             <Font size="19.0" />
          </font></Button>
-      <Text fill="#441fd1" layoutX="350.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have account" wrappingWidth="152.03466796875" />
-      <Button fx:id="signup" layoutX="365.0" layoutY="420.0" mnemonicParsing="false" onAction="#signup" prefHeight="31.0" prefWidth="121.0" style="-fx-background-color: #66cdaa;" text="Sign Up">
+      <Button fx:id="signup" layoutX="366.0" layoutY="389.0" mnemonicParsing="false" onAction="#signup" prefHeight="31.0" prefWidth="121.0" style="-fx-background-color: #66cdaa;" text="New Player">
          <font>
             <Font size="19.0" />
          </font></Button>
@@ -38,6 +37,6 @@
          </font>
       </Text>
       <Text fx:id="checkusername" disable="true" fill="#d31f1f" layoutX="302.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="enter user name" visible="false" />
-      <Text fx:id="checkpassword"  disable="true" fill="#d31f1f" layoutX="302.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="enter password" visible="false" />
+      <Text fx:id="checkpassword" disable="true" fill="#d31f1f" layoutX="302.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="enter password" visible="false" />
    </children>
 </AnchorPane>

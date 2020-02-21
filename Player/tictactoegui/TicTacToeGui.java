@@ -202,9 +202,9 @@ public class TicTacToeGui extends Application {
                     Parent  popuppageroot = popuppage.load();
                     onLinePopupController popup=popuppage.getController(); 
                     popup.getusername( xoMsg.getPlayer().getUserName());
-
                     Scene scenepopup = new Scene( popuppageroot);
                     Stage popupstage =  new Stage() ;
+                    popupstage.initStyle(StageStyle.UNDECORATED);
                     popupstage.hide(); //optional
                     popupstage.setScene(scenepopup); 
                     popupstage.show(); 
@@ -288,17 +288,6 @@ public class TicTacToeGui extends Application {
     void printGameMove(XOInterface xoMsg)
     {
         MI.printOpponentMove(xoMsg.getFieldNumber(),true);
-//        try {
-//            FXMLLoader multiPlayer = new FXMLLoader();
-//            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
-//            Parent  multiPlayerPageRoot = multiPlayer.load();
-//            MultiPlayerController MI = multiPlayer.getController();
-//            MI.setControllerStreams(dis, ps);
-//            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());       
-//            MI.displayMove(xoMsg.getFieldNumber(),xoMsg.getSignPlayed());
-//        } catch (IOException ex) {
-//            Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
   
     

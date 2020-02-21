@@ -23,13 +23,16 @@ import javafx.stage.Stage;
 import online.OnLineController;
 import signup.signUpController;
 import interfaces.*;
+import javafx.scene.text.Text;
 import signin.SignInController;
 
 
 public class selectionModeController implements Initializable {
     
-     DataInputStream controllerDIS;
+    DataInputStream controllerDIS;
     PrintStream controllerPS;
+    @FXML
+    private Text myName;
     public void setControllerStreams(DataInputStream dis, PrintStream ps){
         controllerDIS = dis;
         controllerPS = ps;
@@ -37,12 +40,12 @@ public class selectionModeController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        myName.setText(SignInController.username);
     }    
 
     @FXML
     private void multiplayer(ActionEvent event) throws IOException {
-        Player player=new Player();
+        Player player = new Player();
         player.setUserName(SignInController.username); 
         XOInterface xointerface =new XOInterface (Messages.GET_PLAYERS,player);
         Gson g = new Gson();

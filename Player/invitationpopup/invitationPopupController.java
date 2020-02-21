@@ -41,7 +41,7 @@ public class invitationPopupController implements Initializable {
     
     public void getOpponentplayername(XOInterface xoMssge,Stage stage){
         this.xoMssge = xoMssge;
-        this.opponentPlayer = xoMssge.getGameLog().getOpponentPlayer();
+        this.opponentPlayer = xoMssge.getGameLog().getHomePlayer();
         this.stage = stage;
         poptextinvitation.setText("An invitation request came from: "+ opponentPlayer);
     }
