@@ -1,5 +1,4 @@
 
-
 package tictactoegui;
 
 import com.google.gson.Gson;
@@ -25,8 +24,6 @@ import javafx.animation.PauseTransition;
 import javafx.stage.StageStyle;
 import online.*;
 import invitationpopup.*;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 import multiPlayers.MultiPlayerController;
 import onlinepopup.onLinePopupController;
 //import playwithcomputer.MultiPlayerController;
@@ -128,6 +125,19 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
+                   else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES ))
+                        {
+                            Platform.runLater(() -> {
+                                try
+                                {
+                                    DisplayMoves(xoMsg);
+                                }
+                                catch (Exception ex)
+                                {
+                                    ex.printStackTrace();
+                                }
+                            });
+                        }
                         else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
                             System.err.println("gameIsNotSetted");
                         }
@@ -204,16 +214,13 @@ public class TicTacToeGui extends Application {
                     Parent  popuppageroot = popuppage.load();
                     onLinePopupController popup=popuppage.getController(); 
                     popup.getusername( xoMsg.getPlayer().getUserName());
+
                     Scene scenepopup = new Scene( popuppageroot);
                     Stage popupstage =  new Stage() ;
-                    popupstage.initStyle(StageStyle.UNDECORATED);
                     popupstage.hide(); //optional
-                    popupstage.setScene(scenepopup);
-                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-                    popupstage.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 500);
-                    popupstage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 150);
+                    popupstage.setScene(scenepopup); 
                     popupstage.show(); 
-                    PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                    PauseTransition delay = new PauseTransition(Duration.seconds(2));
                      delay.setOnFinished( event ->  popupstage.close() );
                       delay.play();
                 } catch (IOException ex) {
@@ -293,6 +300,11 @@ public class TicTacToeGui extends Application {
     void printGameMove(XOInterface xoMsg)
     {
         MI.printOpponentMove(xoMsg.getFieldNumber(),true);
+
+    }
+        void  DisplayMoves(XOInterface xoMsg)
+    {
+        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
     }
   
     
@@ -301,4 +313,3 @@ public class TicTacToeGui extends Application {
     }
     
 }
-

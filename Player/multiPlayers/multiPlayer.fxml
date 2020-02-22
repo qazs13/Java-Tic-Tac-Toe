@@ -104,5 +104,7 @@
             <Font name="Arial Black" size="37.0" />
          </font>
       </Label>
+      <Button layoutX="75.0" layoutY="565.0" mnemonicParsing="false" onAction="#resume" text="resume" />
    </children>
 </AnchorPane>
+

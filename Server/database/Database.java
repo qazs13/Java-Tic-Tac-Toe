@@ -435,7 +435,6 @@ public class Database {
         {
             ch = new char[9];
             connect();
-            gameLog = new Gamelog();
             sqlCommand = "SELECT * FROM getsaveddata(?)";
             preparedStatment = connection.prepareStatement(sqlCommand);
             preparedStatment.setInt(1, xoPlayer.getGameLog().getGameId());
@@ -452,8 +451,7 @@ public class Database {
                 ch[7] = (char) result.getInt(8);
                 ch[8] = (char) result.getInt(9);
             }
-            gameLog.setSavedGame(ch);
-            xoInterface = new XOInterface("savedData", gameLog);
+            xoPlayer.getGameLog().setSavedGame(ch);
             close();
         }
         catch (SQLException ex)
@@ -462,7 +460,7 @@ public class Database {
         }
         finally
         {
-         return xoInterface;
+         return xoPlayer;
         }
     }
     

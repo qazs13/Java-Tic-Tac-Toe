@@ -111,6 +111,11 @@ public class Server {
                         {
                             endGame(xoPlayer);
                         }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.RESUME))
+                        {
+                          retrivingGameList(xoPlayer) ;
+                        }                        
                     }
                     
                 } catch (IOException ex) 
@@ -199,7 +204,8 @@ public class Server {
             }
         }
 
-       void getAllPlayers(XOInterface xoPlayer){
+       void getAllPlayers(XOInterface xoPlayer)
+       {
            xoPlayer = db.retriveAllPlayers();
            xoPlayer.setTypeOfOpearation(Messages.RETREVING_PLAYERS_LIST);                
            incomeObjectFromPlayer = new Gson();
@@ -207,7 +213,8 @@ public class Server {
            this.output.println(message);
        }
        
-       void createGame(XOInterface xoPlayer){
+       void createGame(XOInterface xoPlayer)
+       {
            xoPlayer = db.createGame(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.INVITATION_ACCEPTED);
            incomeObjectFromPlayer = new Gson();
@@ -219,17 +226,20 @@ public class Server {
            sendMsgToDesiredInternalSocket(xoPlayer);      
        }
        
-       void invitePlayer(XOInterface xoPlayer){
+       void invitePlayer(XOInterface xoPlayer)
+       {
            xoPlayer.setTypeOfOpearation(Messages.RECEIVING_INVITATION);
            sendMsgToDesiredInternalSocket(xoPlayer);  
        }
        
-       void rejectingInvitation(XOInterface xoPlayer){
+       void rejectingInvitation(XOInterface xoPlayer)
+       {
            xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
            sendMsgToDesiredInternalSocket(xoPlayer);
        }
        
-        void makeMove(XOInterface xoPlayer){
+        void makeMove(XOInterface xoPlayer)
+        {
            xoPlayer = db.setGameMove(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.RECEIVING_MOVE);
            sendMsgToDesiredInternalSocket(xoPlayer);
@@ -254,6 +264,15 @@ public class Server {
                 this.output.println(message);     
             }           
        }
+       
+        void retrivingGameList(XOInterface xoPlayer){
+           xoPlayer = db.getSavedGame(xoPlayer);
+           xoPlayer.setTypeOfOpearation(Messages.RETRIVEMOVES);
+           incomeObjectFromPlayer = new Gson();
+           message = incomeObjectFromPlayer.toJson(xoPlayer);             
+           this.output.println(message);
+           sendMsgToDesiredInternalSocket(xoPlayer);      
+       }       
 
        void Hashmapper(XOInterface xoPlayer){
             map.put(this,xoPlayer.getPlayer().getUserName());
