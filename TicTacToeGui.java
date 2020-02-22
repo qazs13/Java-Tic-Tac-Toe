@@ -1,40 +1,37 @@
-
 package tictactoegui;
 
 import com.google.gson.Gson;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import playwithcomputer.PlayWithComputerController;
 import selectionmode.selectionModeController;
-import levelselection.LevelSelectionController;
-//import signin.*;
-//import signup.*;
-
-
+import signin.*;
+import signup.*;
+import interfaces.*;
+import javafx.util.*;
+import javafx.animation.PauseTransition;
+import javafx.stage.StageStyle;
+import online.*;
+import invitationpopup.*;
+import multiPlayers.MultiPlayerController;
+import onlinepopup.onLinePopupController;
+//import playwithcomputer.MultiPlayerController;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
     PrintStream ps;
     Socket mySocket;
-
+    static MultiPlayerController MI;
     @Override
     public void start(Stage stage) throws Exception {
         try{
@@ -45,52 +42,99 @@ public class TicTacToeGui extends Application {
                 while (true){
                     try {
                         String recievedMsg = dis.readLine();
+                        System.out.println(recievedMsg);
                         Gson g = new Gson();
                         XOInterface xoMsg;
                         xoMsg = g.fromJson(recievedMsg, XOInterface.class);
-                        
                         if(xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGED_IN)){
-                            System.err.println("login here");
-                            
                             Platform.runLater(()->{
                                 try {
                                     switchToSelectionScene(stage);
+                                    
                                 } catch (IOException ex) {
                                     System.err.println("coudn't switch");
+                                    ex.printStackTrace();
                                 }
                             });
                         }
-//Edit by Mayar (replay of server )
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.SIGN_UP_ACCEPTED))
+                        {
+                            System.err.println("Register here");
+                            Platform.runLater(()->{
+                            switchToLogIn(stage);
+                            });                           
+                        }
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
+                        {
+                            switchToOnpopupscene(xoMsg);
+                        }
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_INVITATION))
+                        {
+                           switchToInvitationpopupscene(xoMsg);
+                        }
+                          
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETREVING_PLAYERS_LIST))
+                        {
+                                Platform.runLater(()->{
+                                try {
+                                    switchToOnLineScene(stage,xoMsg);
+                                } catch (IOException ex) {
+                                    System.err.println("coudn't switch");
+                                    ex.printStackTrace();
+                                }
+                            });              
+
+                        }
+                        
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_ACCEPTED))
+                        {
+                            Platform.runLater(() -> {
+                                switchToMultiPlayer(stage, xoMsg);
+                            });
+                        }
+                        
+                        else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_REJECTED))
+                        {
+                            SignInController.myTurn = false;
+                        }
+                        
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
                         {
-                            System.err.println("Create New offlineGame");
                             Platform.runLater(()->{
-                                try {
-                                    switchToSelectionScene(stage);
-                                } catch (IOException ex) {
+                                try 
+                                {
+                                    switchToSinglePlayerScene(stage);
+                                } 
+                                catch (IOException ex) {
                                     System.err.println("coudn't switch");
+                                    ex.printStackTrace();
                                 }
                             });
                         }
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.INVITE))
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_MOVE))
                         {
-                            System.err.println("send an invitation");
-                            Platform.runLater(()->{
-                                try {
-                                    switchToSelectionScene(stage);
-                                } catch (IOException ex) {
-                                    System.err.println("coudn't switch");
+                            Platform.runLater(() -> {
+                                try
+                                {
+                                    printGameMove(xoMsg);
+                                }
+                                catch (Exception ex)
+                                {
+                                    ex.printStackTrace();
                                 }
                             });
                         }
-//////////////////end editing of this part
-                        /*
-                        else
-                        {
-                         /////////////////////   
+                        else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
+                            System.err.println("gameIsNotSetted");
                         }
-*/
-                    } catch (IOException ex) {
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
+                        {
+                            Platform.runLater(() -> {
+                                PrintMessageOfChatRoom(xoMsg);                                    
+                            });
+                        }
+                    }
+                     catch (IOException ex) {
                         System.err.println("errrrrrr");
                     }
 
@@ -98,37 +142,21 @@ public class TicTacToeGui extends Application {
             }).start();
             
         } catch (IOException ex){
-            System.err.println("ay 7aga");
-            
+            System.err.println("Server Is Off");
+            ex.printStackTrace();
         }
 
-        /*FXMLLoader loader=new FXMLLoader();
-        loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
-        Parent  root = loader.load();
-        
-        SignInController singIn =loader.getController();
-        singIn.setControllerStreams(dis, ps);*/
-        
-                
-//Edit by Mayar (load ps & dis to controller)
-        FXMLLoader gameloader=new FXMLLoader();
-        gameloader.setLocation(getClass().getResource("/selectionmode/selection mode.fxml"));
-        Parent  root = gameloader.load();
-        
-        selectionModeController createGame =gameloader.getController();
-        createGame.setControllerStreams(dis, ps);
-        
-        //invite        
         FXMLLoader loader=new FXMLLoader();
-        loader.setLocation(getClass().getResource("/online/onLine.fxml"));
-        root = loader.load();
-        
-        LevelSelectionController invitePlayer =gameloader.getController();
-        invitePlayer.setControllerStreams(dis, ps);
-////////////// End editing this part 
-        
-        Scene scene = new Scene(root);
-        
+        loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
+        Parent  root = loader.load(); 
+        SignInController singIn =loader.getController();
+        singIn.setControllerStreams(dis, ps);
+        FXMLLoader signuppage=new FXMLLoader();
+        signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
+        Parent  signuppageroot = signuppage.load();
+        signUpController SU=signuppage.getController();
+        SU.setControllerStreams(dis, ps);
+        Scene scene = new Scene(root);        
         stage.setScene(scene);
         stage.show();
     }
@@ -138,15 +166,152 @@ public class TicTacToeGui extends Application {
         FXMLLoader selectionpage=new FXMLLoader();
         selectionpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
         Parent  selectionroot = selectionpage.load();
-
+        selectionModeController SM = selectionpage.getController();
+        SM.setControllerStreams(dis, ps);
         Scene sceneselection = new Scene(selectionroot);
         stage.hide();
         stage.setScene(sceneselection);
         stage.show();
     }
+    void switchToOnLineScene(Stage stage,XOInterface xoMssge) throws IOException{
+        FXMLLoader onLinePage=new FXMLLoader();
+        onLinePage.setLocation(getClass().getResource("/online/onLine.fxml"));
+        Parent  onLineRoot = onLinePage.load();        
+        OnLineController ON=onLinePage.getController();
+        ON.setAllPlayers(xoMssge);        
+        ON.setControllerStreams(dis, ps);
+        Scene sceneonline = new Scene(onLineRoot);
+        stage.hide();
+        stage.setScene(sceneonline);
+        stage.show();
+    }
+    void switchToSinglePlayerScene(Stage stage) throws IOException {
+        FXMLLoader singlePlayerPage=new FXMLLoader();
+        singlePlayerPage.setLocation(getClass().getResource("/playwithcomputer/playWithComputer.fxml"));
+        Parent  root = singlePlayerPage.load();
+        PlayWithComputerController SP = singlePlayerPage.getController();
+        SP.setControllerStreams(dis, ps);
+        Scene scene = new Scene(root);
+        stage.hide();
+        stage.setScene(scene);
+        stage.show();
+    }
+    void switchToOnpopupscene(XOInterface xoMsg){
+        if(!xoMsg.getPlayer().getUserName().equals(SignInController.username))
+        {    
+            Platform.runLater(()->{
+                try {
+                    FXMLLoader popuppage=new FXMLLoader();
+                    popuppage.setLocation(getClass().getResource("/onlinepopup/onLinePopup.fxml"));
+                    Parent  popuppageroot = popuppage.load();
+                    onLinePopupController popup=popuppage.getController(); 
+                    popup.getusername( xoMsg.getPlayer().getUserName());
+
+                    Scene scenepopup = new Scene( popuppageroot);
+                    Stage popupstage =  new Stage() ;
+                    popupstage.hide(); //optional
+                    popupstage.setScene(scenepopup); 
+                    popupstage.show(); 
+                    PauseTransition delay = new PauseTransition(Duration.seconds(2));
+                     delay.setOnFinished( event ->  popupstage.close() );
+                      delay.play();
+                } catch (IOException ex) {
+                    Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }); 
+
+      }
+    }
+    
+   void switchToLogIn (Stage stage)
+    {
+        try
+        {
+            FXMLLoader signinpage = new FXMLLoader();
+            signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
+            Parent  signinpageroot = signinpage.load();
+            SignInController SI = signinpage.getController();
+            SI.setControllerStreams(dis, ps);
+            Scene scenesignin = new Scene( signinpageroot);
+            stage.hide();
+            stage.setScene(scenesignin);
+            stage.show();                     
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }     
+    } 
    
+   void switchToMultiPlayer (Stage stage, XOInterface xoMsg)
+   {
+        try
+        {
+            FXMLLoader multiPlayer = new FXMLLoader();
+            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
+            Parent  multiPlayerPageRoot = multiPlayer.load();
+            MI = multiPlayer.getController();
+            MI.setControllerStreams(dis, ps);
+            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());
+           
+            Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
+            stage.hide();
+            stage.setScene(multiPlayerScene);
+            stage.show();                     
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }            
+   }
+   
+    void switchToInvitationpopupscene(XOInterface xoMsg){
+      
+        Platform.runLater(()->{
+            try {
+                FXMLLoader popupInvitationpage=new FXMLLoader();
+                popupInvitationpage.setLocation(getClass().getResource("/invitationpopup/invitationPopup.fxml"));
+                Parent  invitationpageroot = popupInvitationpage.load();
+                invitationPopupController popupInvitation = popupInvitationpage.getController();
+                popupInvitation.setControllerStreams(dis, ps);
+                Scene scenepopupinvitation = new Scene( invitationpageroot);
+                Stage popupinvitationstage =  new Stage() ;
+                popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  
+                popupinvitationstage.hide();
+                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
+                popupinvitationstage.setScene(scenepopupinvitation); 
+                popupinvitationstage.show(); 
+              } 
+            catch (IOException ex) 
+            {
+              Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }); 
+    }
+    
+    void printGameMove(XOInterface xoMsg)
+    {
+        MI.printOpponentMove(xoMsg.getFieldNumber(),true);
+//        try {
+//            FXMLLoader multiPlayer = new FXMLLoader();
+//            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
+//            Parent  multiPlayerPageRoot = multiPlayer.load();
+//            MultiPlayerController MI = multiPlayer.getController();
+//            MI.setControllerStreams(dis, ps);
+//            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());       
+//            MI.displayMove(xoMsg.getFieldNumber(),xoMsg.getSignPlayed());
+//        } catch (IOException ex) {
+//            Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
+  
+    void PrintMessageOfChatRoom(XOInterface xoMsg)
+    {
+        MI.printMessage(xoMsg);
+    }
     public static void main(String[] args) {
         Application.launch(args);
     }
     
 }
+

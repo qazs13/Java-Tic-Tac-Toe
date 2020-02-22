@@ -1,23 +1,49 @@
+package interfaces;
 
 import java.security.Timestamp;
 
-
 public class Gamelog {
     int gameId;
-    String homePlayer,opponentPlayer;
+    String homePlayer,opponentPlayer,message;
     Timestamp startGameDate,endGameDate;
     boolean isFinished;
-    int size=9;
-    Character[] savedGame=new Character[size];
+    char[] savedGame = new char[9];
     public Gamelog(){};
-    public Gamelog(int _gameId,String _homePlayer,String _opponentPlayer,Timestamp _startGameDate,Timestamp _endGameDate,boolean _isFinished){
-        gameId=_gameId;
+    public Gamelog(String homePlayer, String opponentPlayer)
+    {
+        this.homePlayer = homePlayer;
+        this.opponentPlayer = opponentPlayer;
+    }
+    
+    public Gamelog (int gameId)
+    {
+        this.gameId = gameId;
+    }
+    
+    public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer){
+        this.gameId = gameId;
+        homePlayer=_homePlayer;
+        opponentPlayer=_opponentPlayer;
+    }
+    
+    public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer,Timestamp _startGameDate,Timestamp _endGameDate,boolean _isFinished,char[] savedGame){
+        this.gameId = gameId;
         homePlayer=_homePlayer;
         opponentPlayer=_opponentPlayer;
         startGameDate=_startGameDate;
         endGameDate=_endGameDate;
         isFinished=_isFinished; 
-    };
+        this.savedGame = savedGame;
+    }
+//Edited by Mayar 
+    public Gamelog(String homePlayer, String opponentPlayer,String message)
+    {
+        this.homePlayer = homePlayer;
+        this.opponentPlayer = opponentPlayer;
+        this.message = message;
+    }
+   //setter &getter of message at the bottom
+//End 
     public void setGameId(int _gameId){ 
             gameId=_gameId;
     };
@@ -36,12 +62,19 @@ public class Gamelog {
     public void setIsFinished(boolean _isFinished){
            isFinished=_isFinished;
     };
-    public void setSavedGame(Character [] _savedGame){
-           for(int i=0;i<size;i++){
-               savedGame[i]=_savedGame[i];
-           }
-
+    public void setSavedGame(char[] _savedGame){
+           savedGame = _savedGame;
     };
+//edit by Mayar
+    public void setMessage(String _message)
+    {
+        message = _message;
+    }
+    public String getMessage()
+    {
+        return message;
+    }
+///////////End editing
     public int getGameId(){ 
         return gameId;
     };
@@ -59,5 +92,9 @@ public class Gamelog {
     };
     public boolean getIsFinished(){
     return isFinished;
-    };
+    };    
+    public char[] getSavedGame()
+    {
+        return savedGame;
+    }
 }
