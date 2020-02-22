@@ -8,23 +8,24 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Server {
     ServerSocket server_socket;
-    XOInterface xoPlayer;
     Database db = new Database();
+    String message = null;
     static HashMap<ServerHandler,String> map=new HashMap<>();
-    public Server(){
+    Gson incomeObjectFromPlayer = null;
+    public void runServer(){
         try {
-            server_socket=new ServerSocket(5000);
+            System.err.println("Server is Opened Succesfully");
+            server_socket = new ServerSocket(5000);
             while(true){
                 Socket internal_socket=server_socket.accept();
+                System.out.println("New Player Is Here");
                 new ServerHandler(internal_socket);
             }
         } catch (IOException ex) {
@@ -41,93 +42,264 @@ public class Server {
         public ServerHandler(Socket socket){
            
             try {
-                this.playerSocket=socket;
-                input=new DataInputStream(playerSocket.getInputStream());
-                output=new PrintStream(playerSocket.getOutputStream());
-                start();
-                 } catch (IOException ex) {
+                    this.playerSocket = socket;
+                    input = new DataInputStream(playerSocket.getInputStream());
+                    output = new PrintStream(playerSocket.getOutputStream());
+                    start();
+                }
+            catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
+        
         @Override
         public void run(){
-        Gson incomeObjectFromPlayer = new Gson(); 
+            incomeObjectFromPlayer = new Gson();
             while(true){
                 try {
-                    String message = input.readLine();
-                    System.out.println(message);
-                    xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
-                    System.out.println(xoPlayer);
-                    /*
-                    if(action_name[0].startsWith("login")){
-                        //PlayerLoginCheck(xo)
-                        PlayerLoginCheck(action_name); 
-                    }*/
-                    if(xoPlayer.getTypeOfOpearation().equals("Register")){
-                          PlayerRegister(xoPlayer);
+                    message = input.readLine();
+                    System.err.println("New Message From Player");
+                    XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
+                    if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
+                    {
+                        PlayerLoginCheck(xoPlayer);                        
                     }
-                    /*
-                    if(action_name[0].startsWith("send")){
-                            String str=action_name[2];
-                            sendMsgToDesiredInternalSocket(str);          
+                    
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.REGISTER))
+                    {
+                        PlayerRegister(xoPlayer);
                     }
-*/
-//                    sendMsgToAllInternalSocket(msg);
-                } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    
+                    else
+                    {
+                        if(xoPlayer.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
+                        {
+                            playingSingleMode(xoPlayer);
+                        }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.SINGLE_MODE_FINISHED))
+                        {
+                            updatePlayerScoreOffline(xoPlayer);
+                        }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.GET_PLAYERS))
+                        {
+                            getAllPlayers(xoPlayer);
+                        }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITE))
+                        {
+                            invitePlayer(xoPlayer);
+                        }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITATION_ACCEPTED))
+                        {
+                            createGame(xoPlayer);
+                        }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.INVITATION_REJECTED))
+                        {
+                            rejectingInvitation(xoPlayer);
+                        }
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.PLAY_MOVE))
+                        {
+                            makeMove(xoPlayer);
+                        }   
+                                               
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.MULTI_MODE_FINISHED))
+                        {
+                            endGame(xoPlayer);
+                        }
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
+                        {
+//                            chatingBetweenGamePlayers(xoPlayer);
+                            sendMsgToDesiredInternalSocket(xoPlayer);
+                        }
+                    }
+                    
+                } catch (IOException ex) 
+                {
+                    try {
+                        this.input.close();
+                        this.output.close();
+                        this.playerSocket.close();
+                        this.stop();                   
+                        break;
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
                 }
             }
         }
  
-        void PlayerLoginCheck(String[] action_name){
-                            for(int i=1;i<action_name.length;i++)
-                            {
-                                    System.out.println(action_name[i]);
-                            }
-                            //DataBase =db = new DataBase ();
-                            //db.checkLogin(xo)
-               Hashmapper(action_name);
+        void PlayerLoginCheck(XOInterface xoPlayer){
+            if (db.checkLogIn(xoPlayer))
+            {
+                Hashmapper(xoPlayer);
+                xoPlayer = db.makePlayerOnline(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGED_IN);
+                xoPlayer.getPlayer().setPasswd(null);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                System.err.println(message);
+                this.output.println(message);
+                xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGEDIN_POP);
+                sendMsgToAllInternalSocket(xoPlayer);
+            }
+            else
+            {
+                xoPlayer.setOpearationResult(false);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);
+            }
         } 
         
         void PlayerRegister(XOInterface xoPlayer){
             if (db.checkSignUp(xoPlayer))
             {
-                System.out.println("Player is Created ?"+db.createplayer(xoPlayer));
+                XOInterface xoPlayerRecived = new XOInterface();
+                xoPlayerRecived.setTypeOfOpearation(Messages.SIGN_UP_ACCEPTED);
+                boolean flag = db.createplayer(xoPlayer);
+                xoPlayerRecived.setOpearationResult(flag);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayerRecived);
+                this.output.println(message);              
+            }
+            else
+            {   
+                System.out.println("User Name is Existed");
+                xoPlayer.setTypeOfOpearation(Messages.SIGN_UP_REJECTED);
+                xoPlayer.setOpearationResult(false);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);                
+            }
+        }
+ 
+        void playingSingleMode(XOInterface xoPlayer){
+            System.out.println("Player Is Playing Single Mood");
+            xoPlayer.setOpearationResult(db.makePlayerIsPlaying(xoPlayer));
+            incomeObjectFromPlayer = new Gson();
+            message = incomeObjectFromPlayer.toJson(xoPlayer);
+            this.output.println(message);
+       }
+               
+        void updatePlayerScoreOffline(XOInterface xoPlayer){
+            if(db.updateScoreOffline(xoPlayer))
+            {   
+                xoPlayer = db.getScore(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.SINGLE_MODE_SCORE_UPDATED);                
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);
             }
             else
             {
-                System.out.println("error");
+                xoPlayer.setOpearationResult(false);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);     
             }
         }
-        
-       void Hashmapper(String[] action_name){
-                    map.put(this,"yarab");
-                    map.replace(this,"yarab", action_name[1]);
-                    System.out.println(map);
+
+        void getAllPlayers(XOInterface xoPlayer){
+           xoPlayer = db.retriveAllPlayers();
+           xoPlayer.setTypeOfOpearation(Messages.RETREVING_PLAYERS_LIST);                
+           incomeObjectFromPlayer = new Gson();
+           message = incomeObjectFromPlayer.toJson(xoPlayer);
+           this.output.println(message);
+       }
+       
+        void createGame(XOInterface xoPlayer){
+           xoPlayer = db.createGame(xoPlayer);
+           xoPlayer.setTypeOfOpearation(Messages.INVITATION_ACCEPTED);
+           incomeObjectFromPlayer = new Gson();
+           message = incomeObjectFromPlayer.toJson(xoPlayer);             
+           this.output.println(message);
+           String home = xoPlayer.getGameLog().getOpponentPlayer();
+           xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
+           xoPlayer.getGameLog().setHomePlayer(home);
+           sendMsgToDesiredInternalSocket(xoPlayer);      
+       }
+       
+        void invitePlayer(XOInterface xoPlayer){
+           xoPlayer.setTypeOfOpearation(Messages.RECEIVING_INVITATION);
+           sendMsgToDesiredInternalSocket(xoPlayer);  
+       }
+       
+        void rejectingInvitation(XOInterface xoPlayer){
+           xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
+           sendMsgToDesiredInternalSocket(xoPlayer);
+       }
+       
+        void makeMove(XOInterface xoPlayer){
+           xoPlayer = db.setGameMove(xoPlayer);
+           xoPlayer.setTypeOfOpearation(Messages.RECEIVING_MOVE);
+           sendMsgToDesiredInternalSocket(xoPlayer);
+       }
+
+        void endGame(XOInterface xoPlayer){
+            if(db.endGame(xoPlayer))
+            {   
+                db.updateScoreOnline(xoPlayer);
+                xoPlayer = db.getScore(xoPlayer); //getScore function in data base need to be created 
+                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED);                
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);
+            }
+            
+            else
+            {
+                xoPlayer.setOpearationResult(false);
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                this.output.println(message);     
+            }           
+       }
+
+        void Hashmapper(XOInterface xoPlayer){
+            map.put(this,xoPlayer.getPlayer().getUserName());
+            System.out.println(map);
         }         
         
-        void sendMsgToDesiredInternalSocket(String msg){
+        void sendMsgToDesiredInternalSocket(XOInterface xoPlayer){
             ServerHandler key = null;
+            incomeObjectFromPlayer = new Gson();
             for(Map.Entry kv: map.entrySet()){
-                    if (kv.getValue().equals("hakim")) {
-                       key = (ServerHandler) kv.getKey();
+                    if (kv.getValue().equals(xoPlayer.getGameLog().getOpponentPlayer())) {
+                        key = (ServerHandler) kv.getKey();
                         System.out.println(key.toString());                             
                     }
             }
-            key.output.println(msg);
+            message = incomeObjectFromPlayer.toJson(xoPlayer);
+            System.out.println(message);
+            key.output.println(message);
         }
         
-       
-        void sendMsgToAllInternalSocket(String msg){
+           
+        void sendMsgToAllInternalSocket(XOInterface xoPlayer)
+        {
+            ServerHandler key = null;
+            incomeObjectFromPlayer = new Gson();
+            message = incomeObjectFromPlayer.toJson(xoPlayer);
             for(Map.Entry kv: map.entrySet()){
-                  System.out.println(kv);
+                  
+                System.out.println(kv);
+                key = (ServerHandler) kv.getKey();
+                key.output.println(message);
             }
-         }
+        }
     }
-     
-    public static void main(String[] args) {
-       Server server=new Server();
-        
-    } 
-    
+        public void stopServer()
+        {
+            try {
+                System.out.println("Stopped Server");
+                server_socket.close();
+            } catch (IOException ex) {
+                System.out.println("Error in Shutdown The Server");
+            }
+        }    
 }
