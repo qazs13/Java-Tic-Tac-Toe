@@ -11,13 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="778.0" prefWidth="1244.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="serverpage.ServerPageController">
+<AnchorPane id="AnchorPane" prefHeight="778.0" prefWidth="1168.0" styleClass="bodybg" stylesheets="@serverPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="serverpage.ServerPageController">
    <children>
-      <TableView fx:id="playersTable" layoutX="222.0" layoutY="180.0" opacity="0.9" prefHeight="347.0" prefWidth="801.0">
+      <TableView fx:id="playersTable" focusTraversable="false" layoutX="184.0" layoutY="171.0" opacity="0.9" prefHeight="347.0" prefWidth="801.0" style="-fx-background-color: white;">
         <columns>
-          <TableColumn fx:id="userNameCol" prefWidth="311.0" styleClass="username" text="User Name" />
-          <TableColumn fx:id="scoreCol" prefWidth="243.0" text="Score" />
-            <TableColumn fx:id="statusCol" prefWidth="246.0" text="Status" />
+          <TableColumn fx:id="userNameCol" editable="false" prefWidth="311.0" sortable="false" styleClass="username" text="User Name" />
+          <TableColumn fx:id="scoreCol" editable="false" prefWidth="243.0" text="Score" />
+            <TableColumn fx:id="statusCol" editable="false" prefWidth="246.0" sortable="false" text="Status" />
         </columns>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -26,12 +26,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Text fill="WHITE" layoutX="288.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe Server Side" textAlignment="CENTER" wrappingWidth="668.79296875">
+      <Text layoutX="250.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe Server Side" textAlignment="CENTER" wrappingWidth="668.79296875">
          <font>
             <Font name="Sitka Banner" size="74.0" />
          </font>
       </Text>
-      <Button layoutX="222.0" layoutY="583.0" mnemonicParsing="false" onAction="#serverOn" prefHeight="80.0" prefWidth="244.0" style="-fx-background-color: #ffffff;" styleClass=".button1" stylesheets="@style.css" text="Turn Server ON">
+      <Button defaultButton="true" layoutX="184.0" layoutY="574.0" mnemonicParsing="false" onAction="#serverOn" prefHeight="80.0" prefWidth="244.0" style="-fx-background-color: orange;" styleClass=".button1" stylesheets="@style.css" text="Turn Server ON">
          <font>
             <Font name="Verdana Pro Bold" size="22.0" />
          </font>
@@ -49,7 +49,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button contentDisplay="RIGHT" layoutX="786.0" layoutY="583.0" mnemonicParsing="false" onAction="#serverOff" prefHeight="80.0" prefWidth="237.0" style="-fx-background-color: #ffffff;" text="Turn Server Off">
+      <Button cancelButton="true" contentDisplay="RIGHT" layoutX="748.0" layoutY="574.0" mnemonicParsing="false" onAction="#serverOff" prefHeight="80.0" prefWidth="237.0" style="-fx-background-color: orange;" text="Turn Server Off">
          <font>
             <Font name="Verdana Bold" size="22.0" />
          </font>

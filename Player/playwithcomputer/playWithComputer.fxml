@@ -8,74 +8,101 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1043.0" style="-fx-background-color: #e0ffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playwithcomputer.PlayWithComputerController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1124.0" style="-fx-background-color: #e0ffff;" styleClass="bodybg" stylesheets="@PlayWithComputer.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="playwithcomputer.PlayWithComputerController">
    <children>
-      <AnchorPane layoutX="281.0" layoutY="174.0" maxWidth="920.0" prefHeight="482.0" prefWidth="481.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="281.0">
+      <AnchorPane layoutX="319.0" layoutY="90.0" maxWidth="920.0" prefHeight="503.0" prefWidth="486.0" style="-fx-background-color: transparent;" styleClass="border" stylesheets="@PlayWithComputer.css" AnchorPane.leftAnchor="319.0">
          <children>
-            <Button id="7" fx:id="pos7" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="8" fx:id="pos8" layoutX="164.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="9" fx:id="pos9" layoutX="331.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="6" fx:id="pos6" layoutX="331.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="5" fx:id="pos5" layoutX="164.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="4" fx:id="pos4" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="2" fx:id="pos2" layoutX="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="3" fx:id="pos3" layoutX="331.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
-            <Button id="1" fx:id="pos1" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" styleClass="playingBtn" />
+            <Button id="7" fx:id="pos7" layoutX="3.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="8" fx:id="pos8" layoutX="167.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="9" fx:id="pos9" layoutX="334.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="6" fx:id="pos6" layoutX="334.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="5" fx:id="pos5" layoutX="167.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="4" fx:id="pos4" layoutX="3.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="2" fx:id="pos2" layoutX="167.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="3" fx:id="pos3" layoutX="334.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
+            <Button id="1" fx:id="pos1" layoutX="3.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" textFill="#ae1313">
+               <font>
+                  <Font name="Andalus" size="68.0" />
+               </font></Button>
          </children>
       </AnchorPane>
-      <Text layoutX="38.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
+      <Text layoutX="50.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
          <font>
             <Font name="Arial" size="36.0" />
          </font>
       </Text>
-      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="869.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="942.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@versus_vs-512.png" />
          </image>
       </ImageView>
-      <Button layoutX="822.0" layoutY="138.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
+      <Button layoutX="895.0" layoutY="139.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Text fx:id="playerSign" layoutX="878.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
+      <Text fx:id="playerSign" layoutX="951.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
             <Font name="Andalus" size="58.0" />
          </font></Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="userNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="userNameLabel" layoutX="906.0" layoutY="58.0" prefHeight="46.0" prefWidth="150.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Text fx:id="computerSign" layoutX="887.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
+      <Text fx:id="computerSign" layoutX="960.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
             <Font name="Andalus" size="58.0" />
          </font>
       </Text>
-      <Button layoutX="832.0" layoutY="484.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
+      <Button layoutX="905.0" layoutY="485.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Label layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" text="Computer" textAlignment="RIGHT">
+      <Label layoutX="915.0" layoutY="416.0" prefHeight="46.0" prefWidth="150.0" text="Computer" textAlignment="RIGHT">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Button layoutX="38.0" layoutY="447.0" mnemonicParsing="false" onAction="#back" prefHeight="52.0" prefWidth="171.0" text="Back">
+      <Button layoutX="60.0" layoutY="498.0" mnemonicParsing="false" onAction="#back" prefHeight="52.0" prefWidth="171.0" text="Back">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="38.0" layoutY="340.0" mnemonicParsing="false" onAction="#restart" prefHeight="52.0" prefWidth="171.0" text="Restart">
+      <Button layoutX="60.0" layoutY="420.0" mnemonicParsing="false" onAction="#restart" prefHeight="52.0" prefWidth="171.0" text="Restart">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Label fx:id="gameResult" layoutX="148.0" layoutY="57.0" prefHeight="89.0" prefWidth="626.0" textAlignment="CENTER">
+      <Label fx:id="gameResult" layoutX="26.0" layoutY="189.0" prefHeight="153.0" prefWidth="239.0" textAlignment="CENTER">
          <font>
-            <Font size="31.0" />
+            <Font name="System Bold" size="39.0" />
          </font>
       </Label>
    </children>
