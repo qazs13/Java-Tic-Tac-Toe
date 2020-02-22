@@ -125,7 +125,15 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
-                   else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES ))
+                        
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
+                        {
+                            Platform.runLater(() -> {
+                                PrintMessageOfChatRoom(xoMsg);                                    
+                            });
+                        }                        
+                        
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES ))
                         {
                             Platform.runLater(() -> {
                                 try
@@ -138,6 +146,7 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
+                        
                         else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
                             System.err.println("gameIsNotSetted");
                         }
@@ -260,8 +269,7 @@ public class TicTacToeGui extends Application {
             Parent  multiPlayerPageRoot = multiPlayer.load();
             MI = multiPlayer.getController();
             MI.setControllerStreams(dis, ps);
-            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());
-           
+            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());    
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
             stage.hide();
             stage.setScene(multiPlayerScene);
@@ -302,7 +310,13 @@ public class TicTacToeGui extends Application {
         MI.printOpponentMove(xoMsg.getFieldNumber(),true);
 
     }
-        void  DisplayMoves(XOInterface xoMsg)
+    
+    void PrintMessageOfChatRoom(XOInterface xoMsg)
+    {
+        MI.printMessage(xoMsg);
+    }
+    
+    void  DisplayMoves(XOInterface xoMsg)
     {
         MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
     }

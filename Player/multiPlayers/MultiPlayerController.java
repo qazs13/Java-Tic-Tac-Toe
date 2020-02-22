@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multiPlayers;
 
 import java.io.*;
@@ -10,7 +5,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import com.google.gson.Gson;
 import interfaces.Gamelog;
 import interfaces.Messages;
@@ -253,10 +247,16 @@ public class MultiPlayerController implements Initializable {
 
     @FXML
     private void sendMessage(ActionEvent event) {
-        //////////////// The Function used By the send Button
+        String chatingMessage = textAreaMessanger.getText();
+        textAreaMessanger.setText("");
+        textScreenMessanger.appendText(chatingMessage+"\n");
+        Gamelog onlineGameChating = new Gamelog(myUserName, opponentUserName, chatingMessage);
+        XOInterface xointerface = new XOInterface(Messages.Chat_between_GamePlayer, onlineGameChating);
+        Gson g = new Gson();
+        String message = g.toJson(xointerface);
+        System.out.println(message);
+        controllerPS.println(message); 
     }
-
-
 
     @FXML
     private void resume(ActionEvent event) {
@@ -266,13 +266,13 @@ public class MultiPlayerController implements Initializable {
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
     }
-       public  void displayMovesOnBoard (  char[] savedGame)
+       public  void displayMovesOnBoard (char[] savedGame)
     {
         char s= ' ';
         for(int i=0;i<9;i++)
         {
             if(Character.toString(savedGame[i]).equals("-")){
-         savedGame[i]=s ; 
+            savedGame[i]=s ; 
             }
             
         }
@@ -284,7 +284,12 @@ public class MultiPlayerController implements Initializable {
         pos6.setText(Character.toString(savedGame[5]));
         pos7.setText(Character.toString(savedGame[6]));
         pos8.setText(Character.toString(savedGame[7]));
-        pos9.setText(Character.toString(savedGame[8]));
-       
+        pos9.setText(Character.toString(savedGame[8]));  
     }
+       
+    public void printMessage(XOInterface xo)
+    {
+        textScreenMessanger.appendText("\n"+xo.getGameLog().getMessage()+"\n");
+        System.out.println(textScreenMessanger.getText());
+    }       
 }

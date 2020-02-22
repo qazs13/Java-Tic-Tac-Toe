@@ -115,7 +115,12 @@ public class Server {
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.RESUME))
                         {
                           retrivingGameList(xoPlayer) ;
-                        }                        
+                        }    
+                        
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
+                        {
+                            sendMsgToDesiredInternalSocket(xoPlayer);
+                        }
                     }
                     
                 } catch (IOException ex) 
@@ -243,17 +248,19 @@ public class Server {
            xoPlayer = db.setGameMove(xoPlayer);
            xoPlayer.setTypeOfOpearation(Messages.RECEIVING_MOVE);
            sendMsgToDesiredInternalSocket(xoPlayer);
-       }
+        }
 
-       void endGame(XOInterface xoPlayer){
+        void endGame(XOInterface xoPlayer){
             if(db.endGame(xoPlayer))
             {   
                 db.updateScoreOnline(xoPlayer);
-                xoPlayer = db.getScore(xoPlayer); //getScore function in data base need to be created 
-                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED);                
+                xoPlayer = db.getScore(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
+                Gamelog finalGame = new Gamelog(xoPlayer.getGameLog().getHomePlayer(), xoPlayer.getGameLog().getOpponentPlayer());
+                sendMsgToDesiredInternalSocket(new XOInterface(Messages.GAME_ENDED_SECCUSSFULLY,finalGame));
             }
             
             else
@@ -261,7 +268,9 @@ public class Server {
                 xoPlayer.setOpearationResult(false);
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
-                this.output.println(message);     
+                this.output.println(message);   
+                Gamelog finalGame = new Gamelog(xoPlayer.getGameLog().getHomePlayer(), xoPlayer.getGameLog().getOpponentPlayer());
+                sendMsgToDesiredInternalSocket(new XOInterface(Messages.GAME_ENDED_SECCUSSFULLY,finalGame));                
             }           
        }
        

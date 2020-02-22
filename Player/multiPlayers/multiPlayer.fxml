@@ -93,7 +93,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="58.0" prefWidth="283.0">
                <children>
-                  <Button fx:id="sendButton" layoutX="210.0" layoutY="21.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="65.0" text="Send" />
+                  <Button fx:id="sendButton" defaultButton="true" layoutX="210.0" layoutY="21.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="65.0" text="Send" />
                   <TextField fx:id="textAreaMessanger" layoutX="14.0" layoutY="21.0" prefHeight="40.0" prefWidth="187.0" />
                </children>
             </AnchorPane>
@@ -107,4 +107,3 @@
       <Button layoutX="75.0" layoutY="565.0" mnemonicParsing="false" onAction="#resume" text="resume" />
    </children>
 </AnchorPane>
-

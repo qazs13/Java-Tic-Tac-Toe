@@ -4,7 +4,7 @@ import java.security.Timestamp;
 
 public class Gamelog {
     int gameId;
-    String homePlayer,opponentPlayer;
+    String homePlayer,opponentPlayer,message;
     Timestamp startGameDate,endGameDate;
     boolean isFinished;
     char[] savedGame = new char[9];
@@ -25,6 +25,13 @@ public class Gamelog {
         homePlayer=_homePlayer;
         opponentPlayer=_opponentPlayer;
     }
+    
+    public Gamelog(String homePlayer, String opponentPlayer,String message)
+    {
+        this.homePlayer = homePlayer;
+        this.opponentPlayer = opponentPlayer;
+        this.message = message;
+    }    
     
     public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer,Timestamp _startGameDate,Timestamp _endGameDate,boolean _isFinished,char[] savedGame){
         this.gameId = gameId;
@@ -56,6 +63,14 @@ public class Gamelog {
     public void setSavedGame(char[] _savedGame){
            savedGame = _savedGame;
     };
+    public void setMessage(String _message)
+    {
+        message = _message;
+    }
+    public String getMessage()
+    {
+        return message;
+    }    
     public int getGameId(){ 
         return gameId;
     };
