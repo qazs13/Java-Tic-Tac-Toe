@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import signin.SignInController;
@@ -68,7 +69,7 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private Text opponenPlayerSign;
     @FXML
-    private TextField textScreenMessanger;  /////The Main Screen Ally haytl3 3lyha el klam///////
+    private TextArea textScreenMessanger;  /////The Main Screen Ally haytl3 3lyha el klam///////
     @FXML
     private Button sendButton;  /////////Send Button///////////
     @FXML
@@ -102,7 +103,7 @@ public class MultiPlayerController implements Initializable {
         playerMoves.clear();
         opponentMoves.clear();
         movesPool.clear();
-        if(myturn){
+        if(SignInController.myTurn){
             playerSymbol = 'X';
             opponentSymbol = 'O';
         }
@@ -289,7 +290,7 @@ public class MultiPlayerController implements Initializable {
        
     public void printMessage(XOInterface xo)
     {
-        textScreenMessanger.appendText("\n"+xo.getGameLog().getMessage()+"\n");
+        textScreenMessanger.appendText(xo.getGameLog().getMessage()+"\n");
         System.out.println(textScreenMessanger.getText());
     }       
 }

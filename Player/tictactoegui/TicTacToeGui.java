@@ -24,6 +24,8 @@ import javafx.animation.PauseTransition;
 import javafx.stage.StageStyle;
 import online.*;
 import invitationpopup.*;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import multiPlayers.MultiPlayerController;
 import onlinepopup.onLinePopupController;
 //import playwithcomputer.MultiPlayerController;
@@ -226,6 +228,9 @@ public class TicTacToeGui extends Application {
 
                     Scene scenepopup = new Scene( popuppageroot);
                     Stage popupstage =  new Stage() ;
+                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+                    popupstage.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 500);
+                    popupstage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 150);
                     popupstage.hide(); //optional
                     popupstage.setScene(scenepopup); 
                     popupstage.show(); 
