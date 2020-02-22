@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Server {
+public class server {
     ServerSocket server_socket;
     Database db = new Database();
     String message = null;
@@ -29,7 +29,7 @@ public class Server {
                 new ServerHandler(internal_socket);
             }
         } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -48,7 +48,7 @@ public class Server {
                     start();
                 }
             catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(server.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
         
@@ -111,6 +111,10 @@ public class Server {
                         {
                             endGame(xoPlayer);
                         }
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.RESUME))
+                        {
+                          retrivingGameList(xoPlayer) ;
+                        }
                     }
                     
                 } catch (IOException ex) 
@@ -122,7 +126,7 @@ public class Server {
                         this.stop();                   
                         break;
                     } catch (IOException ex1) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+                        Logger.getLogger(server.class.getName()).log(Level.SEVERE, null, ex1);
                     }
                 }
             }
@@ -286,7 +290,17 @@ public class Server {
                 key.output.println(message);
             }
         }
+                   void retrivingGameList(XOInterface xoPlayer){
+           xoPlayer = db.getSavedGame(xoPlayer);
+           xoPlayer.setTypeOfOpearation(Messages.RETRIVEMOVES);
+           incomeObjectFromPlayer = new Gson();
+           message = incomeObjectFromPlayer.toJson(xoPlayer);             
+           this.output.println(message);
+
+           sendMsgToDesiredInternalSocket(xoPlayer);      
+       }
     }
+
         public void stopServer()
         {
             try {

@@ -1,5 +1,4 @@
 
-
 package tictactoegui;
 
 import com.google.gson.Gson;
@@ -126,6 +125,19 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
+                   else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES ))
+                        {
+                            Platform.runLater(() -> {
+                                try
+                                {
+                                    DisplayMoves(xoMsg);
+                                }
+                                catch (Exception ex)
+                                {
+                                    ex.printStackTrace();
+                                }
+                            });
+                        }
                         else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
                             System.err.println("gameIsNotSetted");
                         }
@@ -202,9 +214,9 @@ public class TicTacToeGui extends Application {
                     Parent  popuppageroot = popuppage.load();
                     onLinePopupController popup=popuppage.getController(); 
                     popup.getusername( xoMsg.getPlayer().getUserName());
+
                     Scene scenepopup = new Scene( popuppageroot);
                     Stage popupstage =  new Stage() ;
-                    popupstage.initStyle(StageStyle.UNDECORATED);
                     popupstage.hide(); //optional
                     popupstage.setScene(scenepopup); 
                     popupstage.show(); 
@@ -288,6 +300,11 @@ public class TicTacToeGui extends Application {
     void printGameMove(XOInterface xoMsg)
     {
         MI.printOpponentMove(xoMsg.getFieldNumber(),true);
+
+    }
+        void  DisplayMoves(XOInterface xoMsg)
+    {
+        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
     }
   
     
@@ -296,4 +313,3 @@ public class TicTacToeGui extends Application {
     }
     
 }
-

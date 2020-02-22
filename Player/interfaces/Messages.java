@@ -21,4 +21,6 @@ public interface Messages {
     public static final String GAME_ENDED = "gameEnded";
     public static final String NEW_PLAYER_LOGGEDIN_POP = "newPlayerLoggedInPOP";
     public static final String GAME_ENDDED = "gameEndded";
+      public static final String RESUME = "resume";
+          public static final String RETRIVEMOVES = "retrivemoves";
 }

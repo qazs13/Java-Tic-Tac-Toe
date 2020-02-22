@@ -27,10 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import signin.SignInController;
 
-/**
- *
- * @author E.S
- */
+
 public class MultiPlayerController implements Initializable {
 
     boolean gameEnded;
@@ -257,5 +254,37 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private void sendMessage(ActionEvent event) {
         //////////////// The Function used By the send Button
+    }
+
+
+
+    @FXML
+    private void resume(ActionEvent event) {
+          clearAll();
+         Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
+        XOInterface xoMsg = new XOInterface(Messages.RESUME, gamelog);
+        Gson g = new Gson();
+        controllerPS.println(g.toJson(xoMsg));
+    }
+       public  void displayMovesOnBoard (  char[] savedGame)
+    {
+        char s= ' ';
+        for(int i=0;i<9;i++)
+        {
+            if(Character.toString(savedGame[i]).equals("-")){
+         savedGame[i]=s ; 
+            }
+            
+        }
+        pos1.setText(Character.toString(savedGame[0]));
+        pos2.setText(Character.toString(savedGame[1]));
+        pos3.setText(Character.toString(savedGame[2]));
+        pos4.setText(Character.toString(savedGame[3]));
+        pos5.setText(Character.toString(savedGame[4]));
+        pos6.setText(Character.toString(savedGame[5]));
+        pos7.setText(Character.toString(savedGame[6]));
+        pos8.setText(Character.toString(savedGame[7]));
+        pos9.setText(Character.toString(savedGame[8]));
+       
     }
 }
