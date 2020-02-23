@@ -1,0 +1,8 @@
+.bodybg
+{
+    -fx-background-image: url("/signin/signIn.jpg");
+    -fx-background-size: cover;    
+    -fx-background-repeat: no-repeat;  
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}

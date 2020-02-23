@@ -1,0 +1,7 @@
+.bodybg
+{
+    -fx-background-image: url("/onlinepopup/pop.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+}
+
