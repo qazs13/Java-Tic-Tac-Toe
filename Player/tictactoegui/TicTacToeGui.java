@@ -33,7 +33,7 @@ import onlinepopup.onLinePopupController;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
-    PrintStream ps;
+    public static PrintStream ps;
     Socket mySocket;
     MultiPlayerController MI;
     @Override
@@ -155,6 +155,17 @@ public class TicTacToeGui extends Application {
                         {
                             MI.recieveGameEnding();
                         }
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.BACK))
+                        {
+                         
+                            Platform.runLater(() -> {
+                                try {                                    
+                                    switchToSelectionScene(stage);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            });  
+                        }
                                                 
                         else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
                             System.err.println("gameIsNotSetted");
@@ -175,13 +186,13 @@ public class TicTacToeGui extends Application {
         FXMLLoader loader=new FXMLLoader();
         loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
         Parent  root = loader.load(); 
-        SignInController singIn =loader.getController();
-        singIn.setControllerStreams(dis, ps);
+//        SignInController singIn =loader.getController();
+//        singIn.setControllerStreams(dis, ps);
         FXMLLoader signuppage=new FXMLLoader();
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent  signuppageroot = signuppage.load();
-        signUpController SU=signuppage.getController();
-        SU.setControllerStreams(dis, ps);
+//        signUpController SU=signuppage.getController();
+//        SU.setControllerStreams(dis, ps);
         Scene scene = new Scene(root);        
         stage.setScene(scene);
         stage.show();
@@ -193,8 +204,8 @@ public class TicTacToeGui extends Application {
         FXMLLoader selectionpage=new FXMLLoader();
         selectionpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
         Parent  selectionroot = selectionpage.load();
-        selectionModeController SM = selectionpage.getController();
-        SM.setControllerStreams(dis, ps);
+//        selectionModeController SM = selectionpage.getController();
+//        SM.setControllerStreams(dis, ps);
         Scene sceneselection = new Scene(selectionroot);
         stage.hide();
         stage.setScene(sceneselection);
@@ -206,7 +217,7 @@ public class TicTacToeGui extends Application {
         Parent  onLineRoot = onLinePage.load();        
         OnLineController ON=onLinePage.getController();
         ON.setAllPlayers(xoMssge);        
-        ON.setControllerStreams(dis, ps);
+//        ON.setControllerStreams(dis, ps);
         Scene sceneonline = new Scene(onLineRoot);
         stage.hide();
         stage.setScene(sceneonline);
@@ -216,8 +227,8 @@ public class TicTacToeGui extends Application {
         FXMLLoader singlePlayerPage=new FXMLLoader();
         singlePlayerPage.setLocation(getClass().getResource("/playwithcomputer/playWithComputer.fxml"));
         Parent  root = singlePlayerPage.load();
-        PlayWithComputerController SP = singlePlayerPage.getController();
-        SP.setControllerStreams(dis, ps);
+//        PlayWithComputerController SP = singlePlayerPage.getController();
+//        SP.setControllerStreams(dis, ps);
         Scene scene = new Scene(root);
         stage.hide();
         stage.setScene(scene);
@@ -261,8 +272,8 @@ public class TicTacToeGui extends Application {
             FXMLLoader signinpage = new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();
-            SignInController SI = signinpage.getController();
-            SI.setControllerStreams(dis, ps);
+//            SignInController SI = signinpage.getController();
+//            SI.setControllerStreams(dis, ps);
             Scene scenesignin = new Scene( signinpageroot);
             stage.hide();
             stage.setScene(scenesignin);
@@ -282,7 +293,7 @@ public class TicTacToeGui extends Application {
             multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
             Parent  multiPlayerPageRoot = multiPlayer.load();
             MI = multiPlayer.getController();
-            MI.setControllerStreams(dis, ps);
+//            MI.setControllerStreams(dis, ps);
             MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());    
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
             stage.hide();
@@ -303,7 +314,7 @@ public class TicTacToeGui extends Application {
                 popupInvitationpage.setLocation(getClass().getResource("/invitationpopup/invitationPopup.fxml"));
                 Parent  invitationpageroot = popupInvitationpage.load();
                 invitationPopupController popupInvitation = popupInvitationpage.getController();
-                popupInvitation.setControllerStreams(dis, ps);
+//                popupInvitation.setControllerStreams(dis, ps);
                 Scene scenepopupinvitation = new Scene( invitationpageroot);
                 Stage popupinvitationstage =  new Stage() ;
                 popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  

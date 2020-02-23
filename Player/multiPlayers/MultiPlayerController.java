@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import signin.SignInController;
+import tictactoegui.TicTacToeGui;
 
 
 public class MultiPlayerController implements Initializable {
@@ -53,7 +54,7 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private Label gameResult;
 
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     boolean myturn;
     String myUserName;
@@ -188,11 +189,11 @@ public class MultiPlayerController implements Initializable {
             }            
         }
     }
-
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
+//
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
     void reportGameEnding(){
         XOInterface xoMsgs = new XOInterface(Messages.GAME_ENDED, new Player(myUserName), new Gamelog(gameID, myUserName, opponentUserName));
         Gson g = new Gson();
@@ -207,6 +208,7 @@ public class MultiPlayerController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerPS = TicTacToeGui.ps;
         init();
         myturn = SignInController.myTurn;
     }
@@ -267,22 +269,12 @@ public class MultiPlayerController implements Initializable {
     }
     @FXML
     private void back(ActionEvent event) {
-        try
-        {
-            FXMLLoader signinpage=new FXMLLoader();
-            signinpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
-            Parent  signinpageroot = signinpage.load();
-            Scene scenesignin = new Scene( signinpageroot);
-            Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            signinstage.hide();
-            signinstage.setScene(scenesignin);
-            signinstage.show();            
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+
+        XOInterface xoMsg = new XOInterface(Messages.BACK);
+        Gson g = new Gson();
+        controllerPS.println(g.toJson(xoMsg));
     }
+
 
     @FXML
     private void sendMessage(ActionEvent event) {

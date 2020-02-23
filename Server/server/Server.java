@@ -129,6 +129,12 @@ public class Server {
                         {
                             sendMsgToDesiredInternalSocket(xoPlayer);
                         }
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.BACK))
+                        {
+                            incomeObjectFromPlayer = new Gson();
+                            message = incomeObjectFromPlayer.toJson(xoPlayer);
+                            this.output.println(message);              
+                        }
                     }
                     
                 } catch (IOException ex) 

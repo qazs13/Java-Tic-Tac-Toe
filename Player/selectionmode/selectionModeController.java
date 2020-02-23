@@ -27,24 +27,26 @@ import interfaces.*;
 import javafx.scene.text.Text;
 import levelSelection.LevelSelectionController;
 import signin.SignInController;
+import tictactoegui.TicTacToeGui;
 
 
 public class selectionModeController implements Initializable {
     
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     Stage window;
     @FXML
     private Text myName;
     @FXML
     private Text myName1;
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        controllerPS = TicTacToeGui.ps;
         myName.setText(SignInController.username);
     }    
 
@@ -64,8 +66,8 @@ public class selectionModeController implements Initializable {
         FXMLLoader levelSelection=new FXMLLoader();
         levelSelection.setLocation(getClass().getResource("/levelSelection/levelSelection.fxml"));
         Parent  levelSelectionroot = levelSelection.load();
-        LevelSelectionController lsc=levelSelection.getController();
-        lsc.setControllerStreams(controllerDIS, controllerPS);
+//        LevelSelectionController lsc=levelSelection.getController();
+//        lsc.setControllerStreams(controllerDIS, controllerPS);
         Scene scenelevelSelection = new Scene(levelSelectionroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         signupstage.hide(); 

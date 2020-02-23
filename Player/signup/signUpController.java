@@ -31,12 +31,12 @@ import signin.SignInController;
 import  tictactoegui.*;
 
 public class signUpController implements Initializable {
-        DataInputStream controllerDIS;
+//        DataInputStream controllerDIS;
     PrintStream controllerPS;
-        public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
+//        public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
 
     @FXML
     private TextField fname;
@@ -98,7 +98,7 @@ public class signUpController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
- 
+        controllerPS = TicTacToeGui.ps;
     }    
 
     @FXML

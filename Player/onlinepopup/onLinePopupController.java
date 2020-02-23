@@ -12,14 +12,14 @@ public class onLinePopupController implements Initializable {
     @FXML
     private Text poptext;
     
-    DataInputStream controllerDIS;
-    PrintStream controllerPS;
+//    DataInputStream controllerDIS;
+//    PrintStream controllerPS;
     String uname;
   
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
      public void getusername(String username){
        uname = username;
        poptext.setText(uname + " is now On-line");

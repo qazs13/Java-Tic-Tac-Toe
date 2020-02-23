@@ -26,13 +26,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import signin.SignInController;
+import tictactoegui.TicTacToeGui;
 
 /**
  *
  * @author E.S
  */
 public class OnLineController implements Initializable {
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     Player player;
     boolean inviteName = false;
@@ -51,11 +52,11 @@ public class OnLineController implements Initializable {
     @FXML
     private TableColumn<Player, String> isPlayingCol;
     
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
-    
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
+//    
     public void setAllPlayers (XOInterface xoMssge)
     {
         userNameCol.setCellValueFactory(new PropertyValueFactory<Player, String>("userName"));
@@ -72,6 +73,7 @@ public class OnLineController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        controllerPS = TicTacToeGui.ps;
 
     }    
     

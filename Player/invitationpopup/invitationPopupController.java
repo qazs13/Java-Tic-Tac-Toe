@@ -24,24 +24,25 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import signin.SignInController;
 import static signin.SignInController.username;
+import tictactoegui.TicTacToeGui;
 
 
 public class invitationPopupController implements Initializable {
     
     @FXML
     private Text poptextinvitation;
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     String homeplayer = SignInController.username;
     String opponentPlayer;
     XOInterface xoMssge;
     Stage stage;
-    
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
-    
+//    
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
+//    
     public void getOpponentplayername(XOInterface xoMssge,Stage stage){
         this.xoMssge = xoMssge;
         this.opponentPlayer = xoMssge.getGameLog().getHomePlayer();
@@ -53,6 +54,7 @@ public class invitationPopupController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        controllerPS = TicTacToeGui.ps;
         
     }   
     

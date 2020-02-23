@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import levelSelection.LevelSelectionController;
 import playwithcomputer.GFG.Move;
 import signin.SignInController;
+import tictactoegui.TicTacToeGui;
 
 /**
  *
@@ -64,7 +65,7 @@ public class PlayWithComputerController implements Initializable {
     @FXML
     private Button pos1;
 
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     String myUserName = SignInController.username;
     char playerSymbol, AISymbol;
@@ -287,10 +288,10 @@ public class PlayWithComputerController implements Initializable {
         }
     }
 
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
     void reportGameEnding(){
         Player player = new Player(myUserName);
         XOInterface xoMsg = new XOInterface(Messages.SINGLE_MODE_FINISHED, player);
@@ -299,6 +300,7 @@ public class PlayWithComputerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        controllerPS = TicTacToeGui.ps;
         init();
         userNameLabel.setText(myUserName);
     }

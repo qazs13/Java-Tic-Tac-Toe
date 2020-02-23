@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import signin.SignInController;
+import tictactoegui.TicTacToeGui;
 
 /**
  *
@@ -26,15 +27,15 @@ import signin.SignInController;
 public class LevelSelectionController implements Initializable {
     
     private Label label;
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     public static int gameLevel=0;
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-        
-    }
-    
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//        
+//    }
+//    
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
@@ -43,6 +44,7 @@ public class LevelSelectionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        controllerPS = TicTacToeGui.ps;
     }    
 
     @FXML

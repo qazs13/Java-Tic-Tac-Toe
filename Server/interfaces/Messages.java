@@ -25,4 +25,5 @@ public interface Messages {
     public static final String RETRIVEMOVES = "retriveMoves";
     public static final String Chat_between_GamePlayer = "chatMessage";   
     public static final String LOGOUT = "logout";
+    public static final String BACK = "back";
 }

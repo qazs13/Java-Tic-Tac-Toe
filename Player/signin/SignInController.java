@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import signup.*;
 import interfaces.*;
+import tictactoegui.TicTacToeGui;
 
 public class SignInController implements Initializable {
     public static String username;
@@ -42,15 +43,16 @@ public class SignInController implements Initializable {
         @FXML
     Text checkpassword;  
   Stage window;
-    DataInputStream controllerDIS;
+//    DataInputStream controllerDIS;
     PrintStream controllerPS;
-    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-        controllerDIS = dis;
-        controllerPS = ps;
-    }
-  
+//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
+//        controllerDIS = dis;
+//        controllerPS = ps;
+//    }
+//  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        controllerPS = TicTacToeGui.ps;
     }    
 
     
@@ -60,8 +62,8 @@ public class SignInController implements Initializable {
         FXMLLoader signuppage=new FXMLLoader();
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent  signuppageroot = signuppage.load();
-        signUpController su=signuppage.getController();
-        su.setControllerStreams(controllerDIS, controllerPS);
+//        signUpController su=signuppage.getController();
+//        su.setControllerStreams(controllerDIS, controllerPS);
         Scene scenesignup = new Scene(signuppageroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         signupstage.hide(); //optional
