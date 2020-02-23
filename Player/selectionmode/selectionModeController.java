@@ -36,12 +36,11 @@ public class selectionModeController implements Initializable {
     Stage window;
     @FXML
     private Text myName;
+    @FXML
+    private Text myName1;
     public void setControllerStreams(DataInputStream dis, PrintStream ps){
         controllerDIS = dis;
         controllerPS = ps;
-    }
-    public void setStage(){
-        
     }
     
     @Override
@@ -69,15 +68,33 @@ public class selectionModeController implements Initializable {
         lsc.setControllerStreams(controllerDIS, controllerPS);
         Scene scenelevelSelection = new Scene(levelSelectionroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        signupstage.hide(); //optional
+        signupstage.hide(); 
         signupstage.setScene(scenelevelSelection);
         signupstage.show();         
-        
-//        Player player=new Player();
-//        player.setUserName(SignInController.username);
-//        XOInterface xointerface =new XOInterface (Messages.PLAYING_SINGLE_MODE,player);
-//        Gson g = new Gson();
-//        String s = g.toJson(xointerface);
-//        controllerPS.println(s);
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+        try
+        {
+            Player player=new Player();
+            player.setUserName(SignInController.username);
+            XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
+            Gson g = new Gson();
+            String s = g.toJson(xointerface);
+            controllerPS.println(s);
+            FXMLLoader signinpage=new FXMLLoader();
+            signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
+            Parent  signinpageroot = signinpage.load();
+            Scene scenesignin = new Scene( signinpageroot);
+            Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            signinstage.hide();
+            signinstage.setScene(scenesignin);
+            signinstage.show();             
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }

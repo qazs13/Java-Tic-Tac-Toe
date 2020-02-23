@@ -50,9 +50,9 @@
                </font></Button>
          </children>
       </AnchorPane>
-      <Text layoutX="50.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
+      <Text layoutX="60.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
          <font>
-            <Font name="Arial" size="36.0" />
+            <Font name="Bodoni MT Bold" size="40.0" />
          </font>
       </Text>
       <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="942.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
@@ -60,9 +60,9 @@
             <Image url="@versus_vs-512.png" />
          </image>
       </ImageView>
-      <Button layoutX="895.0" layoutY="139.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
+      <Button layoutX="895.0" layoutY="139.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: transpraent;" text="Sign">
          <font>
-            <Font size="20.0" />
+            <Font name="Bodoni MT" size="25.0" />
          </font>
       </Button>
       <Text fx:id="playerSign" layoutX="951.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
@@ -72,7 +72,7 @@
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="userNameLabel" layoutX="906.0" layoutY="58.0" prefHeight="46.0" prefWidth="150.0" text="Label" textAlignment="CENTER">
          <font>
-            <Font name="Arial Bold" size="33.0" />
+            <Font name="Bodoni MT Bold" size="37.0" />
          </font>
       </Label>
       <Text fx:id="computerSign" layoutX="960.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
@@ -80,30 +80,30 @@
             <Font name="Andalus" size="58.0" />
          </font>
       </Text>
-      <Button layoutX="905.0" layoutY="485.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" text="Sign">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
       <Label layoutX="915.0" layoutY="416.0" prefHeight="46.0" prefWidth="150.0" text="Computer" textAlignment="RIGHT">
          <font>
-            <Font size="31.0" />
+            <Font name="Bodoni MT Bold" size="34.0" />
          </font>
       </Label>
-      <Button layoutX="60.0" layoutY="498.0" mnemonicParsing="false" onAction="#back" prefHeight="52.0" prefWidth="171.0" text="Back">
+      <Button layoutX="60.0" layoutY="498.0" mnemonicParsing="false" onAction="#back" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Back">
          <font>
-            <Font size="20.0" />
+            <Font name="Bodoni MT Bold" size="25.0" />
          </font>
       </Button>
-      <Button layoutX="60.0" layoutY="420.0" mnemonicParsing="false" onAction="#restart" prefHeight="52.0" prefWidth="171.0" text="Restart">
+      <Button layoutX="60.0" layoutY="420.0" mnemonicParsing="false" onAction="#restart" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Restart">
          <font>
-            <Font size="20.0" />
+            <Font name="Bodoni MT Bold" size="25.0" />
          </font>
       </Button>
       <Label fx:id="gameResult" layoutX="26.0" layoutY="189.0" prefHeight="153.0" prefWidth="239.0" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="39.0" />
+            <Font name="Bodoni MT Bold" size="40.0" />
          </font>
       </Label>
+      <Button layoutX="895.0" layoutY="485.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: transpraent;" text="Sign">
+         <font>
+            <Font name="Bodoni MT" size="25.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

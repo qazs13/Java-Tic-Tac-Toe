@@ -7,7 +7,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="179.0" prefWidth="455.0" styleClass="bodybg" stylesheets="@onlinepopup.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="invitationpopup.invitationPopupController">
    <children>
-      <Text fx:id="poptextinvitation" layoutX="117.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Text fx:id="poptextinvitation" fill="#bf5300" layoutX="37.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0">
          <font>
             <Font name="Arial Bold" size="22.0" />
          </font></Text>

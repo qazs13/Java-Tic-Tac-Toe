@@ -56,5 +56,13 @@
             <Font name="Andalus" size="40.0" />
          </font>
       </Text>
+      <Button layoutX="63.0" layoutY="519.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: orange; -fx-border-color: white;" text="Logout">
+         <font>
+            <Font name="Bodoni MT Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

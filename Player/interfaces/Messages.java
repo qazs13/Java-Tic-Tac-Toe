@@ -23,5 +23,6 @@ public interface Messages {
     public static final String NEW_PLAYER_LOGGEDIN_POP = "newPlayerLoggedInPOP";
     public static final String RESUME = "resume";
     public static final String RETRIVEMOVES = "retriveMoves";
-    public static final String Chat_between_GamePlayer = "chatMessage";    
+    public static final String Chat_between_GamePlayer = "chatMessage";   
+    public static final String LOGOUT = "logout";
 }
