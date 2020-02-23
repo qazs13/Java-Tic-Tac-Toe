@@ -5,6 +5,7 @@
  */
 package selectionmode;
 
+import interfaces.Messages;
 import com.google.gson.Gson;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import online.OnLineController;
 import signup.signUpController;
 import interfaces.*;
 import javafx.scene.text.Text;
+import levelSelection.LevelSelectionController;
 import signin.SignInController;
 
 
@@ -31,11 +33,15 @@ public class selectionModeController implements Initializable {
     
     DataInputStream controllerDIS;
     PrintStream controllerPS;
+    Stage window;
     @FXML
     private Text myName;
     public void setControllerStreams(DataInputStream dis, PrintStream ps){
         controllerDIS = dis;
         controllerPS = ps;
+    }
+    public void setStage(){
+        
     }
     
     @Override
@@ -55,12 +61,23 @@ public class selectionModeController implements Initializable {
     }
 
     @FXML
-    private void singlePlayer(ActionEvent event) {
-        Player player=new Player();
-        player.setUserName(SignInController.username);
-        XOInterface xointerface =new XOInterface (Messages.PLAYING_SINGLE_MODE,player);
-        Gson g = new Gson();
-        String s = g.toJson(xointerface);
-        controllerPS.println(s);
+    private void singlePlayer(ActionEvent event) throws IOException { 
+        FXMLLoader levelSelection=new FXMLLoader();
+        levelSelection.setLocation(getClass().getResource("/levelSelection/levelSelection.fxml"));
+        Parent  levelSelectionroot = levelSelection.load();
+        LevelSelectionController lsc=levelSelection.getController();
+        lsc.setControllerStreams(controllerDIS, controllerPS);
+        Scene scenelevelSelection = new Scene(levelSelectionroot);
+        Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        signupstage.hide(); //optional
+        signupstage.setScene(scenelevelSelection);
+        signupstage.show();         
+        
+//        Player player=new Player();
+//        player.setUserName(SignInController.username);
+//        XOInterface xointerface =new XOInterface (Messages.PLAYING_SINGLE_MODE,player);
+//        Gson g = new Gson();
+//        String s = g.toJson(xointerface);
+//        controllerPS.println(s);
     }
 }

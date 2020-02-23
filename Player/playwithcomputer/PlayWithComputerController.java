@@ -29,6 +29,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import levelSelection.LevelSelectionController;
+import playwithcomputer.GFG.Move;
 import signin.SignInController;
 
 /**
@@ -65,6 +67,72 @@ public class PlayWithComputerController implements Initializable {
     Vector<Integer> AIMoves= new Vector<>();
     Vector<Integer> movesPool= new Vector<>();
     int numOfMoves;
+    //int gameLevel=1;
+    char [][] board =              {{ '_', '_', '_' }, 
+					{ '_', '_', '_' }, 
+					{ '_', '_', '_' }};
+    int getAIMove(){
+        int intMove=0;
+        Move gridMove=GFG.findBestMove(board);
+        intMove=gridToInt(gridMove);
+        return intMove;
+    }
+    int gridToInt(Move gridMove){
+        int outInt=0;
+        if(gridMove.row==0 && gridMove.col==0)
+            outInt=1;
+        else if(gridMove.row==0 && gridMove.col==1)
+            outInt=2;
+        else if(gridMove.row==0 && gridMove.col==2)
+            outInt=3;  
+        else if(gridMove.row==1 && gridMove.col==0)
+            outInt=4;
+        else if(gridMove.row==1 && gridMove.col==1)
+            outInt=5; 
+        else if(gridMove.row==1 && gridMove.col==2)
+            outInt=6;  
+        else if(gridMove.row==2 && gridMove.col==0)
+            outInt=7; 
+        else if(gridMove.row==2 && gridMove.col==1)
+            outInt=8;
+        else if(gridMove.row==2 && gridMove.col==2)
+            outInt=9;        
+        return outInt;
+    }
+    void regMove(int position, char symbol){
+        switch (position){
+            case 1:
+                board[0][0]=symbol;
+                break;
+            case 2:
+                board[0][1]=symbol;
+                break;
+            case 3:
+                board[0][2]=symbol;
+                break;
+            case 4:
+                board[1][0]=symbol;
+                break;
+            case 5:
+                board[1][1]=symbol;
+                break;
+            case 6:
+                board[1][2]=symbol;
+                break;
+            case 7:
+                board[2][0]=symbol;
+                break;
+            case 8:
+                board[2][1]=symbol;
+                break;
+            case 9:
+                board[2][2]=symbol;
+                break;
+            default:
+                break;
+        }
+        movesPool.remove((Integer) position);
+    }    
     @FXML
     private Label userNameLabel;
     @FXML
@@ -73,6 +141,7 @@ public class PlayWithComputerController implements Initializable {
     private Text playerSign;
     @FXML
     private Text computerSign;
+  
     char getRndSymbol(){
         Random r = new Random();
         String symbols = "XO";
@@ -104,6 +173,9 @@ public class PlayWithComputerController implements Initializable {
         return winFlag;
     }
     public void init(){
+        for(int i=0; i<3; i++)
+            for(int j=0; j<3; j++)
+                board[i][j]='_';
         playerMoves.clear();
         AIMoves.clear();
         movesPool.clear();
@@ -160,6 +232,7 @@ public class PlayWithComputerController implements Initializable {
                 break;
         }
     }
+    
     @FXML
     void playMove(ActionEvent event) {
         if (!gameEnded) {
@@ -168,6 +241,7 @@ public class PlayWithComputerController implements Initializable {
             if (!movesPool.isEmpty() && movesPool.contains(playerPos)) {
                 displayMove(playerPos, playerSymbol);
                 movesPool.remove(playerPos);
+                regMove(playerPos, playerSymbol);                
                 playerMoves.add(playerPos);
                 numOfMoves++;
                 if(isWinningPosition(playerMoves)){
@@ -176,25 +250,35 @@ public class PlayWithComputerController implements Initializable {
                     gameEnded = true;
                     reportGameEnding();
                 }
-            }
-            // AI move
-            if (!movesPool.isEmpty() && !gameEnded) {
-                Integer AIPos = getRndMove();
-                displayMove(AIPos, AISymbol);
-                movesPool.remove(AIPos);
-                AIMoves.add(AIPos);
-                numOfMoves++;
-                if(isWinningPosition(AIMoves)){
-                    System.out.println("You Lose! :(");
-                    gameResult.setText("You Lose! :(");
+                                // AI move
+
+                if (!movesPool.isEmpty() && !gameEnded) {
+                    Integer AIPos=null;
+                    if(LevelSelectionController.gameLevel==0){
+                        AIPos = getRndMove();
+                    }
+                    else if(LevelSelectionController.gameLevel==1){
+                        AIPos = getAIMove();
+                        regMove(AIPos, AISymbol);                    
+                    }
+
+                    displayMove(AIPos, AISymbol);
+                    movesPool.remove(AIPos);
+                    AIMoves.add(AIPos);
+                    numOfMoves++;
+                    if(isWinningPosition(AIMoves)){
+                        System.out.println("You Lose! :(");
+                        gameResult.setText("You Lose! :(");
+                        gameEnded = true;
+                    }
+                }
+                if (numOfMoves >= 9 && !gameEnded){
+                    System.out.println("It's a draw!");
+                    gameResult.setText("It's a Draw! ");
                     gameEnded = true;
                 }
             }
-            if (numOfMoves >= 9){
-                System.out.println("It's a draw!");
-                gameResult.setText("It's a Draw! ");
-                gameEnded = true;
-            }
+
         }
     }
 
