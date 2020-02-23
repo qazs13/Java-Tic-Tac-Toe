@@ -1,3 +1,4 @@
+
 package tictactoegui;
 
 import com.google.gson.Gson;
@@ -23,6 +24,11 @@ import javafx.animation.PauseTransition;
 import javafx.stage.StageStyle;
 import online.*;
 import invitationpopup.*;
+import java.io.File;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import multiPlayers.MultiPlayerController;
 import onlinepopup.onLinePopupController;
 //import playwithcomputer.MultiPlayerController;
@@ -31,7 +37,7 @@ public class TicTacToeGui extends Application {
     DataInputStream dis;
     PrintStream ps;
     Socket mySocket;
-    static MultiPlayerController MI;
+    MultiPlayerController MI;
     @Override
     public void start(Stage stage) throws Exception {
         try{
@@ -124,14 +130,34 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
-                        else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
-                            System.err.println("gameIsNotSetted");
-                        }
+                        
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
                         {
                             Platform.runLater(() -> {
+                                String path="sound.mp3";
+                                Media media=new Media(new File(path).toURI().toString());
+                                MediaPlayer mediaplayer=new MediaPlayer(media);
+                                mediaplayer.play();
                                 PrintMessageOfChatRoom(xoMsg);                                    
                             });
+                        }                        
+                        
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES ))
+                        {
+                            Platform.runLater(() -> {
+                                try
+                                {
+                                    DisplayMoves(xoMsg);
+                                }
+                                catch (Exception ex)
+                                {
+                                    ex.printStackTrace();
+                                }
+                            });
+                        }
+                        
+                        else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
+                            System.err.println("gameIsNotSetted");
                         }
                     }
                      catch (IOException ex) {
@@ -209,12 +235,16 @@ public class TicTacToeGui extends Application {
 
                     Scene scenepopup = new Scene( popuppageroot);
                     Stage popupstage =  new Stage() ;
+                    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+                    popupstage.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 500);
+                    popupstage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 150);
+                    popupstage.initStyle(StageStyle.UNDECORATED);
                     popupstage.hide(); //optional
-                    popupstage.setScene(scenepopup); 
+                    popupstage.setScene(scenepopup);
                     popupstage.show(); 
-                    PauseTransition delay = new PauseTransition(Duration.seconds(2));
-                     delay.setOnFinished( event ->  popupstage.close() );
-                      delay.play();
+                    PauseTransition delay = new PauseTransition(Duration.seconds(4));
+                    delay.setOnFinished( event ->  popupstage.close() );
+                    delay.play();
                 } catch (IOException ex) {
                     Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -252,8 +282,7 @@ public class TicTacToeGui extends Application {
             Parent  multiPlayerPageRoot = multiPlayer.load();
             MI = multiPlayer.getController();
             MI.setControllerStreams(dis, ps);
-            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());
-           
+            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());    
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
             stage.hide();
             stage.setScene(multiPlayerScene);
@@ -278,7 +307,7 @@ public class TicTacToeGui extends Application {
                 Stage popupinvitationstage =  new Stage() ;
                 popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  
                 popupinvitationstage.hide();
-                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
+//                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
                 popupinvitationstage.setScene(scenepopupinvitation); 
                 popupinvitationstage.show(); 
               } 
@@ -292,26 +321,23 @@ public class TicTacToeGui extends Application {
     void printGameMove(XOInterface xoMsg)
     {
         MI.printOpponentMove(xoMsg.getFieldNumber(),true);
-//        try {
-//            FXMLLoader multiPlayer = new FXMLLoader();
-//            multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
-//            Parent  multiPlayerPageRoot = multiPlayer.load();
-//            MultiPlayerController MI = multiPlayer.getController();
-//            MI.setControllerStreams(dis, ps);
-//            MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getOpponentPlayer());       
-//            MI.displayMove(xoMsg.getFieldNumber(),xoMsg.getSignPlayed());
-//        } catch (IOException ex) {
-//            Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }
-  
+    
     void PrintMessageOfChatRoom(XOInterface xoMsg)
     {
+        
         MI.printMessage(xoMsg);
     }
+    
+    void  DisplayMoves(XOInterface xoMsg)
+    {
+        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
+    }
+  
+    
     public static void main(String[] args) {
         Application.launch(args);
     }
     
 }
-
