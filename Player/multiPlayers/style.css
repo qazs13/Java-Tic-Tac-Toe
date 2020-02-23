@@ -1,9 +1,10 @@
 .playingBtn{
     -fx-font-size: 64;
+    -fx-effect: dropshadow(three-pass-box, white, 30, 0.5, 0, 0);     
 }
 .resultLabel{
     -fx-font-size: 56;
-    -fx-text-alignment: center;
+    -fx-text-alignment: center;    
 }
 
 .bodybg

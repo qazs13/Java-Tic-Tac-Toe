@@ -47,7 +47,7 @@
             <Font name="Andalus" size="58.0" />
          </font></Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="homeNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" textAlignment="CENTER">
+      <Label fx:id="homeNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
@@ -62,7 +62,7 @@
             <Font name="Bodoni MT Bold" size="26.0" />
          </font>
       </Button>
-      <Label fx:id="opponentNameLabel" layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" textAlignment="RIGHT">
+      <Label fx:id="opponentNameLabel" layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="RIGHT">
          <font>
             <Font size="31.0" />
          </font>
@@ -103,7 +103,7 @@
             <Font name="Bodoni MT Black" size="41.0" />
          </font>
       </Label>
-      <Button layoutX="56.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Resume">
+      <Button layoutX="61.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Resume">
          <font>
             <Font name="Bodoni MT Bold" size="26.0" />
          </font>

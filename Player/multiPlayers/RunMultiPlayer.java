@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package multiPlayers;
 
 
@@ -11,12 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import signin.SignInController;
 
-/**
- *
- * @author THE PR!NCE
- */
+
+
 public class RunMultiPlayer extends Application {
 
     @Override
@@ -25,9 +17,7 @@ public class RunMultiPlayer extends Application {
         
         loader.setLocation(getClass().getResource("multiPlayer.fxml"));
         Parent  root = loader.load();
-//        PlayWithComputerController.init();
         Scene scene = new Scene(root);
-        
         primaryStage.setScene(scene);
         primaryStage.show();
     }

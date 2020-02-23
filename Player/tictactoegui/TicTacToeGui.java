@@ -1,4 +1,3 @@
-
 package tictactoegui;
 
 import com.google.gson.Gson;
@@ -24,11 +23,13 @@ import javafx.animation.PauseTransition;
 import javafx.stage.StageStyle;
 import online.*;
 import invitationpopup.*;
+import java.io.File;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import multiPlayers.MultiPlayerController;
 import onlinepopup.onLinePopupController;
-//import playwithcomputer.MultiPlayerController;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
@@ -129,8 +130,8 @@ public class TicTacToeGui extends Application {
                         }
                         
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
-                        {
-                            Platform.runLater(() -> {
+                        {                    
+                            Platform.runLater(() -> {                              
                                 PrintMessageOfChatRoom(xoMsg);                                    
                             });
                         }                        
@@ -319,6 +320,10 @@ public class TicTacToeGui extends Application {
     
     void PrintMessageOfChatRoom(XOInterface xoMsg)
     {
+        String path = "sound.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaplayer = new MediaPlayer(media);
+        mediaplayer.play();                  
         MI.printMessage(xoMsg);
     }
     

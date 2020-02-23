@@ -14,3 +14,8 @@
     -fx-background-repeat: no-repeat;  
     -fx-background-position: center;
 }
+
+.buttonXO
+{
+    -fx-effect: dropshadow(three-pass-box, white, 30, 0.5, 0, 0); 
+}

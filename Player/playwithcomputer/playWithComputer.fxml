@@ -12,39 +12,39 @@
    <children>
       <AnchorPane layoutX="319.0" layoutY="90.0" maxWidth="920.0" prefHeight="503.0" prefWidth="486.0" style="-fx-background-color: transparent;" styleClass="border" stylesheets="@PlayWithComputer.css" AnchorPane.leftAnchor="319.0">
          <children>
-            <Button id="7" fx:id="pos7" layoutX="3.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="7" fx:id="pos7" layoutX="3.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="8" fx:id="pos8" layoutX="167.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="8" fx:id="pos8" layoutX="167.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="9" fx:id="pos9" layoutX="334.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="9" fx:id="pos9" layoutX="334.0" layoutY="341.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="6" fx:id="pos6" layoutX="334.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="6" fx:id="pos6" layoutX="334.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="5" fx:id="pos5" layoutX="167.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="5" fx:id="pos5" layoutX="167.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="4" fx:id="pos4" layoutX="3.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="4" fx:id="pos4" layoutX="3.0" layoutY="173.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="2" fx:id="pos2" layoutX="167.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="2" fx:id="pos2" layoutX="167.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="3" fx:id="pos3" layoutX="334.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="3" fx:id="pos3" layoutX="334.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
-            <Button id="1" fx:id="pos1" layoutX="3.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+            <Button id="1" fx:id="pos1" layoutX="3.0" layoutY="9.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="buttonXO">
                <font>
                   <Font name="Andalus" size="68.0" />
                </font></Button>
@@ -70,7 +70,7 @@
             <Font name="Andalus" size="58.0" />
          </font></Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="userNameLabel" layoutX="906.0" layoutY="58.0" prefHeight="46.0" prefWidth="150.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="userNameLabel" layoutX="906.0" layoutY="58.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" text="Label" textAlignment="CENTER">
          <font>
             <Font name="Bodoni MT Bold" size="37.0" />
          </font>
@@ -80,7 +80,7 @@
             <Font name="Andalus" size="58.0" />
          </font>
       </Text>
-      <Label layoutX="915.0" layoutY="416.0" prefHeight="46.0" prefWidth="150.0" text="Computer" textAlignment="RIGHT">
+      <Label layoutX="915.0" layoutY="416.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" text="Computer" textAlignment="RIGHT">
          <font>
             <Font name="Bodoni MT Bold" size="34.0" />
          </font>
