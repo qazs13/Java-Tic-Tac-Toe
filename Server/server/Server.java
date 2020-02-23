@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import serverpage.ServerPage;
 
 public class Server {
     ServerSocket server_socket;
@@ -156,6 +158,11 @@ public class Server {
                 this.output.println(message);
                 xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGEDIN_POP);
                 sendMsgToAllInternalSocket(xoPlayer);
+                Platform.runLater(() -> {
+                    ServerPage.spc.fetchPlayers();
+
+                });
+                
             }
             else
             {

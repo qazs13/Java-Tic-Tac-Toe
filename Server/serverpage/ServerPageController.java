@@ -55,7 +55,7 @@ public class ServerPageController implements Initializable {
     @FXML
     private TableColumn<Player, String> statusCol;
     
-    void fetchPlayers(){
+    public void fetchPlayers(){
         allPlayers = db.retriveAllPlayers().Players;
         ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
         playersTable.setItems(_allPlayers);

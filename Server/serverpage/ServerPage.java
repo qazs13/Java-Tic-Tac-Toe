@@ -10,15 +10,19 @@ import javafx.stage.Stage;
 
 public class ServerPage extends Application {
 
-    
+    public static ServerPageController spc;
     @Override
     public void start(Stage stage) throws Exception {        
-        Parent root = FXMLLoader.load(getClass().getResource("ServerPage.fxml"));
-
-        Scene scene = new Scene(root);
+        //Parent root = FXMLLoader.load(getClass().getResource("ServerPage.fxml"));
+        FXMLLoader ServerPage=new FXMLLoader();
+        ServerPage.setLocation(getClass().getResource("ServerPage.fxml"));
+        Parent  ServerPageroot = ServerPage.load();
+        spc=ServerPage.getController();
+        Scene scene = new Scene(ServerPageroot);
         stage.setScene(scene);
         stage.setTitle("Server Page");
         stage.show();
+        //ServerPageController updateList
     }
 
 
