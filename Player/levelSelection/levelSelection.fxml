@@ -17,17 +17,17 @@
             <Font name="Forte" size="44.0" />
          </font>
       </Text>
-      <Button layoutX="307.0" layoutY="207.0" mnemonicParsing="false" onAction="#easyMode" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Easy">
+      <Button layoutX="307.0" layoutY="207.0" mnemonicParsing="false" onAction="#easyMode" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Easy" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Black" size="27.0" />
          </font>
       </Button>
-      <Button layoutX="305.0" layoutY="299.0" mnemonicParsing="false" onAction="#mediumMode" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Medium">
+      <Button layoutX="305.0" layoutY="299.0" mnemonicParsing="false" onAction="#mediumMode" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Medium" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Black" size="27.0" />
          </font>
       </Button>
-      <Button layoutX="304.0" layoutY="390.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="232.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Difficult">
+      <Button layoutX="304.0" layoutY="390.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="232.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Difficult" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Black" size="27.0" />
          </font>

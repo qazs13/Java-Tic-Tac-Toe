@@ -50,11 +50,11 @@ public class TicTacToeGui extends Application {
                         Gson g = new Gson();
                         XOInterface xoMsg;
                         xoMsg = g.fromJson(recievedMsg, XOInterface.class);
-                        if(xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGED_IN)){
+                        if(xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGED_IN))
+                        {
                             Platform.runLater(()->{
                                 try {
                                     switchToSelectionScene(stage);
-                                    
                                 } catch (IOException ex) {
                                     System.err.println("coudn't switch");
                                     ex.printStackTrace();
@@ -68,10 +68,12 @@ public class TicTacToeGui extends Application {
                             switchToLogIn(stage);
                             });                           
                         }
+                        
                         else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
                         {
                             switchToOnpopupscene(xoMsg);
                         }
+                        
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_INVITATION))
                         {
                            switchToInvitationpopupscene(xoMsg);
@@ -153,8 +155,7 @@ public class TicTacToeGui extends Application {
                         {
                             MI.recieveGameEnding();
                         }
-                        
-                        
+                                                
                         else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
                             System.err.println("gameIsNotSetted");
                         }
@@ -187,7 +188,8 @@ public class TicTacToeGui extends Application {
     }
     
     
-    void switchToSelectionScene(Stage stage) throws IOException{
+    void switchToSelectionScene(Stage stage) throws IOException
+    {
         FXMLLoader selectionpage=new FXMLLoader();
         selectionpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
         Parent  selectionroot = selectionpage.load();
@@ -306,7 +308,7 @@ public class TicTacToeGui extends Application {
                 Stage popupinvitationstage =  new Stage() ;
                 popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  
                 popupinvitationstage.hide();
-//                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
+                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
                 popupinvitationstage.setScene(scenepopupinvitation); 
                 popupinvitationstage.show(); 
               } 
@@ -334,6 +336,8 @@ public class TicTacToeGui extends Application {
     
     void  DisplayMoves(XOInterface xoMsg)
     {
+        System.out.println(xoMsg.getGameLog().getHomePlayer());
+        System.out.println(xoMsg.getGameLog().getOpponentPlayer());
         MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
     }
   

@@ -314,7 +314,6 @@ public class MultiPlayerController implements Initializable {
             if(Character.toString(savedGame[i]).equals("-")){
             savedGame[i]=s ; 
             }
-            
         }
         pos1.setText(Character.toString(savedGame[0]));
         pos2.setText(Character.toString(savedGame[1]));

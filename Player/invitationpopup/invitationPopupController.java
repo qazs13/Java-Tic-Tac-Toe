@@ -10,6 +10,7 @@ import interfaces.Gamelog;
 import interfaces.Messages;
 import interfaces.XOInterface;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import signin.SignInController;
@@ -60,6 +63,10 @@ public class invitationPopupController implements Initializable {
         String s = g.toJson(xoMssge);
         controllerPS.println(s);
         stage.hide();
+        String path = "game.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaplayer = new MediaPlayer(media);
+        mediaplayer.play();
     }
 
     @FXML

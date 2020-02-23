@@ -46,7 +46,6 @@
          <font>
             <Font name="Andalus" size="58.0" />
          </font></Text>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="homeNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
@@ -67,7 +66,7 @@
             <Font size="31.0" />
          </font>
       </Label>
-      <Button layoutX="61.0" layoutY="573.0" mnemonicParsing="false" onAction="#back" prefHeight="68.0" prefWidth="135.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Back">
+      <Button layoutX="61.0" layoutY="573.0" mnemonicParsing="false" onAction="#back" prefHeight="68.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Back" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold" size="26.0" />
          </font>
@@ -75,7 +74,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="gameResult" layoutX="148.0" layoutY="57.0" prefHeight="89.0" prefWidth="626.0" textAlignment="CENTER">
+      <Label fx:id="gameResult" layoutX="23.0" layoutY="203.0" prefHeight="198.0" prefWidth="245.0" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
@@ -87,7 +86,7 @@
                   <TextArea fx:id="textScreenMessanger" prefHeight="459.0" prefWidth="285.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="58.0" prefWidth="283.0" style="-fx-background-color: orange;">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="58.0" prefWidth="283.0" style="-fx-background-color: #E22C2B;">
                <children>
                   <Button fx:id="sendButton" defaultButton="true" layoutX="210.0" layoutY="21.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: white; -fx-border-color: black;" text="Send">
                      <cursor>
@@ -103,7 +102,7 @@
             <Font name="Bodoni MT Black" size="41.0" />
          </font>
       </Label>
-      <Button layoutX="61.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Resume">
+      <Button layoutX="61.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Resume" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold" size="26.0" />
          </font>

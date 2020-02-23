@@ -20,17 +20,17 @@
             <Font name="Forte" size="36.0" />
          </font>
       </Text>
-      <Button layoutX="404.0" layoutY="234.0" mnemonicParsing="false" onAction="#singlePlayer" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Single Player">
+      <Button layoutX="404.0" layoutY="234.0" mnemonicParsing="false" onAction="#singlePlayer" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Single Player" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Bodoni MT Black" size="25.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="405.0" layoutY="375.0" mnemonicParsing="false" onAction="#multiplayer" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: orange; -fx-border-color: white;" text="Multi Players">
+      <Button layoutX="405.0" layoutY="375.0" mnemonicParsing="false" onAction="#multiplayer" prefHeight="54.0" prefWidth="225.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Multi Players" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Bodoni MT Black" size="25.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -56,9 +56,9 @@
             <Font name="Andalus" size="40.0" />
          </font>
       </Text>
-      <Button layoutX="63.0" layoutY="519.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: orange; -fx-border-color: white;" text="Logout">
+      <Button layoutX="63.0" layoutY="519.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Logout" textFill="WHITE">
          <font>
-            <Font name="Bodoni MT Bold" size="24.0" />
+            <Font name="Bodoni MT Black" size="25.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />

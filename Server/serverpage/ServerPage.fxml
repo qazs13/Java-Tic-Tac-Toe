@@ -31,7 +31,7 @@
             <Font name="Sitka Banner" size="74.0" />
          </font>
       </Text>
-      <Button defaultButton="true" layoutX="184.0" layoutY="574.0" mnemonicParsing="false" onAction="#serverOn" prefHeight="80.0" prefWidth="244.0" style="-fx-background-color: orange;" styleClass=".button1" stylesheets="@style.css" text="Turn Server ON">
+      <Button defaultButton="true" layoutX="184.0" layoutY="574.0" mnemonicParsing="false" onAction="#serverOn" prefHeight="80.0" prefWidth="244.0" style="-fx-background-color: #E22C2B;" styleClass=".button1" stylesheets="@style.css" text="Turn Server ON" textFill="WHITE">
          <font>
             <Font name="Verdana Pro Bold" size="22.0" />
          </font>
@@ -49,7 +49,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button cancelButton="true" contentDisplay="RIGHT" layoutX="748.0" layoutY="574.0" mnemonicParsing="false" onAction="#serverOff" prefHeight="80.0" prefWidth="237.0" style="-fx-background-color: orange;" text="Turn Server Off">
+      <Button cancelButton="true" contentDisplay="RIGHT" layoutX="748.0" layoutY="574.0" mnemonicParsing="false" onAction="#serverOff" prefHeight="80.0" prefWidth="237.0" style="-fx-background-color: #E22C2B;" text="Turn Server Off" textFill="WHITE">
          <font>
             <Font name="Verdana Bold" size="22.0" />
          </font>
