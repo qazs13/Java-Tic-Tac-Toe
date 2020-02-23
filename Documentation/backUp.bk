@@ -109,20 +109,24 @@ $$;
 ALTER FUNCTION public.endgame(gamenumber integer) OWNER TO postgres;
 
 --
--- Name: getsaveddata(integer); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: getsaveddata(integer, text, text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.getsaveddata(gamenumber integer) RETURNS TABLE(field1 integer, field2 integer, field3 integer, field4 integer, field5 integer, field6 integer, field7 integer, field8 integer, field9 integer)
+CREATE FUNCTION public.getsaveddata(newgameid integer, name0fhome text, nameofopponent text) RETURNS TABLE(field1 integer, field2 integer, field3 integer, field4 integer, field5 integer, field6 integer, field7 integer, field8 integer, field9 integer)
     LANGUAGE plpgsql
     AS $$
 DECLARE
+gamenumber  int;
 BEGIN
+SELECT game_id  INTO gamenumber FROM gamelog WHERE isFinished  = false and homeplayer = name0fHome and opponentPlayer = nameOfOpponent OR homeplayer = nameOfOpponent and opponentPlayer = name0fHome LIMIT 1;
+DELETE FROM gamelog WHERE game_id  = newgameId;
+UPDATE players set gameid = newgameId WHERE username IN (name0fHome, nameOfOpponent);
 RETURN QUERY SELECT savedGame[1], savedGame[2], savedGame[3], savedGame[4], savedGame[5], savedGame[6], savedGame[7], savedGame[8], savedGame[9]  FROM gamelog WHERE game_id = gamenumber;
 END;
 $$;
 
 
-ALTER FUNCTION public.getsaveddata(gamenumber integer) OWNER TO postgres;
+ALTER FUNCTION public.getsaveddata(newgameid integer, name0fhome text, nameofopponent text) OWNER TO postgres;
 
 --
 -- Name: isplayeronline(text); Type: FUNCTION; Schema: public; Owner: postgres
@@ -334,6 +338,17 @@ CREATE TABLE public.gamelog (
 ALTER TABLE public.gamelog OWNER TO postgres;
 
 --
+-- Name: gamenumber; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.gamenumber (
+    game_id integer
+);
+
+
+ALTER TABLE public.gamenumber OWNER TO postgres;
+
+--
 -- Name: players; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -356,60 +371,38 @@ ALTER TABLE public.players OWNER TO postgres;
 --
 
 COPY public.gamelog (game_id, homeplayer, opponentplayer, startgamedate, endgamedate, isfinished, savedgame) FROM stdin;
-1	\N	\N	\N	\N	\N	{120,111,45,45,111,45,45,45,45}
-2	qazs13	qazs13	2020-02-20 12:13:04.902554	\N	f	{45,45,45,45,45,45,45,45,45}
-3	qazs13	qazs13	2020-02-20 12:16:28.653851	\N	f	{45,45,45,45,45,45,45,45,45}
-4	qazs13	qazs13	2020-02-20 12:23:40.480736	\N	f	{45,45,45,45,45,45,45,45,45}
-5	qazs13	qazs13	2020-02-20 12:26:18.06009	\N	f	{45,45,45,45,45,45,45,45,45}
-6	qazs13	qazs13	2020-02-20 12:29:01.067919	\N	f	{45,45,45,45,45,45,45,45,45}
-7	qazs13	qazs13	2020-02-20 12:32:42.869909	\N	f	{45,45,45,45,45,45,45,45,45}
-8	qazs13	qazs13	2020-02-20 12:34:18.000348	\N	f	{45,45,45,45,45,45,45,45,45}
-9	qazs13	qazs13	2020-02-20 12:52:49.364548	\N	f	{45,45,45,45,45,45,45,45,45}
-10	aya	qazs13	2020-02-20 17:02:27.753162	\N	f	{45,45,45,45,45,45,45,45,45}
-11	aya	qazs13	2020-02-20 17:12:54.797608	\N	f	{45,45,45,45,45,45,45,45,45}
-12	aya	qazs13	2020-02-20 17:26:13.199565	\N	f	{45,45,45,45,45,45,45,45,45}
-13	hakim	qazs13	2020-02-20 18:37:58.854854	\N	f	{45,45,45,45,45,45,45,45,45}
-14	hakim	qazs13	2020-02-20 18:38:53.002233	\N	f	{45,45,45,45,45,45,45,45,45}
-15	hakim	qazs13	2020-02-20 18:39:52.808779	\N	f	{45,45,45,45,45,45,45,45,45}
-16	aya	hakim	2020-02-20 18:43:26.16381	\N	f	{45,45,45,45,45,45,45,45,45}
-17	aya	hakim	2020-02-20 18:43:39.168664	\N	f	{45,45,45,45,45,45,45,45,45}
-18	aya	qazs13	2020-02-20 18:48:37.559229	\N	f	{45,45,45,45,45,45,45,45,45}
-19	hakim	qazs13	2020-02-20 18:57:17.012671	\N	f	{45,45,45,45,45,45,45,45,45}
-20	hakim	aya	2020-02-20 19:15:06.741653	\N	f	{45,45,45,45,45,45,45,45,45}
-21	hakim	qazs13	2020-02-20 20:08:21.417044	\N	f	{45,45,45,45,45,45,45,45,45}
-22	qazs13	aya	2020-02-20 20:40:04.684419	\N	f	{45,45,45,45,45,45,45,45,45}
-23	qazs13	aya	2020-02-20 20:42:55.93629	\N	f	{45,45,45,45,45,45,45,45,45}
-24	qazs13	aya	2020-02-20 20:47:34.83625	\N	f	{45,45,45,45,45,45,45,45,45}
-25	qazs13	qazs13	2020-02-20 20:50:05.801377	\N	f	{45,45,45,45,45,45,45,45,45}
-26	qazs13	aya	2020-02-20 20:55:00.597498	\N	f	{45,45,45,45,45,45,45,45,45}
-27	hakim	aya	2020-02-20 20:57:41.032802	\N	f	{45,45,45,45,45,45,45,45,45}
-28	qazs13	aya	2020-02-20 21:11:38.300855	\N	f	{45,45,45,45,45,45,45,45,45}
-29	qazs13	aya	2020-02-20 21:13:26.215567	\N	f	{79,45,45,45,45,45,45,45,45}
-35	hakim	qazs13	2020-02-20 22:35:56.493536	\N	f	{79,45,79,45,79,45,79,45,79}
-30	aya	qazs13	2020-02-20 21:14:41.615302	\N	f	{79,45,45,45,79,45,45,45,45}
-44	qazs13	qazs13	2020-02-20 23:14:58.047028	\N	f	{45,45,45,45,45,45,45,45,45}
-36	hakim	qazs13	2020-02-20 22:40:21.289771	\N	f	{79,45,79,45,45,45,45,45,45}
-31	aya	qazs13	2020-02-20 21:20:14.091938	\N	f	{79,79,79,45,45,79,45,45,45}
-45	qazs13	aya	2020-02-20 23:15:37.421195	\N	f	{45,45,45,45,45,45,45,45,45}
-46	qazs13	aya	2020-02-20 23:18:16.394332	\N	f	{45,45,45,45,45,45,45,45,45}
-37	qazs13	qazs13	2020-02-20 22:43:05.979318	\N	f	{45,45,79,45,79,45,45,45,45}
-49	qazs13	aya	2020-02-20 23:35:15.790701	\N	f	{79,79,79,45,45,45,45,45,45}
-32	aya	qazs13	2020-02-20 21:25:13.802939	\N	f	{79,45,45,79,79,79,45,79,79}
-38	aya	aya	2020-02-20 22:43:13.862764	\N	f	{79,45,45,45,79,79,45,79,79}
-39	qazs13	aya	2020-02-20 22:47:13.817523	\N	f	{45,45,45,45,45,45,45,45,45}
-33	hakim	aya	2020-02-20 21:29:36.690821	\N	f	{79,79,79,79,45,45,45,45,45}
-50	qazs13	aya	2020-02-20 23:36:44.885092	\N	f	{79,45,45,45,45,45,45,45,45}
-40	aya	qazs13	2020-02-20 22:51:24.483976	\N	f	{79,79,45,45,79,45,45,45,45}
-34	hakim	aya	2020-02-20 21:47:28.616658	\N	f	{79,79,45,79,79,79,45,45,45}
-52	aya	qazs13	2020-02-21 13:26:24.872453	\N	f	{79,79,79,79,79,79,79,79,79}
-47	aya	qazs13	2020-02-20 23:19:34.084814	\N	f	{79,45,79,79,79,79,79,79,79}
-53	qazs13	aya	2020-02-21 13:36:19.478563	\N	f	{45,79,45,45,45,45,45,45,45}
-41	qazs13	aya	2020-02-20 22:52:38.138628	\N	f	{79,79,79,45,79,45,79,45,79}
-42	aya	qazs13	2020-02-20 23:14:44.033644	\N	f	{45,45,45,45,45,45,45,45,45}
-43	aya	aya	2020-02-20 23:14:52.50813	\N	f	{45,45,45,45,45,45,45,45,45}
-54	qazs13	aya	2020-02-21 13:40:14.48272	\N	f	{45,45,45,45,45,45,45,45,45}
-48	aya	qazs13	2020-02-20 23:32:08.164536	\N	f	{79,79,79,45,45,45,45,45,45}
-51	qazs13	aya	2020-02-20 23:39:41.214273	\N	f	{79,79,79,79,79,79,79,79,79}
+1	2	1	2020-02-23 10:49:58.838829	\N	f	{88,45,79,45,45,45,45,45,45}
+17	2	1	2020-02-23 16:57:17.600296	2020-02-23 16:57:24.593487	t	{88,88,88,79,45,79,45,45,45}
+2	2	1	2020-02-23 15:08:09.034459	\N	f	{45,45,45,45,45,45,45,45,45}
+3	2	1	2020-02-23 15:09:43.855661	\N	f	{45,45,45,45,45,45,45,45,45}
+4	2	1	2020-02-23 15:12:34.565696	\N	f	{45,45,45,45,45,45,45,45,45}
+5	2	1	2020-02-23 15:14:08.010046	\N	f	{45,45,45,45,45,45,45,45,45}
+6	2	1	2020-02-23 15:15:58.152677	\N	f	{45,45,45,45,45,45,45,45,45}
+7	1	2	2020-02-23 15:22:07.999109	\N	f	{88,45,45,45,79,45,45,45,45}
+8	2	1	2020-02-23 16:01:15.629558	\N	f	{88,45,79,88,45,45,88,79,45}
+18	2	1	2020-02-23 17:58:33.485686	\N	f	{88,45,45,45,45,45,45,45,45}
+9	2	1	2020-02-23 16:33:31.24052	2020-02-23 16:35:45.322326	t	{88,88,88,45,79,45,79,45,45}
+10	2	1	2020-02-23 16:38:50.72596	\N	f	{45,45,45,45,45,45,45,45,45}
+11	2	1	2020-02-23 16:42:30.829792	\N	f	{45,45,45,45,45,45,45,45,45}
+19	2	1	2020-02-23 18:00:38.118246	2020-02-23 18:00:52.780483	t	{88,88,88,45,45,79,45,79,45}
+12	2	1	2020-02-23 16:45:31.90749	\N	f	{88,88,88,79,79,45,45,45,45}
+13	2	1	2020-02-23 16:49:29.615932	\N	f	{88,88,88,45,79,45,45,79,45}
+20	2	1	2020-02-23 18:16:18.454357	2020-02-23 18:16:39.722998	t	{88,88,88,45,79,79,45,45,45}
+21	2	1	2020-02-23 21:15:23.826978	\N	f	{45,45,45,45,45,45,45,45,45}
+14	2	1	2020-02-23 16:50:30.003004	\N	f	{88,88,88,45,79,79,45,45,45}
+22	1	2	2020-02-23 22:18:36.693563	\N	f	{45,45,45,45,45,45,45,45,45}
+23	2	1	2020-02-23 22:20:11.39934	\N	f	{45,45,45,45,45,45,45,45,45}
+15	2	1	2020-02-23 16:53:38.881723	\N	f	{88,88,88,45,79,79,45,45,45}
+16	2	1	2020-02-23 16:54:49.157324	2020-02-23 16:54:55.689162	t	{88,88,88,45,79,79,45,45,45}
+\.
+
+
+--
+-- Data for Name: gamenumber; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.gamenumber (game_id) FROM stdin;
+10
 \.
 
 
@@ -418,10 +411,9 @@ COPY public.gamelog (game_id, homeplayer, opponentplayer, startgamedate, endgame
 --
 
 COPY public.players (username, password, fname, lname, status, score, isplaying, gameid) FROM stdin;
-mayar	123456	mayar 	hassan	f	0	f	\N
-hakim	hakim	hakim	hakim	f	25	f	36
-aya	aya	aya	aya	f	0	f	54
-qazs13	amrwsk13	amr	walid	t	55	t	54
+amr	amr	amr	amr	f	5	f	\N
+2	2	mayar	hassan	f	100	f	23
+1	1	amr	walid	t	30	t	23
 \.
 
 
