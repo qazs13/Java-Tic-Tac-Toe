@@ -49,5 +49,13 @@
       </Text>
       <Text fx:id="checkpassword" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your Password" visible="false" />
       <Text fx:id="checkusername" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your User Name" visible="false" wrappingWidth="159.490234375" />
+      <Button layoutX="791.0" layoutY="6.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
+      <Button layoutX="749.0" layoutY="6.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

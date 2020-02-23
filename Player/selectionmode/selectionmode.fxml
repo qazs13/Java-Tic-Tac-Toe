@@ -64,5 +64,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button layoutX="910.0" layoutY="10.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
+      <Button layoutX="877.0" layoutY="10.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

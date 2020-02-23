@@ -39,5 +39,13 @@
             <Font name="Bodoni MT Bold" size="24.0" />
          </font>
       </Button>
+      <Button layoutX="1041.0" layoutY="11.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
+      <Button layoutX="998.0" layoutY="11.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
     </children>
 </AnchorPane>

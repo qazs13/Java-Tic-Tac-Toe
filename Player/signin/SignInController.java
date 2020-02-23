@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import signup.*;
 import interfaces.*;
+import javafx.application.Platform;
 import tictactoegui.TicTacToeGui;
 
 public class SignInController implements Initializable {
@@ -39,17 +40,13 @@ public class SignInController implements Initializable {
     @FXML
      PasswordField loginpassword;
     @FXML
-   Text checkusername;
-        @FXML
+    Text checkusername;
+    
+    @FXML
     Text checkpassword;  
-  Stage window;
-//    DataInputStream controllerDIS;
+    Stage window;
     PrintStream controllerPS;
-//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-//        controllerDIS = dis;
-//        controllerPS = ps;
-//    }
-//  
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controllerPS = TicTacToeGui.ps;
@@ -62,8 +59,6 @@ public class SignInController implements Initializable {
         FXMLLoader signuppage=new FXMLLoader();
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent  signuppageroot = signuppage.load();
-//        signUpController su=signuppage.getController();
-//        su.setControllerStreams(controllerDIS, controllerPS);
         Scene scenesignup = new Scene(signuppageroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         signupstage.hide(); //optional
@@ -94,7 +89,8 @@ public class SignInController implements Initializable {
                 checkpassword.setVisible(false);
             }
        }
-       else{
+       else
+       {
             checkusername.setVisible(false);
             checkpassword.setVisible(false);
             Player player=new Player();
@@ -104,17 +100,16 @@ public class SignInController implements Initializable {
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             controllerPS.println(s);
-//            SocketPlayer socket = SocketPlayer.socketPlayer;
-//            socket.sendMessageToServer(s);
-//            s = socket.ReciveMessageFromServer();
-            if (s != null)
-            {
-                System.out.println(s);
-            }
-       }
-      
+       }             
+    }
+    
+    @FXML
+    private void minimize(ActionEvent event) {
+        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
     }
 
-  
-    
+    @FXML
+    private void exit(ActionEvent event) {
+        Platform.exit();
+    }    
 }

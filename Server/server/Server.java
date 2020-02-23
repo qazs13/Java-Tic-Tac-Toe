@@ -135,6 +135,10 @@ public class Server {
                             message = incomeObjectFromPlayer.toJson(xoPlayer);
                             this.output.println(message);              
                         }
+                       else if (xoPlayer.getTypeOfOpearation().equals(Messages.LOGOUT))
+                        {
+                            removeFromHashMap(xoPlayer);                       
+                        }
                     }
                     
                 } catch (IOException ex) 
@@ -335,6 +339,22 @@ public class Server {
                 key.output.println(message);
             }
         }
+
+        void removeFromHashMap(XOInterface xoPlayer)
+        {
+            ServerHandler key = null;
+            incomeObjectFromPlayer = new Gson();
+            message = incomeObjectFromPlayer.toJson(xoPlayer);
+            for(Map.Entry kv: map.entrySet())
+            {
+                if (kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
+                {
+                    key = (ServerHandler) kv.getKey();
+                    map.remove(key);
+                }
+            }            
+        }        
+        
     }
         public void stopServer()
         {

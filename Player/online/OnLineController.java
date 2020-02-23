@@ -5,12 +5,12 @@ import interfaces.Gamelog;
 import interfaces.Messages;
 import interfaces.Player;
 import interfaces.XOInterface;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -124,4 +125,20 @@ public class OnLineController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
+    @FXML
+    private void minimize(ActionEvent event) {
+        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
+    }
+
+    @FXML
+    private void exit(ActionEvent event) {
+        Player player=new Player();
+        player.setUserName(SignInController.username);
+        XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
+        Gson g = new Gson();
+        String s = g.toJson(xointerface);
+        controllerPS.println(s);        
+        Platform.exit();
+    }          
 }

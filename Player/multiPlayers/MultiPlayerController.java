@@ -13,11 +13,7 @@ import interfaces.XOInterface;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -298,13 +294,14 @@ public class MultiPlayerController implements Initializable {
         controllerPS.println(g.toJson(xoMsg));
     }
     
-    public  void displayMovesOnBoard (char[] savedGame)
+    public void displayMovesOnBoard (char[] savedGame)
     {
-        char s= ' ';
+        char s = ' ';
         for(int i=0;i<9;i++)
         {
-            if(Character.toString(savedGame[i]).equals("-")){
-            savedGame[i]=s ; 
+            if(Character.toString(savedGame[i]).equals("-"))
+            {
+                savedGame[i] = s ; 
             }
         }
         pos1.setText(Character.toString(savedGame[0]));
@@ -322,5 +319,21 @@ public class MultiPlayerController implements Initializable {
     {
         textScreenMessanger.appendText(xo.getGameLog().getMessage()+"\n");
         System.out.println(textScreenMessanger.getText());
-    }       
+    }
+    
+    @FXML
+    private void minimize(ActionEvent event) {
+        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
+    }
+
+    @FXML
+    private void exit(ActionEvent event) {
+        Player player=new Player();
+        player.setUserName(SignInController.username);
+        XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
+        Gson g = new Gson();
+        String s = g.toJson(xointerface);
+        controllerPS.println(s);        
+        Platform.exit();
+    }         
 }

@@ -160,7 +160,7 @@
             </LinearGradient>
          </fill></Text>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="23.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="userNameLabel" layoutX="906.0" layoutY="58.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" text="Label" textAlignment="CENTER">
+      <Label fx:id="userNameLabel" layoutX="906.0" layoutY="58.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="CENTER">
          <font>
             <Font name="Bodoni MT Bold" size="37.0" />
          </font>
@@ -235,5 +235,13 @@
             </LinearGradient>
          </textFill>
       </Button>
+      <Button layoutX="1082.0" layoutY="7.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
+      <Button layoutX="1043.0" layoutY="7.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

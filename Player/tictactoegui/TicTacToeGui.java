@@ -13,10 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import playwithcomputer.PlayWithComputerController;
-import selectionmode.selectionModeController;
 import signin.*;
-import signup.*;
 import interfaces.*;
 import javafx.util.*;
 import javafx.animation.PauseTransition;
@@ -172,7 +169,17 @@ public class TicTacToeGui extends Application {
                         }
                     }
                      catch (IOException ex) {
-                        System.err.println("errrrrrr");
+                         try
+                         {
+                            this.dis.close();
+                            ps.close();
+                            this.mySocket.close();
+                            break;                             
+                         }
+                         catch (IOException exception)
+                         {
+                             exception.printStackTrace();
+                         }
                     }
 
                 }
@@ -186,15 +193,12 @@ public class TicTacToeGui extends Application {
         FXMLLoader loader=new FXMLLoader();
         loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
         Parent  root = loader.load(); 
-//        SignInController singIn =loader.getController();
-//        singIn.setControllerStreams(dis, ps);
         FXMLLoader signuppage=new FXMLLoader();
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent  signuppageroot = signuppage.load();
-//        signUpController SU=signuppage.getController();
-//        SU.setControllerStreams(dis, ps);
         Scene scene = new Scene(root);        
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
     
@@ -204,8 +208,6 @@ public class TicTacToeGui extends Application {
         FXMLLoader selectionpage=new FXMLLoader();
         selectionpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
         Parent  selectionroot = selectionpage.load();
-//        selectionModeController SM = selectionpage.getController();
-//        SM.setControllerStreams(dis, ps);
         Scene sceneselection = new Scene(selectionroot);
         stage.hide();
         stage.setScene(sceneselection);

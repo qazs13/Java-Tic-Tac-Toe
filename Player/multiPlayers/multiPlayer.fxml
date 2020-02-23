@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1319.0" style="-fx-background-color: #e0ffff;" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multiPlayers.MultiPlayerController">
+<AnchorPane id="AnchorPane" prefHeight="722.0" prefWidth="1319.0" style="-fx-background-color: #e0ffff;" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multiPlayers.MultiPlayerController">
    <children>
       <AnchorPane layoutX="281.0" layoutY="174.0" maxWidth="920.0" prefHeight="482.0" prefWidth="481.0" style="-fx-background-color: transparent;" styleClass="border" AnchorPane.leftAnchor="281.0">
          <children>
@@ -79,7 +79,7 @@
             <Font size="31.0" />
          </font>
       </Label>
-      <SplitPane dividerPositions="0.8448905109489051" layoutX="1023.0" layoutY="91.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="285.0">
+      <SplitPane dividerPositions="0.8448905109489051" layoutX="1020.0" layoutY="126.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="285.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
@@ -97,7 +97,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Label layoutX="1052.0" layoutY="25.0" prefHeight="55.0" prefWidth="228.0" text="Messanger" textAlignment="CENTER">
+      <Label layoutX="1049.0" layoutY="53.0" prefHeight="55.0" prefWidth="228.0" text="Messanger" textAlignment="CENTER">
          <font>
             <Font name="Bodoni MT Black" size="41.0" />
          </font>
@@ -109,5 +109,13 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Button layoutX="1277.0" layoutY="6.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
+      <Button layoutX="1242.0" layoutY="6.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
+         <font>
+            <Font name="Bodoni MT Black" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

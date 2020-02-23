@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package playwithcomputer;
 
 import java.io.*;
@@ -11,8 +6,6 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import interfaces.Messages;
@@ -29,9 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import levelSelection.LevelSelectionController;
@@ -65,7 +55,6 @@ public class PlayWithComputerController implements Initializable {
     @FXML
     private Button pos1;
 
-//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     String myUserName = SignInController.username;
     char playerSymbol, AISymbol;
@@ -73,7 +62,6 @@ public class PlayWithComputerController implements Initializable {
     Vector<Integer> AIMoves= new Vector<>();
     Vector<Integer> movesPool= new Vector<>();
     int numOfMoves;
-    //int gameLevel=1;
     char [][] board =              {{ '_', '_', '_' }, 
 					{ '_', '_', '_' }, 
 					{ '_', '_', '_' }};
@@ -288,10 +276,6 @@ public class PlayWithComputerController implements Initializable {
         }
     }
 
-//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-//        controllerDIS = dis;
-//        controllerPS = ps;
-//    }
     void reportGameEnding(){
         Player player = new Player(myUserName);
         XOInterface xoMsg = new XOInterface(Messages.SINGLE_MODE_FINISHED, player);
@@ -342,4 +326,20 @@ public class PlayWithComputerController implements Initializable {
         pos9.setText("");
         gameResult.setText("");
     }
+    
+    @FXML
+    private void minimize(ActionEvent event) {
+        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
+    }
+
+    @FXML
+    private void exit(ActionEvent event) {
+        Player player=new Player();
+        player.setUserName(SignInController.username);
+        XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
+        Gson g = new Gson();
+        String s = g.toJson(xointerface);
+        controllerPS.println(s);        
+        Platform.exit();
+    }      
 }

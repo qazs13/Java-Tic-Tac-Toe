@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package signup;
 
 
@@ -10,33 +5,23 @@ import com.google.gson.Gson;
 import interfaces.Messages;
 import interfaces.Player;
 import interfaces.XOInterface;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import signin.SignInController;
 import  tictactoegui.*;
 
 public class signUpController implements Initializable {
-//        DataInputStream controllerDIS;
     PrintStream controllerPS;
-//        public void setControllerStreams(DataInputStream dis, PrintStream ps){
-//        controllerDIS = dis;
-//        controllerPS = ps;
-//    }
 
     @FXML
     private TextField fname;
@@ -110,30 +95,16 @@ public class signUpController implements Initializable {
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             controllerPS.println(s);  
-//      controllerPS.println("reg msg");
-//      if (b==true)
-//      {
-////           Player player=new Player(uname.getText(),password.getText(),fname.getText(),lname.getText());
-////
-////            XOInterface xointerface =new XOInterface (Messages.REGISTER,player);
-////            Gson g = new Gson();
-////            String s = g.toJson(xointerface);
-////            controllerPS.println(s);  
-//          
-//          
-////   FXMLLoader signinpage=new FXMLLoader();
-////   signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
-////        Parent  signinpageroot = signinpage.load();
-////        SignInController FS=signinpage.getController();
-////        
-////        Scene scenesignin = new Scene( signinpageroot);
-//// Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-////            signinstage.hide(); //optional
-////            signinstage.setScene(scenesignin);
-////           signinstage.show(); 
-//       
-//      }
+    }
 
+    @FXML
+    private void minimize(ActionEvent event) {
+        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
+    }
+
+    @FXML
+    private void exit(ActionEvent event) {
+        Platform.exit();
     }
     
 }
