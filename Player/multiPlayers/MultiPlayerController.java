@@ -176,7 +176,7 @@ public class MultiPlayerController implements Initializable {
                         gameResult.setText("You Win! :D");
                         gameEnded = true;
                         myturn = false;
-    //                    reportGameEnding();
+                        reportGameEnding();
                     }
                 }
                 if (numOfMoves >= 9){
@@ -195,10 +195,17 @@ public class MultiPlayerController implements Initializable {
     }
     void reportGameEnding(){
         Player player = new Player(myUserName);
-        XOInterface xoMsg = new XOInterface(Messages.SINGLE_MODE_FINISHED, player);
+//        Player opponent = new Player(opponentUserName);
+        Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
+        XOInterface xoMsg = new XOInterface(Messages.GAME_ENDED, player, gamelog);
+        System.out.println(new Gson().toJson(xoMsg));
         controllerPS.println(new Gson().toJson(xoMsg));
     }
-
+    public void recieveGameEnding(){
+        gameEnded = true;
+        myturn = false;
+        
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         init();
@@ -239,14 +246,26 @@ public class MultiPlayerController implements Initializable {
         opponentNameLabel.setText(opponentUserName);
     }
     
-    public void printOpponentMove(int playerPos,boolean _myturn){
-        Platform.runLater(()->{
-            displayMove(playerPos, opponentSymbol);
-            myturn = _myturn;
-        });
-        
-    }
+    public void printOpponentMove(Integer playerPos,boolean _myturn){
+        if (!movesPool.isEmpty() && movesPool.contains(playerPos)) {
+            opponentMoves.add(playerPos);
+            movesPool.remove(playerPos);
+            if(!gameEnded){
+                Platform.runLater(()->{
+                    displayMove(playerPos, opponentSymbol);
+                    myturn = _myturn;
+                });
+            }
+        }
+        if(isWinningPosition(opponentMoves)){
+            System.out.println("You Lose! :D");
+            gameResult.setText("You Lose! :D");
+            gameEnded = true;
+            myturn = false;
 
+        }
+
+    }
     @FXML
     private void back(ActionEvent event) {
         try

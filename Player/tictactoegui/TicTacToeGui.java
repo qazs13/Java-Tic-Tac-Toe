@@ -149,6 +149,11 @@ public class TicTacToeGui extends Application {
                                 }
                             });
                         }
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.GAME_ENDED_SECCUSSFULLY))
+                        {
+                            MI.recieveGameEnding();
+                        }
+                        
                         
                         else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
                             System.err.println("gameIsNotSetted");
