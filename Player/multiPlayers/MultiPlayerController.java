@@ -248,7 +248,7 @@ public class MultiPlayerController implements Initializable {
 
     @FXML
     private void sendMessage(ActionEvent event) {
-        String chatingMessage = textAreaMessanger.getText();
+        String chatingMessage = "["+ SignInController.username +"]: "+ textAreaMessanger.getText();
         textAreaMessanger.setText("");
         textScreenMessanger.appendText(chatingMessage+"\n");
         Gamelog onlineGameChating = new Gamelog(myUserName, opponentUserName, chatingMessage);

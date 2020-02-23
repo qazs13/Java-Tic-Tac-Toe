@@ -73,6 +73,9 @@ public class ServerPageController implements Initializable {
     private void serverOff(ActionEvent event) {
         db.makeAllPlayersOffline();
         serverThread.stopThread();
+        allPlayers.clear();
+        ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
+        playersTable.setItems(_allPlayers);
     }
 
     @Override

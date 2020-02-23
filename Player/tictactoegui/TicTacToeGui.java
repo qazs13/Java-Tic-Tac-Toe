@@ -231,12 +231,13 @@ public class TicTacToeGui extends Application {
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
                     popupstage.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 500);
                     popupstage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 150);
+                    popupstage.initStyle(StageStyle.UNDECORATED);
                     popupstage.hide(); //optional
-                    popupstage.setScene(scenepopup); 
+                    popupstage.setScene(scenepopup);
                     popupstage.show(); 
-                    PauseTransition delay = new PauseTransition(Duration.seconds(2));
-                     delay.setOnFinished( event ->  popupstage.close() );
-                      delay.play();
+                    PauseTransition delay = new PauseTransition(Duration.seconds(4));
+                    delay.setOnFinished( event ->  popupstage.close() );
+                    delay.play();
                 } catch (IOException ex) {
                     Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -299,7 +300,7 @@ public class TicTacToeGui extends Application {
                 Stage popupinvitationstage =  new Stage() ;
                 popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  
                 popupinvitationstage.hide();
-                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
+//                popupinvitationstage.initStyle(StageStyle.UNDECORATED);
                 popupinvitationstage.setScene(scenepopupinvitation); 
                 popupinvitationstage.show(); 
               } 
