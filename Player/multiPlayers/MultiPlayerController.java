@@ -194,12 +194,11 @@ public class MultiPlayerController implements Initializable {
         controllerPS = ps;
     }
     void reportGameEnding(){
-        Player player = new Player(myUserName);
-//        Player opponent = new Player(opponentUserName);
-        Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
-        XOInterface xoMsg = new XOInterface(Messages.GAME_ENDED, player, gamelog);
-        System.out.println(new Gson().toJson(xoMsg));
-        controllerPS.println(new Gson().toJson(xoMsg));
+        XOInterface xoMsgs = new XOInterface(Messages.GAME_ENDED, new Player(myUserName), new Gamelog(gameID, myUserName, opponentUserName));
+        Gson g = new Gson();
+        String messageend = g.toJson(xoMsgs);
+        System.out.println(messageend);
+        controllerPS.println(messageend);
     }
     public void recieveGameEnding(){
         gameEnded = true;

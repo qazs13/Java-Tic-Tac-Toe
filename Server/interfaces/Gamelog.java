@@ -20,10 +20,10 @@ public class Gamelog {
         this.gameId = gameId;
     }
     
-    public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer){
+    public Gamelog(int gameId ,String homePlayer,String opponentPlayer){
         this.gameId = gameId;
-        homePlayer=_homePlayer;
-        opponentPlayer=_opponentPlayer;
+        this.homePlayer= homePlayer;
+        this.opponentPlayer= opponentPlayer;
     }
     
     public Gamelog(String homePlayer, String opponentPlayer,String message)
@@ -35,11 +35,11 @@ public class Gamelog {
     
     public Gamelog(int gameId ,String _homePlayer,String _opponentPlayer,Timestamp _startGameDate,Timestamp _endGameDate,boolean _isFinished,char[] savedGame){
         this.gameId = gameId;
-        homePlayer=_homePlayer;
-        opponentPlayer=_opponentPlayer;
-        startGameDate=_startGameDate;
-        endGameDate=_endGameDate;
-        isFinished=_isFinished; 
+        this.homePlayer=_homePlayer;
+        this.opponentPlayer=_opponentPlayer;
+        this.startGameDate=_startGameDate;
+        this.endGameDate=_endGameDate;
+        this.isFinished=_isFinished; 
         this.savedGame = savedGame;
     }
     public void setGameId(int _gameId){ 

@@ -109,10 +109,11 @@ public class Server {
                             makeMove(xoPlayer);
                         }   
                                                
-//                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.MULTI_MODE_FINISHED))
-//                        {
-//                            endGame(xoPlayer);
-//                        }
+                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.MULTI_MODE_FINISHED))
+                        {
+                            endGame(xoPlayer);
+                        }
+                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.GAME_ENDED))
                         {
                             endGame(xoPlayer);
@@ -271,8 +272,10 @@ public class Server {
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
+                /*
                 Gamelog finalGame = new Gamelog(xoPlayer.getGameLog().getHomePlayer(), xoPlayer.getGameLog().getOpponentPlayer());
                 sendMsgToDesiredInternalSocket(new XOInterface(Messages.GAME_ENDED_SECCUSSFULLY,finalGame));
+*/
             }
             
             else

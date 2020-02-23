@@ -11,7 +11,6 @@ public class XOInterface {
     private Gamelog gamelog = null;
     public Vector<Player> Players= null;
     private int fieldNumber; 
-    //String homePlayer;
     private char signPlayed;
     private Boolean moveReceived;
             
@@ -42,7 +41,7 @@ public class XOInterface {
         this.fieldNumber=fieldNumber;
         this.signPlayed=signPlayed;
     }
-    public XOInterface(String typeOfOperation,Player player,Gamelog gamlog)
+    public XOInterface(String typeOfOperation,Player player,Gamelog gamelog)
     {
         this.typeOfOperation = typeOfOperation;        
         this.player = player;
