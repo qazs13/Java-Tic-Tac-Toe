@@ -8,7 +8,7 @@ public class Database {
     
     private final String url = "jdbc:postgresql://localhost/javagame";
     private final String user = "postgres";
-    private final String password = "postgres";
+    private final String password = "amrwsk13";
 
     private Connection connection = null;
     private PreparedStatement preparedStatment = null;
@@ -435,9 +435,11 @@ public class Database {
         {
             ch = new char[9];
             connect();
-            sqlCommand = "SELECT * FROM getsaveddata(?)";
+            sqlCommand = "SELECT * FROM getsaveddata(?,?,?)";
             preparedStatment = connection.prepareStatement(sqlCommand);
             preparedStatment.setInt(1, xoPlayer.getGameLog().getGameId());
+            preparedStatment.setString(2, xoPlayer.getGameLog().getHomePlayer());
+            preparedStatment.setString(3, xoPlayer.getGameLog().getOpponentPlayer());
             result = preparedStatment.executeQuery();
             while (result.next())
             {

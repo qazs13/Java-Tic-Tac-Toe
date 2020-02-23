@@ -261,13 +261,14 @@ public class MultiPlayerController implements Initializable {
 
     @FXML
     private void resume(ActionEvent event) {
-          clearAll();
-         Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
+        clearAll();
+        Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
         XOInterface xoMsg = new XOInterface(Messages.RESUME, gamelog);
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
     }
-       public  void displayMovesOnBoard (char[] savedGame)
+    
+    public  void displayMovesOnBoard (char[] savedGame)
     {
         char s= ' ';
         for(int i=0;i<9;i++)
