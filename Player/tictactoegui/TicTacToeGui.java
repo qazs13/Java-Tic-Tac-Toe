@@ -340,18 +340,21 @@ public class TicTacToeGui extends Application {
     
     void PrintMessageOfChatRoom(XOInterface xoMsg)
     {
+        MI.printMessage(xoMsg);
         String path = "sound.mp3";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaplayer = new MediaPlayer(media);
         mediaplayer.play();                  
-        MI.printMessage(xoMsg);
+//        MI.printMessage(xoMsg);
     }
     
     void  DisplayMoves(XOInterface xoMsg)
     {
         System.out.println(xoMsg.getGameLog().getHomePlayer());
         System.out.println(xoMsg.getGameLog().getOpponentPlayer());
-        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
+        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame(),
+                                xoMsg.getGameLog().getHomePlayer(),
+                                xoMsg.getGameLog().getGameId());
     }
   
     
