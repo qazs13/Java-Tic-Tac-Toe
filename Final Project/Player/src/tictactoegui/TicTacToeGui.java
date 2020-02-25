@@ -22,6 +22,7 @@ import online.*;
 import invitationpopup.*;
 import java.io.File;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
@@ -198,7 +199,9 @@ public class TicTacToeGui extends Application {
         Parent  signuppageroot = signuppage.load();
         Scene scene = new Scene(root);        
         stage.setScene(scene);
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("  Tic Tac Toe The Game");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("tictactoegui/logo.png")); 
         stage.show();
     }
     
@@ -219,7 +222,6 @@ public class TicTacToeGui extends Application {
         Parent  onLineRoot = onLinePage.load();        
         OnLineController ON=onLinePage.getController();
         ON.setAllPlayers(xoMssge);        
-//        ON.setControllerStreams(dis, ps);
         Scene sceneonline = new Scene(onLineRoot);
         stage.hide();
         stage.setScene(sceneonline);
@@ -229,8 +231,6 @@ public class TicTacToeGui extends Application {
         FXMLLoader singlePlayerPage=new FXMLLoader();
         singlePlayerPage.setLocation(getClass().getResource("/playwithcomputer/playWithComputer.fxml"));
         Parent  root = singlePlayerPage.load();
-//        PlayWithComputerController SP = singlePlayerPage.getController();
-//        SP.setControllerStreams(dis, ps);
         Scene scene = new Scene(root);
         stage.hide();
         stage.setScene(scene);
@@ -246,14 +246,13 @@ public class TicTacToeGui extends Application {
                     Parent  popuppageroot = popuppage.load();
                     onLinePopupController popup=popuppage.getController(); 
                     popup.getusername( xoMsg.getPlayer().getUserName());
-
                     Scene scenepopup = new Scene( popuppageroot);
                     Stage popupstage =  new Stage() ;
                     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
                     popupstage.setX(primaryScreenBounds.getMinX() + primaryScreenBounds.getWidth() - 500);
                     popupstage.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 150);
                     popupstage.initStyle(StageStyle.UNDECORATED);
-                    popupstage.hide(); //optional
+                    popupstage.hide();
                     popupstage.setScene(scenepopup);
                     popupstage.show(); 
                     PauseTransition delay = new PauseTransition(Duration.seconds(4));
@@ -274,8 +273,6 @@ public class TicTacToeGui extends Application {
             FXMLLoader signinpage = new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();
-//            SignInController SI = signinpage.getController();
-//            SI.setControllerStreams(dis, ps);
             Scene scenesignin = new Scene( signinpageroot);
             stage.hide();
             stage.setScene(scenesignin);
@@ -295,7 +292,6 @@ public class TicTacToeGui extends Application {
             multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
             Parent  multiPlayerPageRoot = multiPlayer.load();
             MI = multiPlayer.getController();
-//            MI.setControllerStreams(dis, ps);
             MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());    
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);
             stage.hide();
@@ -316,7 +312,6 @@ public class TicTacToeGui extends Application {
                 popupInvitationpage.setLocation(getClass().getResource("/invitationpopup/invitationPopup.fxml"));
                 Parent  invitationpageroot = popupInvitationpage.load();
                 invitationPopupController popupInvitation = popupInvitationpage.getController();
-//                popupInvitation.setControllerStreams(dis, ps);
                 Scene scenepopupinvitation = new Scene( invitationpageroot);
                 Stage popupinvitationstage =  new Stage() ;
                 popupInvitation.getOpponentplayername(xoMsg,popupinvitationstage);                  
@@ -340,20 +335,51 @@ public class TicTacToeGui extends Application {
     
     void PrintMessageOfChatRoom(XOInterface xoMsg)
     {
+        MI.printMessage(xoMsg);
         String path = "sound.mp3";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaplayer = new MediaPlayer(media);
         mediaplayer.play();                  
-        MI.printMessage(xoMsg);
     }
     
     void  DisplayMoves(XOInterface xoMsg)
     {
         System.out.println(xoMsg.getGameLog().getHomePlayer());
         System.out.println(xoMsg.getGameLog().getOpponentPlayer());
-        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame());
+        MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame(),
+                                xoMsg.getGameLog().getHomePlayer(),
+                                xoMsg.getGameLog().getGameId());
     }
-  
+    
+    @Override
+    public void stop()
+    {
+        try
+        {
+            Player player = new Player();            
+            if (SignInController.username == null)
+            {
+               player.setUserName("null");
+            }
+            else
+            {
+                player.setUserName(SignInController.username);
+            }
+            XOInterface xointerface = new XOInterface(Messages.LOGOUT,player);
+            Gson g = new Gson();
+            String s = g.toJson(xointerface);
+            TicTacToeGui.ps.println(s);
+            System.out.println(s);        
+            ps.close();
+            dis.close();            
+            mySocket.close();            
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        Platform.exit();        
+    }
     
     public static void main(String[] args) {
         Application.launch(args);

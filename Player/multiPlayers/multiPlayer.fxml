@@ -6,9 +6,12 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -16,57 +19,102 @@
    <children>
       <AnchorPane layoutX="281.0" layoutY="174.0" maxWidth="920.0" prefHeight="482.0" prefWidth="481.0" style="-fx-background-color: transparent;" styleClass="border" AnchorPane.leftAnchor="281.0">
          <children>
-            <Button id="7" fx:id="pos7" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="8" fx:id="pos8" layoutX="164.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="9" fx:id="pos9" layoutX="331.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="6" fx:id="pos6" layoutX="331.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="5" fx:id="pos5" layoutX="164.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="4" fx:id="pos4" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="2" fx:id="pos2" layoutX="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="3" fx:id="pos3" layoutX="331.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
-            <Button id="1" fx:id="pos1" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn" />
+            <Button id="7" fx:id="pos7" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="8" fx:id="pos8" layoutX="164.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="9" fx:id="pos9" layoutX="331.0" layoutY="332.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="6" fx:id="pos6" layoutX="331.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="5" fx:id="pos5" layoutX="164.0" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="4" fx:id="pos4" layoutY="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="2" fx:id="pos2" layoutX="164.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="3" fx:id="pos3" layoutX="331.0" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="1" fx:id="pos1" mnemonicParsing="false" onAction="#playMove" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: transparent;" styleClass="playingBtn">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </AnchorPane>
       <Text layoutX="38.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
          <font>
             <Font name="Bodoni MT Bold" size="45.0" />
          </font>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Text>
-      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="869.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="100.0" layoutX="870.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@versus_vs-512.png" />
          </image>
+         <effect>
+            <Shadow color="#b20b0b" height="0.0" radius="0.0" width="0.0" />
+         </effect>
       </ImageView>
-      <Button layoutX="831.0" layoutY="137.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: transparent;" text="Sign">
+      <Text fx:id="homePlayerSign" layoutX="878.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
-            <Font name="Bodoni MT Bold" size="26.0" />
+            <Font name="Andalus" size="70.0" />
          </font>
-      </Button>
-      <Text fx:id="homePlayerSign" layoutX="878.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
-         <font>
-            <Font name="Andalus" size="58.0" />
-         </font></Text>
-      <Label fx:id="homeNameLabel" layoutX="833.0" layoutY="57.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="CENTER">
+         <fill>
+            <LinearGradient cycleMethod="REFLECT" endX="0.2815533980582524" endY="1.0" proportional="false">
+               <stops>
+                  <Stop color="#790000" />
+                  <Stop color="#790000" offset="0.007246376811594203" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill></Text>
+      <Label fx:id="homeNameLabel" layoutX="833.0" layoutY="126.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="CENTER">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Text fx:id="opponenPlayerSign" layoutX="887.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="59.08595955371857">
+      <Text fx:id="opponenPlayerSign" layoutX="878.0" layoutY="596.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O" textAlignment="CENTER" wrappingWidth="59.08595955371857">
          <font>
-            <Font name="Andalus" size="58.0" />
+            <Font name="Andalus" size="70.0" />
          </font>
+         <fill>
+            <LinearGradient endX="0.5533980582524272" endY="0.38834951456310685">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Text>
-      <Button layoutX="832.0" layoutY="484.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: transparent;" text="Sign">
-         <font>
-            <Font name="Bodoni MT Bold" size="26.0" />
-         </font>
-      </Button>
-      <Label fx:id="opponentNameLabel" layoutX="842.0" layoutY="415.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="RIGHT">
+      <Label fx:id="opponentNameLabel" layoutX="833.0" layoutY="472.0" prefHeight="46.0" prefWidth="150.0" styleClass="buttonXO" textAlignment="RIGHT">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Button layoutX="61.0" layoutY="573.0" mnemonicParsing="false" onAction="#back" prefHeight="68.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Back" textFill="WHITE">
+      <Button cancelButton="true" layoutX="61.0" layoutY="573.0" mnemonicParsing="false" onAction="#back" prefHeight="68.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Back" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold" size="26.0" />
          </font>
@@ -88,10 +136,13 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="58.0" prefWidth="283.0" style="-fx-background-color: #E22C2B;">
                <children>
-                  <Button fx:id="sendButton" defaultButton="true" layoutX="210.0" layoutY="21.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: white; -fx-border-color: black;" text="Send">
+                  <Button fx:id="sendButton" defaultButton="true" layoutX="210.0" layoutY="21.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: white; -fx-border-color: gray;" text="Send">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
+                     </cursor>
+                     <font>
+                        <Font name="Bodoni MT Black" size="16.0" />
+                     </font></Button>
                   <TextField fx:id="textAreaMessanger" layoutX="14.0" layoutY="21.0" prefHeight="40.0" prefWidth="187.0" />
                </children>
             </AnchorPane>
@@ -101,6 +152,14 @@
          <font>
             <Font name="Bodoni MT Black" size="41.0" />
          </font>
+         <textFill>
+            <LinearGradient cycleMethod="REFLECT" endX="0.058252427184465994" endY="0.529126213592233" proportional="false" startX="0.07281553398058252" startY="0.2669902912621359">
+               <stops>
+                  <Stop color="#9e0000" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
       <Button layoutX="61.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Resume" textFill="WHITE">
          <font>
@@ -109,13 +168,31 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="1277.0" layoutY="6.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
+      <Label fx:id="homeNameLabel1" layoutX="823.0" layoutY="72.0" prefHeight="46.0" prefWidth="170.0" styleClass="buttonXO" text="Home Player" textAlignment="CENTER">
          <font>
-            <Font name="Bodoni MT Black" size="15.0" />
-         </font></Button>
-      <Button layoutX="1242.0" layoutY="6.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
+            <Font name="Bodoni MT Bold" size="31.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.4223300970873786">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label fx:id="homeNameLabel11" layoutX="823.0" layoutY="401.0" prefHeight="46.0" prefWidth="170.0" styleClass="buttonXO" text="Away Player" textAlignment="CENTER">
          <font>
-            <Font name="Bodoni MT Black" size="15.0" />
-         </font></Button>
+            <Font name="Bodoni MT Bold" size="31.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.4223300970873786">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
    </children>
 </AnchorPane>

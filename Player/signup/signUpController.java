@@ -9,15 +9,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import  tictactoegui.*;
 
 public class signUpController implements Initializable {
@@ -44,7 +41,7 @@ public class signUpController implements Initializable {
     @FXML
     private Text confirmpass;
  
-    public boolean check1()
+    public boolean check()
     {
         boolean flag = true;
         checkuname.setVisible(false);
@@ -77,7 +74,6 @@ public class signUpController implements Initializable {
             confirmpass.setVisible(true); 
             flag = false;
         }
-
         return flag;
     }
     
@@ -88,23 +84,13 @@ public class signUpController implements Initializable {
 
     @FXML
     private void register(ActionEvent event) throws IOException {
-      boolean b=check1();
-       Player player=new Player(uname.getText(),password.getText(),fname.getText(),lname.getText());
-
+        if (check())
+        {
+            Player player=new Player(uname.getText(),password.getText(),fname.getText(),lname.getText());
             XOInterface xointerface =new XOInterface (Messages.REGISTER,player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
-            controllerPS.println(s);  
-    }
-
-    @FXML
-    private void minimize(ActionEvent event) {
-        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void exit(ActionEvent event) {
-        Platform.exit();
-    }
-    
+            controllerPS.println(s);            
+        }
+    }  
 }

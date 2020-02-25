@@ -8,6 +8,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -46,16 +48,16 @@
          <font>
             <Font name="Bodoni MT Bold" size="44.0" />
          </font>
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </RadialGradient>
+         </fill>
       </Text>
       <Text fx:id="checkpassword" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your Password" visible="false" />
-      <Text fx:id="checkusername" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your User Name" visible="false" wrappingWidth="159.490234375" />
-      <Button layoutX="791.0" layoutY="6.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
-         <font>
-            <Font name="Bodoni MT Black" size="15.0" />
-         </font></Button>
-      <Button layoutX="749.0" layoutY="6.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
-         <font>
-            <Font name="Bodoni MT Black" size="15.0" />
-         </font></Button>
+      <Text fx:id="checkusername" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your User Name" visible="false" wrappingWidth="159.490234375" />
    </children>
 </AnchorPane>

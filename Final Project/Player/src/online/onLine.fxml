@@ -4,6 +4,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -11,8 +13,16 @@
     <children>
       <Text layoutX="59.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tic Tac Toe">
          <font>
-            <Font name="Arial" size="35.0" />
+            <Font name="Bodoni MT" size="40.0" />
          </font>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="RED" />
+                  <Stop color="BLACK" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Text>
       <Text layoutX="413.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OnLine">
          <font>
@@ -30,22 +40,14 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="849.0" layoutY="350.0" mnemonicParsing="false" onAction="#GetNames" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Invite Player" textFill="WHITE">
+      <Button defaultButton="true" layoutX="849.0" layoutY="350.0" mnemonicParsing="false" onAction="#GetNames" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Invite Player" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold" size="24.0" />
          </font></Button>
-      <Button layoutX="849.0" layoutY="445.0" mnemonicParsing="false" onAction="#back" prefHeight="51.0" prefWidth="161.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Back" textFill="WHITE">
+      <Button cancelButton="true" layoutX="849.0" layoutY="445.0" mnemonicParsing="false" onAction="#back" prefHeight="51.0" prefWidth="161.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Back" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold" size="24.0" />
          </font>
       </Button>
-      <Button layoutX="1041.0" layoutY="11.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="X" textFill="WHITE">
-         <font>
-            <Font name="Bodoni MT Black" size="15.0" />
-         </font></Button>
-      <Button layoutX="998.0" layoutY="11.0" mnemonicParsing="false" onAction="#minimize" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="_" textFill="WHITE">
-         <font>
-            <Font name="Bodoni MT Black" size="15.0" />
-         </font></Button>
     </children>
 </AnchorPane>

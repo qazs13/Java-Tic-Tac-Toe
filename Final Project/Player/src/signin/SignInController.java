@@ -1,8 +1,6 @@
-
 package signin;
 
 import com.google.gson.Gson;
-import java.io.DataInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -20,7 +18,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import signup.*;
 import interfaces.*;
 import javafx.application.Platform;
 import tictactoegui.TicTacToeGui;
@@ -102,14 +99,4 @@ public class SignInController implements Initializable {
             controllerPS.println(s);
        }             
     }
-    
-    @FXML
-    private void minimize(ActionEvent event) {
-        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void exit(ActionEvent event) {
-        Platform.exit();
-    }    
 }

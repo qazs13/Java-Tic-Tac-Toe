@@ -70,7 +70,7 @@ public class selectionModeController implements Initializable {
             XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
-            controllerPS.println(s);
+            controllerPS.println(s);    
             FXMLLoader signinpage=new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();
@@ -85,20 +85,4 @@ public class selectionModeController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
-    @FXML
-    private void minimize(ActionEvent event) {
-        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void exit(ActionEvent event) {
-        Player player=new Player();
-        player.setUserName(SignInController.username);
-        XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
-        Gson g = new Gson();
-        String s = g.toJson(xointerface);
-        controllerPS.println(s);        
-        Platform.exit();
-    }        
 }

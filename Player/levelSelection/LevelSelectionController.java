@@ -1,4 +1,3 @@
-
 package levelSelection;
 
 import com.google.gson.Gson;
@@ -35,7 +34,6 @@ public class LevelSelectionController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         controllerPS = TicTacToeGui.ps;
     }    
 
@@ -61,12 +59,10 @@ public class LevelSelectionController implements Initializable {
         gameLevel=1;
     }
     
-    @FXML
     private void minimize(ActionEvent event) {
         ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
     }
 
-    @FXML
     private void exit(ActionEvent event) {
         Player player=new Player();
         player.setUserName(SignInController.username);

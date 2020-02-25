@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import signin.SignInController;
 import tictactoegui.TicTacToeGui;
 
@@ -50,7 +49,6 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private Label gameResult;
 
-//    DataInputStream controllerDIS;
     PrintStream controllerPS;
     boolean myturn;
     String myUserName;
@@ -76,6 +74,10 @@ public class MultiPlayerController implements Initializable {
     private Button sendButton;  /////////Send Button///////////
     @FXML
     private TextField textAreaMessanger; ///////The Input Screen Ally hakteb feha el resala//////////
+    @FXML
+    private Label homeNameLabel1;
+    @FXML
+    private Label homeNameLabel11;
 
     boolean isWinningPosition(Vector<Integer> moves){
         boolean winFlag = false;
@@ -185,11 +187,7 @@ public class MultiPlayerController implements Initializable {
             }            
         }
     }
-//
-//    public void setControllerStreams(DataInputStream dis, PrintStream ps){
-//        controllerDIS = dis;
-//        controllerPS = ps;
-//    }
+
     void reportGameEnding(){
         XOInterface xoMsgs = new XOInterface(Messages.GAME_ENDED, new Player(myUserName), new Gamelog(gameID, myUserName, opponentUserName));
         Gson g = new Gson();
@@ -210,7 +208,6 @@ public class MultiPlayerController implements Initializable {
     }
 
 
-    @FXML
     private void restart(ActionEvent event) {
         init();
         clearAll();
@@ -232,6 +229,7 @@ public class MultiPlayerController implements Initializable {
         Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
         XOInterface xoMsg = new XOInterface(Messages.PLAY_MOVE, gamelog, playerPos, playerSymbol);
         Gson g = new Gson();
+        System.out.println(g.toJson(xoMsg));
         controllerPS.println(g.toJson(xoMsg));
     }
     
@@ -242,7 +240,7 @@ public class MultiPlayerController implements Initializable {
         homeNameLabel.setText(myUserName);
         opponentNameLabel.setText(opponentUserName);
     }
-    
+
     public void printOpponentMove(Integer playerPos,boolean _myturn){
         if (!movesPool.isEmpty() && movesPool.contains(playerPos)) {
             opponentMoves.add(playerPos);
@@ -255,8 +253,8 @@ public class MultiPlayerController implements Initializable {
             }
         }
         if(isWinningPosition(opponentMoves)){
-            System.out.println("You Lose! :D");
-            gameResult.setText("You Lose! :D");
+            System.out.println("You Lose! :(");
+            gameResult.setText("You Lose! :(");
             gameEnded = true;
             myturn = false;
 
@@ -287,21 +285,43 @@ public class MultiPlayerController implements Initializable {
 
     @FXML
     private void resume(ActionEvent event) {
-        clearAll();
+        
         Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
         XOInterface xoMsg = new XOInterface(Messages.RESUME, gamelog);
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
     }
     
-    public void displayMovesOnBoard (char[] savedGame)
+    public void displayMovesOnBoard (char[] savedGame, String homePlayer, int gameID)
     {
+        this.gameID = gameID;
+        if(myUserName == homePlayer){
+            playerSymbol = 'X';
+            opponentSymbol = 'O';
+        }
+        else{
+            playerSymbol = 'O';
+            opponentSymbol = 'X';
+        }
+        clearAll();
+        init();
         char s = ' ';
         for(int i=0;i<9;i++)
         {
-            if(Character.toString(savedGame[i]).equals("-"))
+            Integer move = i+1;
+            if(savedGame[i] == '-' )
             {
                 savedGame[i] = s ; 
+            }
+            else if(savedGame[i] == playerSymbol){
+                playerMoves.add(move);
+                movesPool.remove(move);
+                myturn = true;
+            }
+            else{
+                opponentMoves.add(move);
+                movesPool.remove(move);
+                myturn = false;
             }
         }
         pos1.setText(Character.toString(savedGame[0]));
@@ -320,20 +340,4 @@ public class MultiPlayerController implements Initializable {
         textScreenMessanger.appendText(xo.getGameLog().getMessage()+"\n");
         System.out.println(textScreenMessanger.getText());
     }
-    
-    @FXML
-    private void minimize(ActionEvent event) {
-        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void exit(ActionEvent event) {
-        Player player=new Player();
-        player.setUserName(SignInController.username);
-        XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
-        Gson g = new Gson();
-        String s = g.toJson(xointerface);
-        controllerPS.println(s);        
-        Platform.exit();
-    }         
 }

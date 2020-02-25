@@ -5,25 +5,22 @@ import interfaces.Player;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import javafx.animation.PathTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import server.Server;
-/**
- *
- * @author E.S
- */
 
 class ServerThread extends Thread
 {
     Server server;
+    @Override
     public void run ()
     {
         server = new Server();
@@ -32,17 +29,17 @@ class ServerThread extends Thread
 
     public void stopThread()
     {
-        server.stopServer();
-        System.out.println(server);
-        this.stop();
+        if (server != null)
+        {
+            server.stopServer();
+        }
+        this.stop();                
     }
 }
 
 public class ServerPageController implements Initializable {
-    
     private Label label;
     ServerThread serverThread;
-    
     Database db = new Database();
     Vector<Player> allPlayers;
     
@@ -54,7 +51,10 @@ public class ServerPageController implements Initializable {
     private TableColumn<Player, Integer> scoreCol;
     @FXML
     private TableColumn<Player, String> statusCol;
-    
+    @FXML
+    private Button serverON;
+    @FXML
+    private Button serverOff;
     public void fetchPlayers(){
         allPlayers = db.retriveAllPlayers().Players;
         ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
@@ -67,6 +67,8 @@ public class ServerPageController implements Initializable {
         serverThread = new ServerThread();
         serverThread.start();
         fetchPlayers();
+        serverON.setDisable(true);
+        serverOff.setDisable(false);        
     }
     
     @FXML
@@ -76,6 +78,8 @@ public class ServerPageController implements Initializable {
         allPlayers.clear();
         ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
         playersTable.setItems(_allPlayers);
+        serverOff.setDisable(true);
+        serverON.setDisable(false);
     }
 
     @Override
@@ -86,6 +90,6 @@ public class ServerPageController implements Initializable {
         userNameCol.setStyle("-fx-alignment: CENTER;");
         scoreCol.setStyle("-fx-alignment: CENTER;");
         statusCol.setStyle("-fx-alignment: CENTER;");
-    }
-    
+        serverOff.setDisable(true);
+    }  
 }

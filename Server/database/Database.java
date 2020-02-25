@@ -157,6 +157,23 @@ public class Database {
         }
     }
     
+    public boolean makeDesirePlayerOfflien(XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            sqlCommand = "SELECT makePlayerOffline(?)";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            preparedStatment.setString(1, xoPlayer.getPlayer().getUserName());
+            return preparedStatment.execute();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
     public boolean makeAllPlayersOffline ()
     {
         try
@@ -431,6 +448,7 @@ public class Database {
     
     public XOInterface getSavedGame (XOInterface xoPlayer)
     {
+        int gameid = 0;
         try
         {
             ch = new char[9];
@@ -443,22 +461,29 @@ public class Database {
             result = preparedStatment.executeQuery();
             while (result.next())
             {
-                ch[0] = (char) result.getInt(1);
-                ch[1] = (char) result.getInt(2);
-                ch[2] = (char) result.getInt(3);
-                ch[3] = (char) result.getInt(4);
-                ch[4] = (char) result.getInt(5);
-                ch[5] = (char) result.getInt(6);
-                ch[6] = (char) result.getInt(7);
-                ch[7] = (char) result.getInt(8);
-                ch[8] = (char) result.getInt(9);
+                gameid = result.getInt(1);
+                ch[0] = (char) result.getInt(2);
+                ch[1] = (char) result.getInt(3);
+                ch[2] = (char) result.getInt(4);
+                ch[3] = (char) result.getInt(5);
+                ch[4] = (char) result.getInt(6);
+                ch[5] = (char) result.getInt(7);
+                ch[6] = (char) result.getInt(8);
+                ch[7] = (char) result.getInt(9);
+                ch[8] = (char) result.getInt(10);
             }
+            xoPlayer.getGameLog().setGameId(gameid);
             xoPlayer.getGameLog().setSavedGame(ch);
             close();
         }
         catch (SQLException ex)
         {
             ex.printStackTrace();
+            if (gameid == 0)
+            {
+                xoPlayer = createGame(xoPlayer);
+                return xoPlayer;
+            }
         }
         finally
         {

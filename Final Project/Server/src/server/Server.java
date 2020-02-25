@@ -62,7 +62,12 @@ public class Server {
                     message = input.readLine();
                     System.err.println("New Message From Player");
                     XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
-                    if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
+                    if (xoPlayer == null)
+                    {
+                        handeTheSuddenExit();
+                        break;
+                    }
+                    else if(xoPlayer.getTypeOfOpearation().equals(Messages.LOGIN))
                     {
                         PlayerLoginCheck(xoPlayer);                        
                     }
@@ -119,7 +124,6 @@ public class Server {
                             endGame(xoPlayer);
                         }
                         
-                        
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.RESUME))
                         {
                           retrivingGameList(xoPlayer) ;
@@ -137,21 +141,18 @@ public class Server {
                         }
                        else if (xoPlayer.getTypeOfOpearation().equals(Messages.LOGOUT))
                         {
-                            removeFromHashMap(xoPlayer);                       
+                            if (!xoPlayer.getPlayer().getUserName().equals("null"))
+                            {
+                                removeFromHashMap(xoPlayer);
+                                db.makeDesirePlayerOfflien(xoPlayer);                                
+                            }
                         }
                     }
                     
                 } catch (IOException ex) 
                 {
-                    try {
-                        this.input.close();
-                        this.output.close();
-                        this.playerSocket.close();
-                        this.stop();                   
-                        break;
-                    } catch (IOException ex1) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
-                    }
+                    handeTheSuddenExit();
+                    break;
                 }
             }
         }
@@ -276,16 +277,13 @@ public class Server {
         void endGame(XOInterface xoPlayer){
             if(db.endGame(xoPlayer))
             {   
+                sendMsgToDesiredInternalSocket(xoPlayer);                
                 db.updateScoreOnline(xoPlayer);
                 xoPlayer = db.getScore(xoPlayer);
                 xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
-                /*
-                Gamelog finalGame = new Gamelog(xoPlayer.getGameLog().getHomePlayer(), xoPlayer.getGameLog().getOpponentPlayer());
-                sendMsgToDesiredInternalSocket(new XOInterface(Messages.GAME_ENDED_SECCUSSFULLY,finalGame));
-*/
             }
             
             else
@@ -353,16 +351,30 @@ public class Server {
                     map.remove(key);
                 }
             }            
-        }        
-        
-    }
-        public void stopServer()
+        }
+
+        void handeTheSuddenExit ()
         {
             try {
-                System.out.println("Stopped Server");
-                server_socket.close();
-            } catch (IOException ex) {
-                System.out.println("Error in Shutdown The Server");
-            }
-        }    
+                this.input.close();
+                this.output.close();
+                this.playerSocket.close();
+                this.stop();                   
+            } 
+            catch (IOException ex1) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+            }                  
+        }
+    }
+    
+    public void stopServer()
+    {
+        try {
+            System.out.println("Stopped Server");
+            map.clear();
+            server_socket.close();
+        } catch (IOException ex) {
+            System.out.println("Error in Shutdown The Server");
+        }
+    }    
 }

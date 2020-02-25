@@ -6,12 +6,10 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import com.google.gson.Gson;
 import interfaces.Messages;
 import interfaces.Player;
 import interfaces.XOInterface;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import levelSelection.LevelSelectionController;
@@ -29,10 +29,7 @@ import playwithcomputer.GFG.Move;
 import signin.SignInController;
 import tictactoegui.TicTacToeGui;
 
-/**
- *
- * @author E.S
- */
+
 public class PlayWithComputerController implements Initializable {
     
     private Label label;
@@ -244,7 +241,7 @@ public class PlayWithComputerController implements Initializable {
                     gameEnded = true;
                     reportGameEnding();
                 }
-                                // AI move
+                // AI move
 
                 if (!movesPool.isEmpty() && !gameEnded) {
                     Integer AIPos=null;
@@ -287,6 +284,10 @@ public class PlayWithComputerController implements Initializable {
         controllerPS = TicTacToeGui.ps;
         init();
         userNameLabel.setText(myUserName);
+        String path = "game.mp3";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaplayer = new MediaPlayer(media);
+        mediaplayer.play();        
     }
 
     @FXML
@@ -326,20 +327,4 @@ public class PlayWithComputerController implements Initializable {
         pos9.setText("");
         gameResult.setText("");
     }
-    
-    @FXML
-    private void minimize(ActionEvent event) {
-        ((Stage)((Button)event.getSource()).getScene().getWindow()).setIconified(true);
-    }
-
-    @FXML
-    private void exit(ActionEvent event) {
-        Player player=new Player();
-        player.setUserName(SignInController.username);
-        XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
-        Gson g = new Gson();
-        String s = g.toJson(xointerface);
-        controllerPS.println(s);        
-        Platform.exit();
-    }      
 }
