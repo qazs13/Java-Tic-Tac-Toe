@@ -112,7 +112,7 @@ ALTER FUNCTION public.endgame(gamenumber integer) OWNER TO postgres;
 -- Name: getsaveddata(integer, text, text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.getsaveddata(newgameid integer, name0fhome text, nameofopponent text) RETURNS TABLE(field1 integer, field2 integer, field3 integer, field4 integer, field5 integer, field6 integer, field7 integer, field8 integer, field9 integer)
+CREATE FUNCTION public.getsaveddata(newgameid integer, name0fhome text, nameofopponent text) RETURNS TABLE(fieldid integer, field1 integer, field2 integer, field3 integer, field4 integer, field5 integer, field6 integer, field7 integer, field8 integer, field9 integer)
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -121,7 +121,7 @@ BEGIN
 SELECT game_id  INTO gamenumber FROM gamelog WHERE isFinished  = false and homeplayer = name0fHome and opponentPlayer = nameOfOpponent OR homeplayer = nameOfOpponent and opponentPlayer = name0fHome LIMIT 1;
 DELETE FROM gamelog WHERE game_id  = newgameId;
 UPDATE players set gameid = newgameId WHERE username IN (name0fHome, nameOfOpponent);
-RETURN QUERY SELECT savedGame[1], savedGame[2], savedGame[3], savedGame[4], savedGame[5], savedGame[6], savedGame[7], savedGame[8], savedGame[9]  FROM gamelog WHERE game_id = gamenumber;
+RETURN QUERY SELECT game_id,savedGame[1], savedGame[2], savedGame[3], savedGame[4], savedGame[5], savedGame[6], savedGame[7], savedGame[8], savedGame[9]  FROM gamelog WHERE game_id = gamenumber;
 END;
 $$;
 
@@ -199,6 +199,23 @@ $$;
 
 
 ALTER FUNCTION public.makeallplayersoffline() OWNER TO postgres;
+
+--
+-- Name: makeplayeroffline(text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.makeplayeroffline(nameofuser text) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN 
+UPDATE players SET status = false , isPlaying = false WHERE username = nameOfUser;
+RETURN true;
+END;
+$$;
+
+
+ALTER FUNCTION public.makeplayeroffline(nameofuser text) OWNER TO postgres;
 
 --
 -- Name: makeplayeronline(text); Type: FUNCTION; Schema: public; Owner: postgres
@@ -371,29 +388,6 @@ ALTER TABLE public.players OWNER TO postgres;
 --
 
 COPY public.gamelog (game_id, homeplayer, opponentplayer, startgamedate, endgamedate, isfinished, savedgame) FROM stdin;
-1	2	1	2020-02-23 10:49:58.838829	\N	f	{88,45,79,45,45,45,45,45,45}
-17	2	1	2020-02-23 16:57:17.600296	2020-02-23 16:57:24.593487	t	{88,88,88,79,45,79,45,45,45}
-2	2	1	2020-02-23 15:08:09.034459	\N	f	{45,45,45,45,45,45,45,45,45}
-3	2	1	2020-02-23 15:09:43.855661	\N	f	{45,45,45,45,45,45,45,45,45}
-4	2	1	2020-02-23 15:12:34.565696	\N	f	{45,45,45,45,45,45,45,45,45}
-5	2	1	2020-02-23 15:14:08.010046	\N	f	{45,45,45,45,45,45,45,45,45}
-6	2	1	2020-02-23 15:15:58.152677	\N	f	{45,45,45,45,45,45,45,45,45}
-7	1	2	2020-02-23 15:22:07.999109	\N	f	{88,45,45,45,79,45,45,45,45}
-8	2	1	2020-02-23 16:01:15.629558	\N	f	{88,45,79,88,45,45,88,79,45}
-18	2	1	2020-02-23 17:58:33.485686	\N	f	{88,45,45,45,45,45,45,45,45}
-9	2	1	2020-02-23 16:33:31.24052	2020-02-23 16:35:45.322326	t	{88,88,88,45,79,45,79,45,45}
-10	2	1	2020-02-23 16:38:50.72596	\N	f	{45,45,45,45,45,45,45,45,45}
-11	2	1	2020-02-23 16:42:30.829792	\N	f	{45,45,45,45,45,45,45,45,45}
-19	2	1	2020-02-23 18:00:38.118246	2020-02-23 18:00:52.780483	t	{88,88,88,45,45,79,45,79,45}
-12	2	1	2020-02-23 16:45:31.90749	\N	f	{88,88,88,79,79,45,45,45,45}
-13	2	1	2020-02-23 16:49:29.615932	\N	f	{88,88,88,45,79,45,45,79,45}
-20	2	1	2020-02-23 18:16:18.454357	2020-02-23 18:16:39.722998	t	{88,88,88,45,79,79,45,45,45}
-21	2	1	2020-02-23 21:15:23.826978	\N	f	{45,45,45,45,45,45,45,45,45}
-14	2	1	2020-02-23 16:50:30.003004	\N	f	{88,88,88,45,79,79,45,45,45}
-22	1	2	2020-02-23 22:18:36.693563	\N	f	{45,45,45,45,45,45,45,45,45}
-23	2	1	2020-02-23 22:20:11.39934	\N	f	{45,45,45,45,45,45,45,45,45}
-15	2	1	2020-02-23 16:53:38.881723	\N	f	{88,88,88,45,79,79,45,45,45}
-16	2	1	2020-02-23 16:54:49.157324	2020-02-23 16:54:55.689162	t	{88,88,88,45,79,79,45,45,45}
 \.
 
 
@@ -411,9 +405,6 @@ COPY public.gamenumber (game_id) FROM stdin;
 --
 
 COPY public.players (username, password, fname, lname, status, score, isplaying, gameid) FROM stdin;
-amr	amr	amr	amr	f	5	f	\N
-2	2	mayar	hassan	f	100	f	23
-1	1	amr	walid	t	30	t	23
 \.
 
 
