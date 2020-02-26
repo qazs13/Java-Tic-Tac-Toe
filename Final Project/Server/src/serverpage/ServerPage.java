@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -21,7 +22,9 @@ public class ServerPage extends Application {
         spc = ServerPage.getController();
         Scene scene = new Scene(ServerPageroot);
         stage.setScene(scene);
-        stage.setTitle("Server Page");
+        stage.setTitle("  Tic Tac Toe The Server");
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("serverpage/logo.png"));         
         stage.show();
     }
 
