@@ -34,9 +34,11 @@ public class TicTacToeGui extends Application {
     public static PrintStream ps;
     Socket mySocket;
     MultiPlayerController MI;
+    int counter = 0;
     @Override
     public void start(Stage stage) throws Exception {
-        try{
+        try
+        {
             mySocket = new Socket("127.0.0.1", 5000);
             dis = new DataInputStream(mySocket.getInputStream());
             ps = new PrintStream(mySocket.getOutputStream());
@@ -136,12 +138,19 @@ public class TicTacToeGui extends Application {
                             });
                         }                        
                         
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES ))
+                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES))
                         {
                             Platform.runLater(() -> {
                                 try
                                 {
-                                    DisplayMoves(xoMsg);
+                                    if (xoMsg.getGameLog().getGameId() != 0)
+                                    {
+                                        DisplayMoves(xoMsg);
+                                    }
+                                    else
+                                    {
+                                        cancelResume();
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -188,7 +197,21 @@ public class TicTacToeGui extends Application {
             
         } catch (IOException ex){
             System.err.println("Server Is Off");
-            ex.printStackTrace();
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished( event -> {
+                try {
+                    start(stage);
+                    counter ++;
+                    if (counter > 30)
+                    {
+                        Platform.exit();
+                    }                    
+                }
+                catch (Exception ex1) {
+                    ex1.printStackTrace();
+                }
+            });
+            delay.play();            
         }
 
         FXMLLoader loader=new FXMLLoader();
@@ -344,11 +367,14 @@ public class TicTacToeGui extends Application {
     
     void  DisplayMoves(XOInterface xoMsg)
     {
-        System.out.println(xoMsg.getGameLog().getHomePlayer());
-        System.out.println(xoMsg.getGameLog().getOpponentPlayer());
         MI.displayMovesOnBoard(xoMsg.getGameLog().getSavedGame(),
                                 xoMsg.getGameLog().getHomePlayer(),
                                 xoMsg.getGameLog().getGameId());
+    }
+    
+    void cancelResume()
+    {
+        MI.cancelResume();
     }
     
     @Override

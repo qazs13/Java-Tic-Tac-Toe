@@ -78,6 +78,8 @@ public class MultiPlayerController implements Initializable {
     private Label homeNameLabel1;
     @FXML
     private Label homeNameLabel11;
+    @FXML
+    private Button resume;
 
     boolean isWinningPosition(Vector<Integer> moves){
         boolean winFlag = false;
@@ -285,7 +287,6 @@ public class MultiPlayerController implements Initializable {
 
     @FXML
     private void resume(ActionEvent event) {
-        
         Gamelog gamelog = new Gamelog(gameID, myUserName, opponentUserName);
         XOInterface xoMsg = new XOInterface(Messages.RESUME, gamelog);
         Gson g = new Gson();
@@ -298,6 +299,7 @@ public class MultiPlayerController implements Initializable {
         if(myUserName == homePlayer){
             playerSymbol = 'X';
             opponentSymbol = 'O';
+            myturn = true;
         }
         else{
             playerSymbol = 'O';
@@ -339,5 +341,10 @@ public class MultiPlayerController implements Initializable {
     {
         textScreenMessanger.appendText(xo.getGameLog().getMessage()+"\n");
         System.out.println(textScreenMessanger.getText());
+    }
+    
+    public void cancelResume()
+    {
+        resume.setDisable(true);
     }
 }

@@ -22,14 +22,14 @@
                </stops>
             </LinearGradient>
          </fill></Text>
-      <Button layoutX="48.0" layoutY="111.0" mnemonicParsing="false" onAction="#accept" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Accept " textFill="WHITE">
+      <Button defaultButton="true" layoutX="48.0" layoutY="111.0" mnemonicParsing="false" onAction="#accept" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Accept " textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
             <Font name="Bodoni MT Bold" size="19.0" />
          </font></Button>
-      <Button layoutX="337.0" layoutY="111.0" mnemonicParsing="false" onAction="#decline" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Decline" textFill="WHITE">
+      <Button cancelButton="true" layoutX="337.0" layoutY="111.0" mnemonicParsing="false" onAction="#decline" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Decline" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

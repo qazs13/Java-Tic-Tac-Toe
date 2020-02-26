@@ -161,7 +161,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button layoutX="61.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Resume" textFill="WHITE">
+      <Button fx:id="resume" layoutX="61.0" layoutY="446.0" mnemonicParsing="false" onAction="#resume" prefHeight="77.0" prefWidth="135.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Resume" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Bold" size="26.0" />
          </font>

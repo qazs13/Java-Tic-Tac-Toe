@@ -18,7 +18,7 @@ public class Database {
     private Player player = null;
     private Gamelog gameLog = null;
     private XOInterface xoInterface = null;
-    boolean state = false; //Momken Nshylo 3ady
+    boolean state = false;
     char[] ch = null;
     
     private void connect ()
