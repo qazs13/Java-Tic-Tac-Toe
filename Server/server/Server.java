@@ -171,8 +171,7 @@ public class Server {
                 xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGEDIN_POP);
                 sendMsgToAllInternalSocket(xoPlayer);
                 Platform.runLater(() -> {
-                    ServerPage.spc.fetchPlayers();
-
+                ServerPage.spc.fetchPlayers();
                 });
                 
             }
@@ -194,7 +193,10 @@ public class Server {
                 xoPlayerRecived.setOpearationResult(flag);
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayerRecived);
-                this.output.println(message);              
+                this.output.println(message);
+                Platform.runLater(() -> {
+                ServerPage.spc.fetchPlayers();
+                });                
             }
             else
             {   

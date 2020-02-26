@@ -343,8 +343,8 @@ public class MultiPlayerController implements Initializable {
         System.out.println(textScreenMessanger.getText());
     }
     
-    public void cancelResume()
+    public void cancelOrEnableResume(boolean state)
     {
-        resume.setDisable(true);
+        resume.setDisable(state);
     }
 }

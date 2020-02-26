@@ -146,10 +146,11 @@ public class TicTacToeGui extends Application {
                                     if (xoMsg.getGameLog().getGameId() != 0)
                                     {
                                         DisplayMoves(xoMsg);
+                                        cancelResume(false);
                                     }
                                     else
                                     {
-                                        cancelResume();
+                                        cancelResume(true);
                                     }
                                 }
                                 catch (Exception ex)
@@ -372,9 +373,9 @@ public class TicTacToeGui extends Application {
                                 xoMsg.getGameLog().getGameId());
     }
     
-    void cancelResume()
+    void cancelResume(boolean state)
     {
-        MI.cancelResume();
+        MI.cancelOrEnableResume(state);
     }
     
     @Override
