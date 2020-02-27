@@ -20,7 +20,11 @@ import javafx.animation.PauseTransition;
 import javafx.stage.StageStyle;
 import online.*;
 import invitationpopup.*;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -35,11 +39,35 @@ public class TicTacToeGui extends Application {
     Socket mySocket;
     MultiPlayerController MI;
     int counter = 0;
+    String [] getServerSocket(){
+        String line = "";
+        try
+        {
+            
+            File file = new File("connection.conf");
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(isr);
+            line = br.readLine();
+
+            System.out.println("Read text file using InputStreamReader");
+
+            br.close();
+
+        }
+        catch (IOException ex)
+        {
+            System.err.println("server ip coudn't be loaded");
+        }
+        String[] config = line.split(":");
+        return config;
+    }
     @Override
     public void start(Stage stage) throws Exception {
         try
         {
-            mySocket = new Socket("127.0.0.1", 5000);
+            String [] config = getServerSocket();
+            mySocket = new Socket(config[0], Integer.parseInt(config[1]));
             dis = new DataInputStream(mySocket.getInputStream());
             ps = new PrintStream(mySocket.getOutputStream());
             new Thread(()->{

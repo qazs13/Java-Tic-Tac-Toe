@@ -80,16 +80,19 @@ public class OnLineController implements Initializable {
     private void GetNames(ActionEvent event) {
         if (!player.getUserName().equals(SignInController.username))
         {
-            opponentPlayer = player.getUserName();
-            Gamelog offlineGameCreation = new Gamelog();
-            offlineGameCreation.setHomePlayer(homePlayer);
-            offlineGameCreation.setOpponentPlayer(opponentPlayer);
-            XOInterface xointerface =new XOInterface (Messages.INVITE, offlineGameCreation);
-            SignInController.myTurn = true;
-            Gson g = new Gson();
-            String s = g.toJson(xointerface);
-            System.out.println(s);
-            controllerPS.println(s);             
+            if (player.getStatus() && !player.getIsPlaying())
+            {
+                opponentPlayer = player.getUserName();
+                Gamelog offlineGameCreation = new Gamelog();
+                offlineGameCreation.setHomePlayer(homePlayer);
+                offlineGameCreation.setOpponentPlayer(opponentPlayer);
+                XOInterface xointerface =new XOInterface (Messages.INVITE, offlineGameCreation);
+                SignInController.myTurn = true;
+                Gson g = new Gson();
+                String s = g.toJson(xointerface);
+                System.out.println(s);
+                controllerPS.println(s);  
+            }           
         }
     }
 
@@ -116,4 +119,14 @@ public class OnLineController implements Initializable {
             ex.printStackTrace();
         }
     } 
+
+    @FXML
+    private void refreshList(ActionEvent event) {
+        Player player = new Player();
+        player.setUserName(SignInController.username); 
+        XOInterface xointerface =new XOInterface (Messages.GET_PLAYERS,player);
+        Gson g = new Gson();
+        String s = g.toJson(xointerface);
+        controllerPS.println(s);
+    }
 }
