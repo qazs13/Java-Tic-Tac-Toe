@@ -10,6 +10,7 @@ import interfaces.Gamelog;
 import interfaces.Messages;
 import interfaces.Player;
 import interfaces.XOInterface;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -177,10 +178,10 @@ public class MultiPlayerController implements Initializable {
                         gameResult.setText("You Win! :D");
                         gameEnded = true;
                         myturn = false;
-                        reportGameEnding();
+                        //reportGameEnding();
                     }
                 }
-                if (numOfMoves >= 9){
+                if (!gameEnded && numOfMoves >= 9){
                     System.out.println("It's a draw!");
                     gameResult.setText("It's a Draw! ");
                     gameEnded = true;
@@ -239,19 +240,31 @@ public class MultiPlayerController implements Initializable {
         this.gameID = gameID;
         this.myUserName = myUserName;
         this.opponentUserName = opponentUserName;
-        homeNameLabel.setText(myUserName);
-        opponentNameLabel.setText(opponentUserName);
+        if(myturn){
+            Platform.runLater(() -> {
+                homeNameLabel.setText(myUserName);
+                opponentNameLabel.setText(opponentUserName);      
+            });
+        }
+        else{
+            Platform.runLater(() -> {
+                homeNameLabel.setText(opponentUserName);
+                opponentNameLabel.setText(myUserName);      
+            });
+        }
+
+
     }
 
     public void printOpponentMove(Integer playerPos,boolean _myturn){
         if (!movesPool.isEmpty() && movesPool.contains(playerPos)) {
             opponentMoves.add(playerPos);
             movesPool.remove(playerPos);
+            numOfMoves++;
             if(!gameEnded){
-                Platform.runLater(()->{
-                    displayMove(playerPos, opponentSymbol);
-                    myturn = _myturn;
-                });
+                displayMove(playerPos, opponentSymbol);
+                myturn = _myturn;
+
             }
         }
         if(isWinningPosition(opponentMoves)){
@@ -260,6 +273,12 @@ public class MultiPlayerController implements Initializable {
             gameEnded = true;
             myturn = false;
 
+        }
+        if (!gameEnded && numOfMoves >= 9){
+            System.out.println("It's a draw!");
+            gameResult.setText("It's a Draw! ");
+            gameEnded = true;
+            myturn = false;
         }
 
     }
