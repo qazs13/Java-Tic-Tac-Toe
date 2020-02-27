@@ -3,12 +3,18 @@ package database;
 
 import java.sql.*;
 import interfaces.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class Database {
     
-    private final String url = "jdbc:postgresql://localhost/javagame";
-    private final String user = "postgres";
-    private final String password = "amrwsk13";
+    private String url;// = "jdbc:postgresql://localhost/javagame";
+    private String user;// = "postgres";
+    private String password;// = "amrwsk13";
 
     private Connection connection = null;
     private PreparedStatement preparedStatment = null;
@@ -20,15 +26,42 @@ public class Database {
     private XOInterface xoInterface = null;
     boolean state = false;
     char[] ch = null;
-    
-    private void connect ()
-    {
+    String [] getDatabaseConnConfig(){
+        String line = "";
         try
         {
+            
+            File file = new File("server_config.conf");
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(isr);
+            line = br.readLine();
+
+            System.out.println("Read text file using InputStreamReader");
+
+            br.close();
+
+        }
+        catch (IOException ex)
+        {
+            System.err.println("server ip coudn't be loaded");
+        }
+        String[] config = line.split("::");
+        return config;
+    }
+    private void connect ()
+    {
+        String[] config = getDatabaseConnConfig();
+        url = config[0];
+        user = config[1];
+        password = config[2];
+        try
+        {
+            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url,user,password);
             System.err.println("Connection is made successfully");
         }
-        catch (SQLException ex)
+        catch (ClassNotFoundException | SQLException ex)
         {
             ex.printStackTrace();
         }

@@ -3,11 +3,16 @@ package server;
 import com.google.gson.Gson;
 import interfaces.*;
 import database.Database;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -19,12 +24,36 @@ public class Server {
     ServerSocket server_socket;
     Database db = new Database();
     String message = null;
+    Integer serverPort = getServerPort();
     static HashMap<ServerHandler,String> map=new HashMap<>();
     Gson incomeObjectFromPlayer = null;
+        Integer getServerPort(){
+        String line = "";
+        try
+        {
+            
+            File file = new File("server_config.conf");
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(isr);
+            line = br.readLine();
+
+            System.out.println("Read text file using InputStreamReader");
+
+            br.close();
+
+        }
+        catch (IOException ex)
+        {
+            System.err.println("server ip coudn't be loaded");
+        }
+        String[] config = line.split("::");
+        return Integer.parseInt(config[3]);
+    }
     public void runServer(){
         try {
             System.err.println("Server is Opened Succesfully");
-            server_socket = new ServerSocket(5000);
+            server_socket = new ServerSocket(serverPort);
             while(true){
                 Socket internal_socket=server_socket.accept();
                 System.out.println("New Player Is Here");
