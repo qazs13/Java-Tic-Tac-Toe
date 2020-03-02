@@ -118,7 +118,7 @@ CREATE FUNCTION public.getsaveddata(newgameid integer, name0fhome text, nameofop
 DECLARE
 gamenumber  int;
 BEGIN
-SELECT game_id INTO gamenumber  FROM gamelog WHERE isFinished  = false and homeplayer in (name0fHome,nameofopponent) and opponentplayer in (name0fHome,nameofopponent) LIMIT 1;
+SELECT game_id INTO gamenumber  FROM gamelog WHERE isFinished  = false and homeplayer in (name0fHome,nameofopponent) and opponentplayer in (name0fHome,nameofopponent) and (savedgame @> ARRAY[88] OR savedgame @> ARRAY[79] ) LIMIT 1;
 IF gamenumber  > 0 THEN
 UPDATE players set gameid = newgameId WHERE username IN (name0fHome,nameOfOpponent);
 RETURN QUERY SELECT game_id,savedGame[1], savedGame[2], savedGame[3], savedGame[4], savedGame[5], savedGame[6], savedGame[7], savedGame[8], savedGame[9]  FROM gamelog WHERE game_id = gamenumber;
