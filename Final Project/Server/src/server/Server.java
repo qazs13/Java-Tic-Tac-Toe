@@ -170,6 +170,13 @@ public class Server {
                                 removeFromHashMap(xoPlayer);
                                 db.makeDesirePlayerOfflien(xoPlayer);                                
                             }
+                            else
+                            {
+                                this.input.close();
+                                this.output.close();
+                                this.playerSocket.close();
+                                System.err.println("The Annynomus Client is Closed");
+                            }
                         }
                     }
                     

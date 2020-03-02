@@ -414,12 +414,9 @@ public class TicTacToeGui extends Application {
             Player player = new Player();            
             if (SignInController.username == null)
             {
-               player.setUserName("null");
+               SignInController.username = "null";
             }
-            else
-            {
-                player.setUserName(SignInController.username);
-            }
+            player.setUserName(SignInController.username);
             XOInterface xointerface = new XOInterface(Messages.LOGOUT,player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);

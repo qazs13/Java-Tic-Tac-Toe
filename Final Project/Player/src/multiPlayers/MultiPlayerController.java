@@ -112,11 +112,13 @@ public class MultiPlayerController implements Initializable
         if(SignInController.myTurn){
             playerSymbol = 'X';
             opponentSymbol = 'O';
+            gameResult.setText("Your Turn");
         }
         else
         {
             playerSymbol = 'O';
-            opponentSymbol = 'X';        
+            opponentSymbol = 'X';
+            gameResult.setText("Their Turn");
         }
         for(int i=0; i<9; i++)
             movesPool.add(i+1);
@@ -172,6 +174,7 @@ public class MultiPlayerController implements Initializable
                     sendMyMove();
                     numOfMoves++;
                     myturn = false;
+                    gameResult.setText("Their Turn");
                     if(isWinningPosition(playerMoves)){
                         System.out.println("You win! :D");
                         gameResult.setText("You Win! :D");
@@ -202,7 +205,6 @@ public class MultiPlayerController implements Initializable
     public void recieveGameEnding(){
         gameEnded = true;
         myturn = false;
-        
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -244,13 +246,15 @@ public class MultiPlayerController implements Initializable
         if(myturn){
             Platform.runLater(() -> {
                 homeNameLabel.setText(myUserName);
-                opponentNameLabel.setText(opponentUserName);      
+                opponentNameLabel.setText(opponentUserName);
+                gameResult.setText("Your Turn");
             });
         }
         else{
             Platform.runLater(() -> {
                 homeNameLabel.setText(opponentUserName);
-                opponentNameLabel.setText(myUserName);      
+                opponentNameLabel.setText(myUserName);
+                gameResult.setText("Their Turn");
             });
         }
 
@@ -265,7 +269,14 @@ public class MultiPlayerController implements Initializable
             if(!gameEnded){
                 displayMove(playerPos, opponentSymbol);
                 myturn = _myturn;
-
+                if (myturn)
+                {
+                    gameResult.setText("Your Turn");
+                }
+                else
+                {
+                    gameResult.setText("Their Turn");
+                }
             }
         }
         if(isWinningPosition(opponentMoves)){
@@ -273,7 +284,6 @@ public class MultiPlayerController implements Initializable
             gameResult.setText("You Lose! :(");
             gameEnded = true;
             myturn = false;
-
         }
         if (!gameEnded && numOfMoves >= 9){
             System.out.println("It's a draw!");
@@ -325,6 +335,7 @@ public class MultiPlayerController implements Initializable
             opponentSymbol = 'O';
             opponenPlayerSign.setText(Character.toString(opponentSymbol));
             myturn = true;
+            gameResult.setText("Your Turn");
         }
         else
         {
