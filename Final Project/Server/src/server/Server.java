@@ -309,10 +309,10 @@ public class Server {
             if(xoPlayer.getOpearationResult())
             {   
                 db.endGame(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                                
                 sendMsgToDesiredInternalSocket(xoPlayer);                
                 db.updateScoreOnline(xoPlayer);
                 xoPlayer = db.getScore(xoPlayer);
-                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
@@ -320,10 +320,10 @@ public class Server {
             else
             {
                 db.endGame(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                                
                 xoPlayer.setOpearationResult(true);
                 sendMsgToDesiredInternalSocket(xoPlayer);                
                 xoPlayer = db.getScore(xoPlayer);
-                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);                
@@ -378,7 +378,7 @@ public class Server {
             message = incomeObjectFromPlayer.toJson(xoPlayer);
             for(Map.Entry kv: map.entrySet())
             {
-                if (kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
+                if (xoPlayer.getPlayer().getUserName() != null && kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
                 {
                     key = (ServerHandler) kv.getKey();
                     map.remove(key);
