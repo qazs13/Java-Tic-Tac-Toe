@@ -306,8 +306,9 @@ public class Server {
         }
 
         void endGame(XOInterface xoPlayer){
-            if(db.endGame(xoPlayer))
+            if(xoPlayer.getOpearationResult())
             {   
+                db.endGame(xoPlayer);
                 sendMsgToDesiredInternalSocket(xoPlayer);                
                 db.updateScoreOnline(xoPlayer);
                 xoPlayer = db.getScore(xoPlayer);
@@ -316,15 +317,16 @@ public class Server {
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
                 this.output.println(message);
             }
-            
             else
             {
-                xoPlayer.setOpearationResult(false);
+                db.endGame(xoPlayer);
+                xoPlayer.setOpearationResult(true);
+                sendMsgToDesiredInternalSocket(xoPlayer);                
+                xoPlayer = db.getScore(xoPlayer);
+                xoPlayer.setTypeOfOpearation(Messages.GAME_ENDED_SECCUSSFULLY);                
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
-                this.output.println(message);   
-                Gamelog finalGame = new Gamelog(xoPlayer.getGameLog().getHomePlayer(), xoPlayer.getGameLog().getOpponentPlayer());
-                sendMsgToDesiredInternalSocket(new XOInterface(Messages.GAME_ENDED_SECCUSSFULLY,finalGame));                
+                this.output.println(message);                
             }           
        }
        

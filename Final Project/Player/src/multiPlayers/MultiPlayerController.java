@@ -10,7 +10,6 @@ import interfaces.Gamelog;
 import interfaces.Messages;
 import interfaces.Player;
 import interfaces.XOInterface;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -178,7 +177,7 @@ public class MultiPlayerController implements Initializable {
                         gameResult.setText("You Win! :D");
                         gameEnded = true;
                         myturn = false;
-                        //reportGameEnding();
+                        reportGameEnding(true);
                     }
                 }
                 if (!gameEnded && numOfMoves >= 9){
@@ -186,13 +185,15 @@ public class MultiPlayerController implements Initializable {
                     gameResult.setText("It's a Draw! ");
                     gameEnded = true;
                     myturn = false;
+                    reportGameEnding(false);                    
                 }
             }            
         }
     }
 
-    void reportGameEnding(){
+    void reportGameEnding(boolean state){
         XOInterface xoMsgs = new XOInterface(Messages.GAME_ENDED, new Player(myUserName), new Gamelog(gameID, myUserName, opponentUserName));
+        xoMsgs.setOpearationResult(state);
         Gson g = new Gson();
         String messageend = g.toJson(xoMsgs);
         System.out.println(messageend);
