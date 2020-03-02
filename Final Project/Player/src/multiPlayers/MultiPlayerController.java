@@ -24,13 +24,9 @@ import signin.SignInController;
 import tictactoegui.TicTacToeGui;
 
 
-public class MultiPlayerController implements Initializable {
-
+public class MultiPlayerController implements Initializable 
+{
     boolean gameEnded;
-    @FXML
-    private Button pos7;
-    @FXML
-    private Button pos8;
     @FXML
     private Button pos9;
     @FXML
@@ -44,7 +40,11 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private Button pos3;
     @FXML
-    private Button pos1;
+    private Button pos1;;
+    @FXML
+    private Button pos7;
+    @FXML
+    private Button pos8;
     private Label userNameLabel;
     @FXML
     private Label gameResult;
@@ -286,7 +286,7 @@ public class MultiPlayerController implements Initializable {
     @FXML
     private void back(ActionEvent event) {
 
-        XOInterface xoMsg = new XOInterface(Messages.BACK);
+        XOInterface xoMsg = new XOInterface(Messages.BACK,new Player(myUserName));
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
     }
@@ -315,18 +315,24 @@ public class MultiPlayerController implements Initializable {
     
     public void displayMovesOnBoard (char[] savedGame, String homePlayer, int gameID)
     {
+        clearAll();
+        init();        
         this.gameID = gameID;
-        if(myUserName == homePlayer){
+        if(myUserName.equals(homePlayer))
+        {
             playerSymbol = 'X';
+            homePlayerSign.setText(Character.toString(playerSymbol));
             opponentSymbol = 'O';
+            opponenPlayerSign.setText(Character.toString(opponentSymbol));
             myturn = true;
         }
-        else{
+        else
+        {
             playerSymbol = 'O';
+            homePlayerSign.setText(Character.toString(playerSymbol));            
             opponentSymbol = 'X';
+            opponenPlayerSign.setText(Character.toString(opponentSymbol));            
         }
-        clearAll();
-        init();
         char s = ' ';
         for(int i=0;i<9;i++)
         {
