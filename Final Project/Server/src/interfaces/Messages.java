@@ -8,7 +8,6 @@ public interface Messages {
     public static final String GET_PLAYERS = "getPlayers";
     public static final String INVITE = "invite";
     public static final String PLAY_MOVE = "playMove";
-    public static final String MULTI_MODE_FINISHED = "multiModeFinished";
     public static final String NEW_PLAYER_LOGGED_IN = "newPlayerLoggedIn";
     public static final String SIGN_UP_ACCEPTED = "signUpAccepted";
     public static final String SIGN_UP_REJECTED = "signUpRejected";

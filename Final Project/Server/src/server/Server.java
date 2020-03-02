@@ -142,11 +142,6 @@ public class Server {
                         {
                             makeMove(xoPlayer);
                         }   
-                                               
-                        else if(xoPlayer.getTypeOfOpearation().equals(Messages.MULTI_MODE_FINISHED))
-                        {
-                            endGame(xoPlayer);
-                        }
                         
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.GAME_ENDED))
                         {
