@@ -38,6 +38,7 @@ public class TicTacToeGui extends Application {
     public static PrintStream ps;
     Socket mySocket;
     MultiPlayerController MI;
+    public static int score = 0;
     int counter = 0;
     String [] getServerSocket(){
         String line = "";
@@ -81,8 +82,9 @@ public class TicTacToeGui extends Application {
                         if(xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGED_IN))
                         {
                             Platform.runLater(()->{
-                                try {
-                                    switchToSelectionScene(stage);
+                                try 
+                                {
+                                    switchToSelectionScene(stage,xoMsg);
                                 } catch (IOException ex) {
                                     System.err.println("coudn't switch");
                                     ex.printStackTrace();
@@ -193,10 +195,9 @@ public class TicTacToeGui extends Application {
                         }
                         else if(xoMsg.getTypeOfOpearation().equals(Messages.BACK))
                         {
-                         
                             Platform.runLater(() -> {
                                 try {                                    
-                                    switchToSelectionScene(stage);
+                                    switchToSelectionScene(stage,xoMsg);
                                 } catch (IOException ex) {
                                     Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -258,9 +259,10 @@ public class TicTacToeGui extends Application {
     }
     
     
-    void switchToSelectionScene(Stage stage) throws IOException
+    void switchToSelectionScene(Stage stage,XOInterface xoMessage) throws IOException
     {
-        FXMLLoader selectionpage=new FXMLLoader();
+        score = xoMessage.getPlayer().getScore();
+        FXMLLoader selectionpage = new FXMLLoader();
         selectionpage.setLocation(getClass().getResource("/selectionmode/selectionmode.fxml"));
         Parent  selectionroot = selectionpage.load();
         Scene sceneselection = new Scene(selectionroot);

@@ -444,7 +444,8 @@ public class Database {
             {
                 score = result.getInt(1);
             }
-            xoPlayer = new XOInterface(" ", new Player(xoPlayer.getPlayer().getUserName(),score));
+            xoPlayer.getPlayer().setScore(score);
+//            xoPlayer = new XOInterface(" ", new Player(xoPlayer.getPlayer().getUserName(),score));
         }
         catch (SQLException ex)
         {

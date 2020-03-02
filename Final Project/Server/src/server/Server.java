@@ -159,6 +159,7 @@ public class Server {
                         }
                         else if(xoPlayer.getTypeOfOpearation().equals(Messages.BACK))
                         {
+                            xoPlayer = db.getScore(xoPlayer);
                             incomeObjectFromPlayer = new Gson();
                             message = incomeObjectFromPlayer.toJson(xoPlayer);
                             this.output.println(message);              
@@ -177,6 +178,7 @@ public class Server {
                                 this.playerSocket.close();
                                 System.err.println("The Annynomus Client is Closed");
                             }
+                            refreshTable();
                         }
                     }
                     
@@ -193,6 +195,7 @@ public class Server {
             {
                 Hashmapper(xoPlayer);
                 xoPlayer = db.makePlayerOnline(xoPlayer);
+                xoPlayer = db.getScore(xoPlayer);
                 xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGED_IN);
                 xoPlayer.getPlayer().setPasswd(null);
                 incomeObjectFromPlayer = new Gson();
@@ -201,10 +204,7 @@ public class Server {
                 this.output.println(message);
                 xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGEDIN_POP);
                 sendMsgToAllInternalSocket(xoPlayer);
-                Platform.runLater(() -> {
-                ServerPage.spc.fetchPlayers();
-                });
-                
+                refreshTable();
             }
             else
             {
@@ -225,9 +225,7 @@ public class Server {
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayerRecived);
                 this.output.println(message);
-                Platform.runLater(() -> {
-                ServerPage.spc.fetchPlayers();
-                });                
+                refreshTable();
             }
             else
             {   
@@ -285,7 +283,7 @@ public class Server {
            String home = xoPlayer.getGameLog().getOpponentPlayer();
            xoPlayer.getGameLog().setOpponentPlayer(xoPlayer.getGameLog().getHomePlayer());
            xoPlayer.getGameLog().setHomePlayer(home);
-           sendMsgToDesiredInternalSocket(xoPlayer);      
+           sendMsgToDesiredInternalSocket(xoPlayer);     
        }
        
        void invitePlayer(XOInterface xoPlayer)
@@ -400,6 +398,13 @@ public class Server {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
             }                  
         }
+    }
+    
+    public void refreshTable()
+    {
+        Platform.runLater(() -> {
+        ServerPage.spc.fetchPlayers();
+        });            
     }
     
     public void stopServer()

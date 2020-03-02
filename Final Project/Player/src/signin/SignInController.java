@@ -19,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import interfaces.*;
-import javafx.application.Platform;
 import tictactoegui.TicTacToeGui;
 
 public class SignInController implements Initializable {

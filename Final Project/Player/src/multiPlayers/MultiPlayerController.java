@@ -213,11 +213,6 @@ public class MultiPlayerController implements Initializable
         myturn = SignInController.myTurn;
     }
 
-
-    private void restart(ActionEvent event) {
-        init();
-        clearAll();
-    }
     void clearAll ()
     {
         pos1.setText("");
@@ -326,7 +321,9 @@ public class MultiPlayerController implements Initializable
     public void displayMovesOnBoard (char[] savedGame, String homePlayer, int gameID)
     {
         clearAll();
-        init();        
+        init();
+        int countHome = 0;
+        int countOpponent = 0;
         this.gameID = gameID;
         if(myUserName.equals(homePlayer))
         {
@@ -334,15 +331,13 @@ public class MultiPlayerController implements Initializable
             homePlayerSign.setText(Character.toString(playerSymbol));
             opponentSymbol = 'O';
             opponenPlayerSign.setText(Character.toString(opponentSymbol));
-            myturn = true;
-            gameResult.setText("Your Turn");
         }
         else
         {
             playerSymbol = 'O';
             homePlayerSign.setText(Character.toString(playerSymbol));            
             opponentSymbol = 'X';
-            opponenPlayerSign.setText(Character.toString(opponentSymbol));            
+            opponenPlayerSign.setText(Character.toString(opponentSymbol));
         }
         char s = ' ';
         for(int i=0;i<9;i++)
@@ -355,14 +350,26 @@ public class MultiPlayerController implements Initializable
             else if(savedGame[i] == playerSymbol){
                 playerMoves.add(move);
                 movesPool.remove(move);
-                myturn = true;
+                countHome++;
             }
             else{
                 opponentMoves.add(move);
                 movesPool.remove(move);
-                myturn = false;
+                countOpponent++;
             }
         }
+        
+        if(countHome < countOpponent)
+        {
+            myturn = true;
+            gameResult.setText("Your Turn");            
+        }
+        else
+        {
+            myturn = false;
+            gameResult.setText("Their Turn");              
+        }
+        
         pos1.setText(Character.toString(savedGame[0]));
         pos2.setText(Character.toString(savedGame[1]));
         pos3.setText(Character.toString(savedGame[2]));

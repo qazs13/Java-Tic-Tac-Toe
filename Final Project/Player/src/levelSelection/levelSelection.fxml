@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="304.0" layoutY="390.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="232.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Difficult" textFill="WHITE">
+      <Button disable="true" layoutX="304.0" layoutY="390.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="232.0" style="-fx-background-color: #E22C2B; -fx-border-color: white;" text="Difficult" textFill="WHITE">
          <font>
             <Font name="Bodoni MT Black" size="27.0" />
          </font>
