@@ -345,6 +345,7 @@ public class TicTacToeGui extends Application {
             FXMLLoader multiPlayer = new FXMLLoader();
             multiPlayer.setLocation(getClass().getResource("/multiPlayers/multiPlayer.fxml"));
             Parent  multiPlayerPageRoot = multiPlayer.load();
+            SignInController.myTurn = xoMsg.getGameLog().getHomePlayer().equals(SignInController.username);
             MI = multiPlayer.getController();
             MI.setIDs(xoMsg.getGameLog().getGameId(), SignInController.username, xoMsg.getGameLog().getHomePlayer());    
             Scene multiPlayerScene = new Scene(multiPlayerPageRoot);

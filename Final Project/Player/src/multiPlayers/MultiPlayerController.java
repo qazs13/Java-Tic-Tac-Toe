@@ -359,7 +359,7 @@ public class MultiPlayerController implements Initializable
             }
         }
         
-        if(countHome < countOpponent)
+        if(countHome <= countOpponent)
         {
             myturn = true;
             gameResult.setText("Your Turn");            
