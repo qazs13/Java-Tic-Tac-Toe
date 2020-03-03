@@ -306,6 +306,7 @@ public class TicTacToeGui extends Application {
             FXMLLoader signinpage = new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();
+            SI = signinpage.getController();
             Scene scenesignin = new Scene( signinpageroot);
             stage.hide();
             stage.setScene(scenesignin);
