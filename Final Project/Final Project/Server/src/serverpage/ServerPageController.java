@@ -75,6 +75,11 @@ public class ServerPageController implements Initializable {
     private void serverOff(ActionEvent event) 
     {
         stop();
+        ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
+        playersTable.setItems(_allPlayers);
+        allPlayers.clear();
+        serverOff.setDisable(true);
+        serverON.setDisable(false);  
     }
 
     @Override
@@ -91,11 +96,9 @@ public class ServerPageController implements Initializable {
     public void stop()
     {
         db.makeAllPlayersOffline();
-        serverThread.stopThread();
-        allPlayers.clear();
-        ObservableList<Player> _allPlayers = FXCollections.observableList(allPlayers);
-        playersTable.setItems(_allPlayers);
-        serverOff.setDisable(true);
-        serverON.setDisable(false);        
+        if (serverThread != null)
+        {
+            serverThread.stopThread();             
+        }
     }
 }
