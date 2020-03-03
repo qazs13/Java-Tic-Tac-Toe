@@ -65,7 +65,8 @@ public class TicTacToeGui extends Application {
         return config;
     }
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception 
+    {
         try
         {
             String [] config = getServerSocket();
@@ -226,9 +227,6 @@ public class TicTacToeGui extends Application {
         loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
         Parent  root = loader.load(); 
         SI = loader.getController();
-//        FXMLLoader signuppage=new FXMLLoader();
-//        signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
-//        Parent  signuppageroot = signuppage.load();
         Scene scene = new Scene(root);        
         stage.setScene(scene);
         stage.setTitle("  Tic Tac Toe The Game");
@@ -365,16 +363,18 @@ public class TicTacToeGui extends Application {
     void printGameMove(XOInterface xoMsg)
     {
         MI.printOpponentMove(xoMsg.getFieldNumber(),true);
-
     }
     
     void PrintMessageOfChatRoom(XOInterface xoMsg)
     {
         MI.printMessage(xoMsg);
-        String path = "sound.mp3";
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaplayer = new MediaPlayer(media);
-        mediaplayer.play();                  
+        if (MultiPlayerController.turnOffNotification)
+        {
+            String path = "sound.mp3";
+            Media media = new Media(new File(path).toURI().toString());
+            MediaPlayer mediaplayer = new MediaPlayer(media);
+            mediaplayer.play();               
+        }
     }
     
     void  DisplayMoves(XOInterface xoMsg)
@@ -404,7 +404,9 @@ public class TicTacToeGui extends Application {
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             TicTacToeGui.ps.println(s);
-            System.out.println(s);        
+            System.out.println(s);                  
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.play();
             ps.close();
             dis.close();            
             mySocket.close();            

@@ -89,7 +89,7 @@ public class Server {
             while(true){
                 try {
                     message = input.readLine();
-                    System.err.println("New Message From Player");
+                    System.err.println(message);
                     XOInterface xoPlayer = incomeObjectFromPlayer.fromJson(message, XOInterface.class);
                     if (xoPlayer == null)
                     {
@@ -173,9 +173,7 @@ public class Server {
                             }
                             else
                             {
-                                this.input.close();
-                                this.output.close();
-                                this.playerSocket.close();
+                                handeTheSuddenExit();
                                 System.err.println("The Annynomus Client is Closed");
                             }
                             refreshTable();
@@ -200,7 +198,6 @@ public class Server {
                 xoPlayer.getPlayer().setPasswd(null);
                 incomeObjectFromPlayer = new Gson();
                 message = incomeObjectFromPlayer.toJson(xoPlayer);
-                System.err.println(message);
                 this.output.println(message);
                 xoPlayer.setTypeOfOpearation(Messages.NEW_PLAYER_LOGGEDIN_POP);
                 sendMsgToAllInternalSocket(xoPlayer);
@@ -341,17 +338,17 @@ public class Server {
 
        void Hashmapper(XOInterface xoPlayer){
             map.put(this,xoPlayer.getPlayer().getUserName());
-            System.out.println(map);
         }         
         
         void sendMsgToDesiredInternalSocket(XOInterface xoPlayer){
             ServerHandler key = null;
             incomeObjectFromPlayer = new Gson();
+            for (Map.Entry kv: map.entrySet()){}
             for(Map.Entry kv: map.entrySet()){
-                    if (kv.getValue().equals(xoPlayer.getGameLog().getOpponentPlayer())) {
-                        key = (ServerHandler) kv.getKey();
-                        System.out.println(key.toString());                             
-                    }
+                if (kv.getValue().equals(xoPlayer.getGameLog().getOpponentPlayer())) {
+                    key = (ServerHandler) kv.getKey();
+                    System.out.println(key.toString());                             
+                }
             }
             message = incomeObjectFromPlayer.toJson(xoPlayer);
             System.out.println(message);
@@ -363,8 +360,9 @@ public class Server {
             ServerHandler key = null;
             incomeObjectFromPlayer = new Gson();
             message = incomeObjectFromPlayer.toJson(xoPlayer);
-            for(Map.Entry kv: map.entrySet()){
-                  
+            for (Map.Entry kv: map.entrySet()){}            
+            for(Map.Entry kv: map.entrySet())
+            {
                 System.out.println(kv);
                 key = (ServerHandler) kv.getKey();
                 key.output.println(message);
@@ -373,17 +371,21 @@ public class Server {
 
         void removeFromHashMap(XOInterface xoPlayer)
         {
+            for (Map.Entry kv: map.entrySet()){}
             ServerHandler key = null;
             incomeObjectFromPlayer = new Gson();
             message = incomeObjectFromPlayer.toJson(xoPlayer);
-            for(Map.Entry kv: map.entrySet())
+            if (!map.isEmpty())
             {
-                if (xoPlayer.getPlayer().getUserName() != null && kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
+                for(Map.Entry kv: map.entrySet())
                 {
-                    key = (ServerHandler) kv.getKey();
-                    map.remove(key);
-                }
-            }            
+                    if (xoPlayer.getPlayer().getUserName() != null && kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
+                    {
+                        key = (ServerHandler) kv.getKey();
+                        map.remove(key);
+                    }
+                }            
+            }                
         }
 
         void handeTheSuddenExit ()

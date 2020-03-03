@@ -60,6 +60,7 @@ public class MultiPlayerController implements Initializable
     Vector<Integer> opponentMoves= new Vector<>();
     Vector<Integer> movesPool= new Vector<>();
     int numOfMoves;
+    public static boolean turnOffNotification = true;
     @FXML
     private Text homePlayerSign;
     @FXML
@@ -109,6 +110,7 @@ public class MultiPlayerController implements Initializable
         playerMoves.clear();
         opponentMoves.clear();
         movesPool.clear();
+        turnOffNotification = true;
         if(SignInController.myTurn){
             playerSymbol = 'X';
             opponentSymbol = 'O';
@@ -294,6 +296,7 @@ public class MultiPlayerController implements Initializable
         XOInterface xoMsg = new XOInterface(Messages.BACK,new Player(myUserName));
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
+        turnOffNotification = false;
     }
 
 

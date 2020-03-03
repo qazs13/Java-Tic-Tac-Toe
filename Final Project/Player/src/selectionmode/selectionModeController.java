@@ -76,6 +76,7 @@ public class selectionModeController implements Initializable {
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             controllerPS.println(s);    
+            System.out.println(s);
             FXMLLoader signinpage=new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();

@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -40,6 +41,8 @@ public class signUpController implements Initializable {
     private Text checkpass;
     @FXML
     private Text confirmpass;
+    @FXML
+    private Label errorMsg;
  
     public boolean check()
     {
@@ -93,4 +96,8 @@ public class signUpController implements Initializable {
             controllerPS.println(s);            
         }
     }  
+
+    @FXML
+    private void back(ActionEvent event) {
+    }
 }
