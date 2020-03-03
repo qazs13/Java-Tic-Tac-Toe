@@ -62,6 +62,7 @@ public class SignInController implements Initializable {
         FXMLLoader signuppage = new FXMLLoader();
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
         Parent signuppageroot = signuppage.load();
+        TicTacToeGui.SU = signuppage.getController();
         Scene scenesignup = new Scene(signuppageroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         signupstage.hide(); //optional

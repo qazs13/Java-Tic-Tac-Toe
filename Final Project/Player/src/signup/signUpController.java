@@ -11,12 +11,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import  tictactoegui.*;
+import static tictactoegui.TicTacToeGui.SI;
 
 public class signUpController implements Initializable {
     PrintStream controllerPS;
@@ -83,6 +89,7 @@ public class signUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controllerPS = TicTacToeGui.ps;
+        errorMsg.setVisible(false);
     }    
 
     @FXML
@@ -99,5 +106,25 @@ public class signUpController implements Initializable {
 
     @FXML
     private void back(ActionEvent event) {
+        try
+        {
+            Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader signinpage = new FXMLLoader();
+            signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
+            Parent  signinpageroot = signinpage.load();
+            TicTacToeGui.SI = signinpage.getController();
+            Scene scenesignin = new Scene( signinpageroot);
+            signinstage.hide();
+            signinstage.setScene(scenesignin);
+            signinstage.show();                     
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }    
     }
+    public void dispErrMsg(){
+        errorMsg.setVisible(true);
+    }
+
 }

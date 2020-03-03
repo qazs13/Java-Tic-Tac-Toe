@@ -32,6 +32,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import multiPlayers.MultiPlayerController;
 import onlinepopup.onLinePopupController;
+import signup.signUpController;
 
 public class TicTacToeGui extends Application {
     DataInputStream dis;
@@ -39,6 +40,7 @@ public class TicTacToeGui extends Application {
     Socket mySocket;
     MultiPlayerController MI;
     public static SignInController SI;
+    public static signUpController SU;
     public static int score = 0;
     int counter = 0;
     String [] getServerSocket(){
@@ -179,7 +181,12 @@ public class TicTacToeGui extends Application {
                                 Platform.runLater(() -> {
                                     SI.dispErrMsg();
                                 });
-                                break;                                
+                                break;
+                            case Messages.SIGN_UP_REJECTED:
+                                Platform.runLater(() -> {
+                                    SU.dispErrMsg();
+                                });
+                                break;
                             case "gameIsNotSetted":
                                 System.err.println("gameIsNotSetted");
                                 break;
