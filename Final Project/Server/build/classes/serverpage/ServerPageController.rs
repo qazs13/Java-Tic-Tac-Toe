@@ -1,2 +1,0 @@
-serverpage.ServerThread
-serverpage.ServerPageController

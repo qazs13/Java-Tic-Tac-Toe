@@ -15,8 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import interfaces.*;
-import javafx.application.Platform;
-import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import signin.SignInController;
 import tictactoegui.TicTacToeGui;
@@ -30,12 +28,15 @@ public class selectionModeController implements Initializable {
     private Text myName;
     @FXML
     private Text myName1;
+    @FXML
+    private Text myScore;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controllerPS = TicTacToeGui.ps;
         myName.setText(SignInController.username);
+        myScore.setText(Integer.toString(TicTacToeGui.score));
     }    
 
     @FXML
@@ -66,14 +67,20 @@ public class selectionModeController implements Initializable {
         try
         {
             Player player=new Player();
+            if (SignInController.username == null)
+            {
+                SignInController.username = "null";
+            }
             player.setUserName(SignInController.username);
             XOInterface xointerface =new XOInterface (Messages.LOGOUT,player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             controllerPS.println(s);    
+            System.out.println(s);
             FXMLLoader signinpage=new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();
+            TicTacToeGui.SI = signinpage.getController();
             Scene scenesignin = new Scene( signinpageroot);
             Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             signinstage.hide();

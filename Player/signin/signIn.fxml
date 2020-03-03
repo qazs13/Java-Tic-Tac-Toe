@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -59,5 +60,10 @@
       </Text>
       <Text fx:id="checkpassword" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your Password" visible="false" />
       <Text fx:id="checkusername" disable="true" fill="#d31f1f" layoutX="292.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Enter Your User Name" visible="false" wrappingWidth="159.490234375" />
+      <Label fx:id="errorMsg" layoutX="341.0" layoutY="127.0" prefHeight="38.0" prefWidth="159.0" text="Wrong Credintials!" textAlignment="CENTER" textFill="#fb0505">
+         <font>
+            <Font name="Bodoni MT Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
