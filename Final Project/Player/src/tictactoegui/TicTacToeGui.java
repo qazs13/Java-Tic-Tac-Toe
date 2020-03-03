@@ -38,6 +38,7 @@ public class TicTacToeGui extends Application {
     public static PrintStream ps;
     Socket mySocket;
     MultiPlayerController MI;
+    public static SignInController SI;
     public static int score = 0;
     int counter = 0;
     String [] getServerSocket(){
@@ -79,133 +80,110 @@ public class TicTacToeGui extends Application {
                         Gson g = new Gson();
                         XOInterface xoMsg;
                         xoMsg = g.fromJson(recievedMsg, XOInterface.class);
-                        if(xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGED_IN))
-                        {
-                            Platform.runLater(()->{
-                                try 
-                                {
-                                    switchToSelectionScene(stage,xoMsg);
-                                } catch (IOException ex) {
-                                    System.err.println("coudn't switch");
-                                    ex.printStackTrace();
-                                }
-                            });
-                        }
-                        else if (xoMsg.getTypeOfOpearation().equals(Messages.SIGN_UP_ACCEPTED))
-                        {
-                            System.err.println("Register here");
-                            Platform.runLater(()->{
-                            switchToLogIn(stage);
-                            });                           
-                        }
-                        
-                        else if (xoMsg.getTypeOfOpearation().equals(Messages.NEW_PLAYER_LOGGEDIN_POP))
-                        {
-                            switchToOnpopupscene(xoMsg);
-                        }
-                        
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_INVITATION))
-                        {
-                           switchToInvitationpopupscene(xoMsg);
-                        }
-                          
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETREVING_PLAYERS_LIST))
-                        {
+                        switch (xoMsg.getTypeOfOpearation()) {
+                            case Messages.NEW_PLAYER_LOGGED_IN:
                                 Platform.runLater(()->{
-                                try {
-                                    switchToOnLineScene(stage,xoMsg);
-                                } catch (IOException ex) {
-                                    System.err.println("coudn't switch");
-                                    ex.printStackTrace();
-                                }
-                            });              
-
-                        }
-                        
-                        else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_ACCEPTED))
-                        {
-                            Platform.runLater(() -> {
-                                switchToMultiPlayer(stage, xoMsg);
-                            });
-                        }
-                        
-                        else if (xoMsg.getTypeOfOpearation().equals(Messages.INVITATION_REJECTED))
-                        {
-                            SignInController.myTurn = false;
-                        }
-                        
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.PLAYING_SINGLE_MODE))
-                        {
-                            Platform.runLater(()->{
-                                try 
-                                {
-                                    switchToSinglePlayerScene(stage);
-                                } 
-                                catch (IOException ex) {
-                                    System.err.println("coudn't switch");
-                                    ex.printStackTrace();
-                                }
-                            });
-                        }
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RECEIVING_MOVE))
-                        {
-                            Platform.runLater(() -> {
-                                try
-                                {
-                                    printGameMove(xoMsg);
-                                }
-                                catch (Exception ex)
-                                {
-                                    ex.printStackTrace();
-                                }
-                            });
-                        }
-                        
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.Chat_between_GamePlayer))
-                        {                    
-                            Platform.runLater(() -> {                              
-                                PrintMessageOfChatRoom(xoMsg);                                    
-                            });
-                        }                        
-                        
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.RETRIVEMOVES))
-                        {
-                            Platform.runLater(() -> {
-                                try
-                                {
-                                    if (xoMsg.getGameLog().getGameId() != 0)
+                                    try
                                     {
-                                        DisplayMoves(xoMsg);
-                                        cancelResume(false);
+                                        switchToSelectionScene(stage,xoMsg);
+                                    } catch (IOException ex) {
+                                        System.err.println("coudn't switch");
+                                        ex.printStackTrace();
                                     }
-                                    else
+                                }); break;
+                            case Messages.SIGN_UP_ACCEPTED:
+                                System.err.println("Register here");
+                                Platform.runLater(()->{
+                                    switchToLogIn(stage);
+                                }); break;
+                            case Messages.NEW_PLAYER_LOGGEDIN_POP:
+                                switchToOnpopupscene(xoMsg);
+                                break;
+                            case Messages.RECEIVING_INVITATION:
+                                switchToInvitationpopupscene(xoMsg);
+                                break;
+                            case Messages.RETREVING_PLAYERS_LIST:
+                                Platform.runLater(()->{
+                                    try {
+                                        switchToOnLineScene(stage,xoMsg);
+                                    } catch (IOException ex) {
+                                        System.err.println("coudn't switch");
+                                        ex.printStackTrace();
+                                    }
+                                }); break;
+                            case Messages.INVITATION_ACCEPTED:
+                                Platform.runLater(() -> {
+                                    switchToMultiPlayer(stage, xoMsg);
+                                }); break;
+                            case Messages.INVITATION_REJECTED:
+                                SignInController.myTurn = false;
+                                break;
+                            case Messages.PLAYING_SINGLE_MODE:
+                                Platform.runLater(()->{
+                                    try
                                     {
-                                        cancelResume(true);
+                                        switchToSinglePlayerScene(stage);
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    ex.printStackTrace();
-                                }
-                            });
-                        }
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.GAME_ENDED_SECCUSSFULLY))
-                        {
-                            MI.recieveGameEnding();
-                        }
-                        else if(xoMsg.getTypeOfOpearation().equals(Messages.BACK))
-                        {
-                            Platform.runLater(() -> {
-                                try {                                    
-                                    switchToSelectionScene(stage,xoMsg);
-                                } catch (IOException ex) {
-                                    Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                            });  
-                        }
-                                                
-                        else if(xoMsg.getTypeOfOpearation().equals("gameIsNotSetted")){
-                            System.err.println("gameIsNotSetted");
+                                    catch (IOException ex) {
+                                        System.err.println("coudn't switch");
+                                        ex.printStackTrace();
+                                    }
+                                }); break;
+                            case Messages.RECEIVING_MOVE:
+                                Platform.runLater(() -> {
+                                    try
+                                    {
+                                        printGameMove(xoMsg);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        ex.printStackTrace();
+                                    }
+                                }); break;
+                            case Messages.Chat_between_GamePlayer:
+                                Platform.runLater(() -> {
+                                    PrintMessageOfChatRoom(xoMsg);
+                                }); break;
+                            case Messages.RETRIVEMOVES:
+                                Platform.runLater(() -> {
+                                    try
+                                    {
+                                        if (xoMsg.getGameLog().getGameId() != 0)
+                                        {
+                                            DisplayMoves(xoMsg);
+                                            cancelResume(false);
+                                        }
+                                        else
+                                        {
+                                            cancelResume(true);
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        ex.printStackTrace();
+                                    }
+                                }); break;
+                            case Messages.GAME_ENDED_SECCUSSFULLY:
+                                MI.recieveGameEnding();
+                                break;
+                            case Messages.BACK:
+                                Platform.runLater(() -> {
+                                    try {
+                                        switchToSelectionScene(stage,xoMsg);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(TicTacToeGui.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }); break;
+                            case Messages.LOGIN:
+                                Platform.runLater(() -> {
+                                    SI.dispErrMsg();
+                                });
+                                break;                                
+                            case "gameIsNotSetted":
+                                System.err.println("gameIsNotSetted");
+                                break;
+                            default:
+                                break;
                         }
                     }
                      catch (IOException ex) {
@@ -247,9 +225,10 @@ public class TicTacToeGui extends Application {
         FXMLLoader loader=new FXMLLoader();
         loader.setLocation(getClass().getResource("/signin/signIn.fxml"));
         Parent  root = loader.load(); 
-        FXMLLoader signuppage=new FXMLLoader();
-        signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
-        Parent  signuppageroot = signuppage.load();
+        SI = loader.getController();
+//        FXMLLoader signuppage=new FXMLLoader();
+//        signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
+//        Parent  signuppageroot = signuppage.load();
         Scene scene = new Scene(root);        
         stage.setScene(scene);
         stage.setTitle("  Tic Tac Toe The Game");

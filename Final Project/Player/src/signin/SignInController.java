@@ -19,83 +19,81 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import interfaces.*;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 import tictactoegui.TicTacToeGui;
 
 public class SignInController implements Initializable {
+
     public static String username;
     public static boolean myTurn = false;
     String password;
-   @FXML
+    @FXML
     Button signup;
-   @FXML
- private AnchorPane main;
     @FXML
-       Button login;
+    private AnchorPane main;
     @FXML
-     TextField loginusername;
+    Button login;
     @FXML
-     PasswordField loginpassword;
+    TextField loginusername;
+    @FXML
+    PasswordField loginpassword;
     @FXML
     Text checkusername;
-    
+
     @FXML
-    Text checkpassword;  
+    Text checkpassword;
     Stage window;
     PrintStream controllerPS;
+    @FXML
+    private Label errorMsg;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controllerPS = TicTacToeGui.ps;
-    }    
-
-    
+        errorMsg.setVisible(false);
+    }
+    public void dispErrMsg(){
+        errorMsg.setVisible(true);
+    }
 
     @FXML
-     void signup(ActionEvent event) throws IOException {
-        FXMLLoader signuppage=new FXMLLoader();
+    void signup(ActionEvent event) throws IOException {
+        FXMLLoader signuppage = new FXMLLoader();
         signuppage.setLocation(getClass().getResource("/signup/signUp.fxml"));
-        Parent  signuppageroot = signuppage.load();
+        Parent signuppageroot = signuppage.load();
         Scene scenesignup = new Scene(signuppageroot);
         Stage signupstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         signupstage.hide(); //optional
         signupstage.setScene(scenesignup);
-        signupstage.show(); 
+        signupstage.show();
     }
 
-@FXML
+    @FXML
     private void login(ActionEvent event) {
         username = loginusername.getText();
         password = loginpassword.getText();
-       if(username.equals("") || password.equals(""))
-       {
-            if (username.equals(""))
-            {
+        if (username.equals("") || password.equals("")) {
+            if (username.equals("")) {
                 checkusername.setVisible(true);
-            }
-            else
-            {
+            } else {
                 checkusername.setVisible(false);
             }
-            if(password.equals(""))
-            {
+            if (password.equals("")) {
                 checkpassword.setVisible(true);
-            }
-            else
-            {
+            } else {
                 checkpassword.setVisible(false);
             }
-       }
-       else
-       {
+        } else {
             checkusername.setVisible(false);
             checkpassword.setVisible(false);
-            Player player=new Player();
+            Player player = new Player();
             player.setUserName(username);
             player.setPasswd(password);
-            XOInterface xointerface =new XOInterface (Messages.LOGIN,player);
+            XOInterface xointerface = new XOInterface(Messages.LOGIN, player);
             Gson g = new Gson();
             String s = g.toJson(xointerface);
             controllerPS.println(s);
-       }             
+        }
     }
 }

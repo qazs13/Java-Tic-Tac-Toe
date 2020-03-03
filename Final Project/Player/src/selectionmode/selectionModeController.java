@@ -79,6 +79,7 @@ public class selectionModeController implements Initializable {
             FXMLLoader signinpage=new FXMLLoader();
             signinpage.setLocation(getClass().getResource("/signin/signIn.fxml"));
             Parent  signinpageroot = signinpage.load();
+            TicTacToeGui.SI = signinpage.getController();
             Scene scenesignin = new Scene( signinpageroot);
             Stage signinstage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             signinstage.hide();
