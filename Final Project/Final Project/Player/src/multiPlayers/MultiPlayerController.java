@@ -211,6 +211,7 @@ public class MultiPlayerController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controllerPS = TicTacToeGui.ps;
+        gameResult.setText("");
         init();
         myturn = SignInController.myTurn;
     }
@@ -291,9 +292,9 @@ public class MultiPlayerController implements Initializable
 
     }
     @FXML
-    private void back(ActionEvent event) {
-
-        XOInterface xoMsg = new XOInterface(Messages.BACK,new Player(myUserName));
+    private void back(ActionEvent event)
+    {
+        XOInterface xoMsg = new XOInterface(Messages.BACK_FROM_ONLINE,new Player(myUserName),new Gamelog(myUserName, opponentUserName));
         Gson g = new Gson();
         controllerPS.println(g.toJson(xoMsg));
         turnOffNotification = false;
@@ -306,7 +307,7 @@ public class MultiPlayerController implements Initializable
         textAreaMessanger.setText("");
         textScreenMessanger.appendText(chatingMessage+"\n");
         Gamelog onlineGameChating = new Gamelog(myUserName, opponentUserName, chatingMessage);
-        XOInterface xointerface = new XOInterface(Messages.CHAT_BETWEEN_GAMEPLAYER, onlineGameChating);
+        XOInterface xointerface = new XOInterface(Messages.CHAT_BTWEEN_GAMEPLAYER, onlineGameChating);
         Gson g = new Gson();
         String message = g.toJson(xointerface);
         System.out.println(message);
@@ -386,8 +387,15 @@ public class MultiPlayerController implements Initializable
        
     public void printMessage(XOInterface xo)
     {
-        textScreenMessanger.appendText(xo.getGameLog().getMessage()+"\n");
-        System.out.println(textScreenMessanger.getText());
+        if (!xo.getGameLog().getMessage().equals("IS_LEFT"))
+        {
+            textScreenMessanger.appendText(xo.getGameLog().getMessage()+"\n");
+            System.out.println(textScreenMessanger.getText());
+        }
+        else
+        {
+            gameResult.setText("Opponent Left The Session");
+        }
     }
     
     public void cancelOrEnableResume(boolean state)

@@ -140,7 +140,7 @@ public class TicTacToeGui extends Application {
                                         ex.printStackTrace();
                                     }
                                 }); break;
-                            case Messages.CHAT_BETWEEN_GAMEPLAYER:
+                            case Messages.CHAT_BTWEEN_GAMEPLAYER:
                                 Platform.runLater(() -> {
                                     PrintMessageOfChatRoom(xoMsg);
                                 }); break;

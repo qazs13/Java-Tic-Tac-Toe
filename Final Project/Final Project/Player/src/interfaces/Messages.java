@@ -22,7 +22,9 @@ public interface Messages {
     public static final String NEW_PLAYER_LOGGEDIN_POP = "newPlayerLoggedInPOP";
     public static final String RESUME = "resume";
     public static final String RETRIVEMOVES = "retriveMoves";
-    public static final String CHAT_BETWEEN_GAMEPLAYER = "chatMessage";   
+    public static final String CHAT_BTWEEN_GAMEPLAYER = "chatMessage";   
     public static final String LOGOUT = "logout";
     public static final String BACK = "back";
+        public static final String BACK_FROM_ONLINE = "backFromOnline";
+
 }

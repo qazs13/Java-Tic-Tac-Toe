@@ -162,19 +162,32 @@ public class Server {
                             message = incomeObjectFromPlayer.toJson(xoPlayer);
                             this.output.println(message);              
                         }
+                        else if (xoPlayer.getTypeOfOpearation().equals(Messages.BACK_FROM_ONLINE))
+                        {
+                            db.isPlayingOff(xoPlayer);
+                            xoPlayer = db.getScore(xoPlayer);
+                            xoPlayer.setTypeOfOpearation(Messages.BACK);
+                            incomeObjectFromPlayer = new Gson();
+                            message = incomeObjectFromPlayer.toJson(xoPlayer);
+                            this.output.println(message);
+                            xoPlayer.setTypeOfOpearation(Messages.CHAT_BTWEEN_GAMEPLAYER);
+                            xoPlayer.getGameLog().setMessage("IS_LEFT");
+                            sendMsgToDesiredInternalSocket(xoPlayer);
+                        }                             
                        else if (xoPlayer.getTypeOfOpearation().equals(Messages.LOGOUT))
                         {
                             if (!xoPlayer.getPlayer().getUserName().equals("null"))
                             {
                                 removeFromHashMap(xoPlayer);
                                 db.makeDesirePlayerOfflien(xoPlayer);                                
-                            }
+                            }                 
                             else
                             {
                                 handeTheSuddenExit();
                                 System.err.println("The Annynomus Client is Closed");
                             }
                             refreshTable();
+                            
                         }
                     }
                     

@@ -25,4 +25,6 @@ public interface Messages {
     public static final String CHAT_BTWEEN_GAMEPLAYER = "chatMessage";   
     public static final String LOGOUT = "logout";
     public static final String BACK = "back";
+        public static final String BACK_FROM_ONLINE = "backFromOnline";
+
 }

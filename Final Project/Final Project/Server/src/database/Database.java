@@ -186,6 +186,22 @@ public class Database {
         }
     }
     
+    public void isPlayingOff (XOInterface xoPlayer)
+    {
+        try
+        {
+            connect();
+            sqlCommand = "SELECT isplayingOff(?)";
+            preparedStatment = connection.prepareStatement(sqlCommand);
+            preparedStatment.setString(1, xoPlayer.getGameLog().getHomePlayer());
+            preparedStatment.execute();
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    
     public boolean makeDesirePlayerOfflien(XOInterface xoPlayer)
     {
         try
