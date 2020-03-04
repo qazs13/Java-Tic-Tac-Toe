@@ -25,7 +25,7 @@ public class Server {
     Database db = new Database();
     String message = null;
     Integer serverPort = getServerPort();
-    static HashMap<ServerHandler,String> map=new HashMap<>();
+    static HashMap<ServerHandler,String> map = new HashMap<>();
     Gson incomeObjectFromPlayer = null;
         Integer getServerPort(){
         String line = "";
@@ -348,55 +348,76 @@ public class Server {
        }       
 
        void Hashmapper(XOInterface xoPlayer){
-            map.put(this,xoPlayer.getPlayer().getUserName());
+           synchronized (map)
+           {
+                map.put(this,xoPlayer.getPlayer().getUserName());               
+           }
         }         
         
         void sendMsgToDesiredInternalSocket(XOInterface xoPlayer){
-            ServerHandler key = null;
-            incomeObjectFromPlayer = new Gson();
-            for (Map.Entry kv: map.entrySet()){}
-            for(Map.Entry kv: map.entrySet()){
-                if (kv.getValue().equals(xoPlayer.getGameLog().getOpponentPlayer())) {
-                    key = (ServerHandler) kv.getKey();
-                    System.out.println(key.toString());                             
+            synchronized(map)
+            {
+                ServerHandler key = null;
+                incomeObjectFromPlayer = new Gson();
+                for (Map.Entry kv: map.entrySet()){}
+                synchronized (map)
+                {
+                    for(Map.Entry kv: map.entrySet()){
+                        if (kv.getValue().equals(xoPlayer.getGameLog().getOpponentPlayer())) {
+                            key = (ServerHandler) kv.getKey();
+                            System.out.println(key.toString());                             
+                        }
+                    }
+                    message = incomeObjectFromPlayer.toJson(xoPlayer);
+                    System.out.println(message);
+                    key.output.println(message);                    
                 }
             }
-            message = incomeObjectFromPlayer.toJson(xoPlayer);
-            System.out.println(message);
-            key.output.println(message);
         }
            
         void sendMsgToAllInternalSocket(XOInterface xoPlayer)
         {
-            ServerHandler key = null;
-            incomeObjectFromPlayer = new Gson();
-            message = incomeObjectFromPlayer.toJson(xoPlayer);
-            for (Map.Entry kv: map.entrySet()){}            
-            for(Map.Entry kv: map.entrySet())
+            synchronized (map)
             {
-                System.out.println(kv);
-                key = (ServerHandler) kv.getKey();
-                key.output.println(message);
+                ServerHandler key = null;
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                for (Map.Entry kv: map.entrySet()){}
+                synchronized (map)
+                {
+                    for(Map.Entry kv: map.entrySet())
+                    {
+                        System.out.println(kv);
+                        key = (ServerHandler) kv.getKey();
+                        key.output.println(message);
+                    }                    
+                }             
             }
         }
 
         void removeFromHashMap(XOInterface xoPlayer)
         {
-            for (Map.Entry kv: map.entrySet()){}
-            ServerHandler key = null;
-            incomeObjectFromPlayer = new Gson();
-            message = incomeObjectFromPlayer.toJson(xoPlayer);
-            if (!map.isEmpty())
+            synchronized (map)
             {
-                for(Map.Entry kv: map.entrySet())
+                for (Map.Entry kv: map.entrySet()){}
+                ServerHandler key = null;
+                incomeObjectFromPlayer = new Gson();
+                message = incomeObjectFromPlayer.toJson(xoPlayer);
+                if (!map.isEmpty())
                 {
-                    if (xoPlayer.getPlayer().getUserName() != null && kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
+                    synchronized (map)
                     {
-                        key = (ServerHandler) kv.getKey();
-                        map.remove(key);
-                    }
-                }            
-            }                
+                        for(Map.Entry kv: map.entrySet())
+                        {
+                            if (xoPlayer.getPlayer().getUserName() != null && kv.getValue().equals(xoPlayer.getPlayer().getUserName()))
+                            {
+                                key = (ServerHandler) kv.getKey();
+                                map.remove(key);
+                            }
+                        }                        
+                    }      
+                }              
+            }              
         }
 
         void handeTheSuddenExit ()
