@@ -99,7 +99,7 @@ CREATE FUNCTION public.endgame(gamenumber integer) RETURNS void
 DECLARE
 Nowtime timestamp;
 BEGIN
-Update players set gameId = NULL WHERE gameid = gamenumber;
+Update players set gameId = NULL , isplaying = false WHERE gameid = gamenumber;
 Nowtime = now();
 Update gamelog set endGameDate = nowtime , isFinished = true where game_id = gamenumber;
 End;
@@ -164,6 +164,23 @@ $$;
 
 
 ALTER FUNCTION public.isplaying(nameofuser text) OWNER TO postgres;
+
+--
+-- Name: isplayingoff(text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.isplayingoff(nameofuser text) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN 
+UPDATE players SET isPlaying = false WHERE username = nameOfUser;
+RETURN false;
+END;
+$$;
+
+
+ALTER FUNCTION public.isplayingoff(nameofuser text) OWNER TO postgres;
 
 --
 -- Name: logincheck(text, text); Type: FUNCTION; Schema: public; Owner: postgres
@@ -262,6 +279,7 @@ CREATE FUNCTION public.returnscoreplayer(nameofuser text) RETURNS integer
 DECLARE 
 playerScore int;
 BEGIN
+Update players set isplaying = false where username = nameOfUser;
 SELECT score INTO playerScore FROM players WHERE username = nameOfUser;
 RETURN playerScore;
 END;
@@ -312,7 +330,7 @@ CREATE FUNCTION public.updatescoreoffline(nameofuser text) RETURNS void
     AS $$
 DECLARE
 BEGIN
-UPDATE players SET score = score + 5 WHERE username = nameofuser;
+UPDATE players SET score = score + 5, isplaying = false WHERE username = nameOfUser;
 END;
 $$;
 
@@ -326,10 +344,10 @@ ALTER FUNCTION public.updatescoreoffline(nameofuser text) OWNER TO postgres;
 CREATE FUNCTION public.updatescoreonline(nameofuser text) RETURNS void
     LANGUAGE plpgsql
     AS $$
-declare
-begin
-update players set score = score + 20 where username = nameofuser;
-end;
+DECLARE
+BEGIN 
+UPDATE players SET score = score + 20, isplaying = false WHERE username = nameOfUser;
+END;
 $$;
 
 
